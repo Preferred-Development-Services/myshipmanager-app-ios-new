@@ -1,0 +1,649 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */; };
+		B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */; };
+		B5A0ECA227F11CD300C4057C /* ReadBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0ECA127F11CD300C4057C /* ReadBarcode.swift */; };
+		B5A0ECA427F1208900C4057C /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0ECA327F1208900C4057C /* Defaults.swift */; };
+		C93F0068264622BC00D02FA8 /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93F0067264622BC00D02FA8 /* ForgotPassword.swift */; };
+		C956DCC1263F5981003392FB /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C956DCC0263F5981003392FB /* Brand.swift */; };
+		C9571493265F1B1300B8F442 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9571492265F1B1300B8F442 /* Utils.swift */; };
+		C9CB4E9027E026AA00456093 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CB4E8F27E026AA00456093 /* BarcodeScannerView.swift */; };
+		C9CE0A142633AD3700F6795B /* MyShipManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CE0A132633AD3700F6795B /* MyShipManagerApp.swift */; };
+		C9CE0A162633AD3700F6795B /* ShipmentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CE0A152633AD3700F6795B /* ShipmentList.swift */; };
+		C9CE0A182633AD3700F6795B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9CE0A172633AD3700F6795B /* Assets.xcassets */; };
+		C9CE0A1B2633AD3700F6795B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9CE0A1A2633AD3700F6795B /* Preview Assets.xcassets */; };
+		C9CE0A262633AD3700F6795B /* MyShipManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CE0A252633AD3700F6795B /* MyShipManagerTests.swift */; };
+		C9CE0A312633AD3700F6795B /* MyShipManagerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CE0A302633AD3700F6795B /* MyShipManagerUITests.swift */; };
+		C9CE0A422633AD7F00F6795B /* CreateQueued.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CE0A412633AD7F00F6795B /* CreateQueued.swift */; };
+		C9CE0A4A2633C2E900F6795B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CE0A492633C2E900F6795B /* Models.swift */; };
+		C9F4F7302634FF7A00225115 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F4F72F2634FF7A00225115 /* ImagePickerView.swift */; };
+		C9F80C34263471DC00442E47 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F80C33263471DC00442E47 /* Welcome.swift */; };
+		C9F80C3C263474AB00442E47 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F80C3B263474AB00442E47 /* SignIn.swift */; };
+		C9F80C44263494E800442E47 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F80C43263494E800442E47 /* API.swift */; };
+		C9F80C4C26349C0100442E47 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F80C4B26349C0100442E47 /* Account.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C9CE0A222633AD3700F6795B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9CE0A082633AD3700F6795B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9CE0A0F2633AD3700F6795B;
+			remoteInfo = MyShipManager;
+		};
+		C9CE0A2D2633AD3700F6795B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9CE0A082633AD3700F6795B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9CE0A0F2633AD3700F6795B;
+			remoteInfo = MyShipManager;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProduct.swift; sourceTree = "<group>"; };
+		B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShipment.swift; sourceTree = "<group>"; };
+		B5A0ECA127F11CD300C4057C /* ReadBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBarcode.swift; sourceTree = "<group>"; };
+		B5A0ECA327F1208900C4057C /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		C93F0067264622BC00D02FA8 /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
+		C956DCC0263F5981003392FB /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
+		C9571492265F1B1300B8F442 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		C9CB4E8F27E026AA00456093 /* BarcodeScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
+		C9CE0A102633AD3700F6795B /* MyShipManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyShipManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9CE0A132633AD3700F6795B /* MyShipManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShipManagerApp.swift; sourceTree = "<group>"; };
+		C9CE0A152633AD3700F6795B /* ShipmentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShipmentList.swift; sourceTree = "<group>"; };
+		C9CE0A172633AD3700F6795B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C9CE0A1A2633AD3700F6795B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C9CE0A1C2633AD3700F6795B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9CE0A212633AD3700F6795B /* MyShipManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyShipManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9CE0A252633AD3700F6795B /* MyShipManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShipManagerTests.swift; sourceTree = "<group>"; };
+		C9CE0A272633AD3700F6795B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9CE0A2C2633AD3700F6795B /* MyShipManagerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyShipManagerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9CE0A302633AD3700F6795B /* MyShipManagerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShipManagerUITests.swift; sourceTree = "<group>"; };
+		C9CE0A322633AD3700F6795B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9CE0A412633AD7F00F6795B /* CreateQueued.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQueued.swift; sourceTree = "<group>"; };
+		C9CE0A492633C2E900F6795B /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		C9F4F72F2634FF7A00225115 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		C9F80C33263471DC00442E47 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
+		C9F80C3B263474AB00442E47 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
+		C9F80C43263494E800442E47 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		C9F80C4B26349C0100442E47 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C9CE0A0D2633AD3700F6795B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9CE0A1E2633AD3700F6795B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9CE0A292633AD3700F6795B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C9CE0A072633AD3700F6795B = {
+			isa = PBXGroup;
+			children = (
+				C9CE0A122633AD3700F6795B /* MyShipManager */,
+				C9CE0A242633AD3700F6795B /* MyShipManagerTests */,
+				C9CE0A2F2633AD3700F6795B /* MyShipManagerUITests */,
+				C9CE0A112633AD3700F6795B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C9CE0A112633AD3700F6795B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C9CE0A102633AD3700F6795B /* MyShipManager.app */,
+				C9CE0A212633AD3700F6795B /* MyShipManagerTests.xctest */,
+				C9CE0A2C2633AD3700F6795B /* MyShipManagerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C9CE0A122633AD3700F6795B /* MyShipManager */ = {
+			isa = PBXGroup;
+			children = (
+				C9F80C43263494E800442E47 /* API.swift */,
+				C9571492265F1B1300B8F442 /* Utils.swift */,
+				C9CE0A492633C2E900F6795B /* Models.swift */,
+				C9CE0A132633AD3700F6795B /* MyShipManagerApp.swift */,
+				C9CE0A152633AD3700F6795B /* ShipmentList.swift */,
+				C9CE0A412633AD7F00F6795B /* CreateQueued.swift */,
+				C9F80C33263471DC00442E47 /* Welcome.swift */,
+				C9F80C3B263474AB00442E47 /* SignIn.swift */,
+				C93F0067264622BC00D02FA8 /* ForgotPassword.swift */,
+				C9CB4E8F27E026AA00456093 /* BarcodeScannerView.swift */,
+				C9F80C4B26349C0100442E47 /* Account.swift */,
+				C9F4F72F2634FF7A00225115 /* ImagePickerView.swift */,
+				C956DCC0263F5981003392FB /* Brand.swift */,
+				C9CE0A172633AD3700F6795B /* Assets.xcassets */,
+				C9CE0A1C2633AD3700F6795B /* Info.plist */,
+				C9CE0A192633AD3700F6795B /* Preview Content */,
+				B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */,
+				B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */,
+				B5A0ECA127F11CD300C4057C /* ReadBarcode.swift */,
+				B5A0ECA327F1208900C4057C /* Defaults.swift */,
+			);
+			path = MyShipManager;
+			sourceTree = "<group>";
+		};
+		C9CE0A192633AD3700F6795B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				C9CE0A1A2633AD3700F6795B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C9CE0A242633AD3700F6795B /* MyShipManagerTests */ = {
+			isa = PBXGroup;
+			children = (
+				C9CE0A252633AD3700F6795B /* MyShipManagerTests.swift */,
+				C9CE0A272633AD3700F6795B /* Info.plist */,
+			);
+			path = MyShipManagerTests;
+			sourceTree = "<group>";
+		};
+		C9CE0A2F2633AD3700F6795B /* MyShipManagerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C9CE0A302633AD3700F6795B /* MyShipManagerUITests.swift */,
+				C9CE0A322633AD3700F6795B /* Info.plist */,
+			);
+			path = MyShipManagerUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C9CE0A0F2633AD3700F6795B /* MyShipManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9CE0A352633AD3700F6795B /* Build configuration list for PBXNativeTarget "MyShipManager" */;
+			buildPhases = (
+				C9CE0A0C2633AD3700F6795B /* Sources */,
+				C9CE0A0D2633AD3700F6795B /* Frameworks */,
+				C9CE0A0E2633AD3700F6795B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MyShipManager;
+			productName = MyShipManager;
+			productReference = C9CE0A102633AD3700F6795B /* MyShipManager.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C9CE0A202633AD3700F6795B /* MyShipManagerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9CE0A382633AD3700F6795B /* Build configuration list for PBXNativeTarget "MyShipManagerTests" */;
+			buildPhases = (
+				C9CE0A1D2633AD3700F6795B /* Sources */,
+				C9CE0A1E2633AD3700F6795B /* Frameworks */,
+				C9CE0A1F2633AD3700F6795B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C9CE0A232633AD3700F6795B /* PBXTargetDependency */,
+			);
+			name = MyShipManagerTests;
+			productName = MyShipManagerTests;
+			productReference = C9CE0A212633AD3700F6795B /* MyShipManagerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C9CE0A2B2633AD3700F6795B /* MyShipManagerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9CE0A3B2633AD3700F6795B /* Build configuration list for PBXNativeTarget "MyShipManagerUITests" */;
+			buildPhases = (
+				C9CE0A282633AD3700F6795B /* Sources */,
+				C9CE0A292633AD3700F6795B /* Frameworks */,
+				C9CE0A2A2633AD3700F6795B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C9CE0A2E2633AD3700F6795B /* PBXTargetDependency */,
+			);
+			name = MyShipManagerUITests;
+			productName = MyShipManagerUITests;
+			productReference = C9CE0A2C2633AD3700F6795B /* MyShipManagerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C9CE0A082633AD3700F6795B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					C9CE0A0F2633AD3700F6795B = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					C9CE0A202633AD3700F6795B = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = C9CE0A0F2633AD3700F6795B;
+					};
+					C9CE0A2B2633AD3700F6795B = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = C9CE0A0F2633AD3700F6795B;
+					};
+				};
+			};
+			buildConfigurationList = C9CE0A0B2633AD3700F6795B /* Build configuration list for PBXProject "MyShipManager" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C9CE0A072633AD3700F6795B;
+			productRefGroup = C9CE0A112633AD3700F6795B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C9CE0A0F2633AD3700F6795B /* MyShipManager */,
+				C9CE0A202633AD3700F6795B /* MyShipManagerTests */,
+				C9CE0A2B2633AD3700F6795B /* MyShipManagerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C9CE0A0E2633AD3700F6795B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9CE0A1B2633AD3700F6795B /* Preview Assets.xcassets in Resources */,
+				C9CE0A182633AD3700F6795B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9CE0A1F2633AD3700F6795B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9CE0A2A2633AD3700F6795B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C9CE0A0C2633AD3700F6795B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9CE0A422633AD7F00F6795B /* CreateQueued.swift in Sources */,
+				C9F80C3C263474AB00442E47 /* SignIn.swift in Sources */,
+				C9F80C34263471DC00442E47 /* Welcome.swift in Sources */,
+				C956DCC1263F5981003392FB /* Brand.swift in Sources */,
+				B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */,
+				B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */,
+				C9CE0A162633AD3700F6795B /* ShipmentList.swift in Sources */,
+				C9F4F7302634FF7A00225115 /* ImagePickerView.swift in Sources */,
+				B5A0ECA227F11CD300C4057C /* ReadBarcode.swift in Sources */,
+				C9CE0A142633AD3700F6795B /* MyShipManagerApp.swift in Sources */,
+				C9F80C4C26349C0100442E47 /* Account.swift in Sources */,
+				B5A0ECA427F1208900C4057C /* Defaults.swift in Sources */,
+				C9CB4E9027E026AA00456093 /* BarcodeScannerView.swift in Sources */,
+				C9CE0A4A2633C2E900F6795B /* Models.swift in Sources */,
+				C9F80C44263494E800442E47 /* API.swift in Sources */,
+				C93F0068264622BC00D02FA8 /* ForgotPassword.swift in Sources */,
+				C9571493265F1B1300B8F442 /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9CE0A1D2633AD3700F6795B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9CE0A262633AD3700F6795B /* MyShipManagerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9CE0A282633AD3700F6795B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9CE0A312633AD3700F6795B /* MyShipManagerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C9CE0A232633AD3700F6795B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9CE0A0F2633AD3700F6795B /* MyShipManager */;
+			targetProxy = C9CE0A222633AD3700F6795B /* PBXContainerItemProxy */;
+		};
+		C9CE0A2E2633AD3700F6795B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9CE0A0F2633AD3700F6795B /* MyShipManager */;
+			targetProxy = C9CE0A2D2633AD3700F6795B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C9CE0A332633AD3700F6795B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C9CE0A342633AD3700F6795B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C9CE0A362633AD3700F6795B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 18;
+				DEVELOPMENT_ASSET_PATHS = "\"MyShipManager/Preview Content\"";
+				DEVELOPMENT_TEAM = 2WJ3HU959U;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MyShipManager/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myshipmanager.MyShipManagerApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		C9CE0A372633AD3700F6795B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 18;
+				DEVELOPMENT_ASSET_PATHS = "\"MyShipManager/Preview Content\"";
+				DEVELOPMENT_TEAM = 2WJ3HU959U;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MyShipManager/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myshipmanager.MyShipManagerApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		C9CE0A392633AD3700F6795B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BUSQE4DJW3;
+				INFOPLIST_FILE = MyShipManagerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.myshipmanager.MyShipManagerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyShipManager.app/MyShipManager";
+			};
+			name = Debug;
+		};
+		C9CE0A3A2633AD3700F6795B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BUSQE4DJW3;
+				INFOPLIST_FILE = MyShipManagerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.myshipmanager.MyShipManagerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyShipManager.app/MyShipManager";
+			};
+			name = Release;
+		};
+		C9CE0A3C2633AD3700F6795B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BUSQE4DJW3;
+				INFOPLIST_FILE = MyShipManagerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.myshipmanager.MyShipManagerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MyShipManager;
+			};
+			name = Debug;
+		};
+		C9CE0A3D2633AD3700F6795B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BUSQE4DJW3;
+				INFOPLIST_FILE = MyShipManagerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.myshipmanager.MyShipManagerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MyShipManager;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C9CE0A0B2633AD3700F6795B /* Build configuration list for PBXProject "MyShipManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9CE0A332633AD3700F6795B /* Debug */,
+				C9CE0A342633AD3700F6795B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9CE0A352633AD3700F6795B /* Build configuration list for PBXNativeTarget "MyShipManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9CE0A362633AD3700F6795B /* Debug */,
+				C9CE0A372633AD3700F6795B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9CE0A382633AD3700F6795B /* Build configuration list for PBXNativeTarget "MyShipManagerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9CE0A392633AD3700F6795B /* Debug */,
+				C9CE0A3A2633AD3700F6795B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9CE0A3B2633AD3700F6795B /* Build configuration list for PBXNativeTarget "MyShipManagerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9CE0A3C2633AD3700F6795B /* Debug */,
+				C9CE0A3D2633AD3700F6795B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C9CE0A082633AD3700F6795B /* Project object */;
+}
