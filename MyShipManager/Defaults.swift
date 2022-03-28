@@ -34,7 +34,6 @@ struct SetDefaults: View {
     @State var notes = ""
 
     var body: some View {
-        NavigationView {
             ZStack {
                 VStack {
                     Form {
@@ -121,6 +120,7 @@ struct SetDefaults: View {
                     }
                     
                 }
+
                 if submitting {
                     VStack {
                         Image(systemName: "arrow.up.arrow.down.circle.fill")
@@ -153,8 +153,6 @@ struct SetDefaults: View {
                     }
                     }
             }
-            .navigationBarItems( trailing: Button("Set") { startSubmit() })
-        }
         .onAppear() {
             print("onAppear")
             loadVendors()

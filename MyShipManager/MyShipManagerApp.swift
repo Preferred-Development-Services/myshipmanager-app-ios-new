@@ -30,8 +30,11 @@ struct MyShipManagerApp: App {
                     }
                     NavigationView {
                         SetDefaults(isPresented: $showModal)
-                        .navigationTitle("Set Defaults")
+                            .navigationTitle("Set Defaults")
+                            .navigationBarItems( trailing: Button("Set") {})
                     }
+  
+
                     .tabItem {
                         Image(systemName: "list.dash")
                         Text("Defaults".uppercased())
