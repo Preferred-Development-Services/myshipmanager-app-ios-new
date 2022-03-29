@@ -24,28 +24,17 @@ struct MyShipManagerApp: App {
                             .navigationTitle("Upcoming Deliveries")
                     }
                     .tabItem {
-                        Image(systemName: "list.dash")
+                        Image(systemName: "calendar")
                         Text("Upcoming".uppercased())
                             .accentColor(.brandPrimary)
                     }
-                    NavigationView {
-                        SetDefaults(isPresented: $showModal)
-                            .navigationTitle("Set Defaults")
-                            .navigationBarItems( trailing: Button("Set") {})
-                    }
-  
 
-                    .tabItem {
-                        Image(systemName: "list.dash")
-                        Text("Defaults".uppercased())
-                            .accentColor(.brandPrimary)
-                    }
                     NavigationView {
                         NewProduct()
                             .navigationTitle("Add Product")
                     }
                     .tabItem {
-                        Image(systemName: "list.dash")
+                        Image(systemName: "bag")
                         Text("Product".uppercased())
                             .accentColor(.brandPrimary)
                     }
@@ -54,17 +43,36 @@ struct MyShipManagerApp: App {
                             .navigationTitle("Create Shipment")
                     }
                     .tabItem {
-                        Image(systemName: "list.dash")
+                        Image(systemName: "shippingbox")
                         Text("Create".uppercased())
                             .accentColor(.brandPrimary)
                     }
                     NavigationView {
-                        ReadBarcode()
+                        ContentView()
                             .navigationTitle("Scan Barcode")
                     }
                     .tabItem {
-                        Image(systemName: "list.dash")
+                        Image(systemName: "barcode")
                         Text("Barcode".uppercased())
+                            .accentColor(.brandPrimary)
+                    }
+                    NavigationView {
+                        SetDefaults(isPresented: $showModal)
+                            .navigationTitle("Set Defaults")
+                            .navigationBarItems( trailing: Button("Set") {})
+                    }
+                    .tabItem {
+                        Image(systemName: "gearshape")
+                        Text("Defaults".uppercased())
+                            .accentColor(.brandPrimary)
+                    }
+                    NavigationView {
+                        Account()
+                            .navigationTitle("Account")
+                    }
+                    .tabItem {
+                        Image(systemName: "person")
+                        Text("Account".uppercased())
                             .accentColor(.brandPrimary)
                     }
 /*

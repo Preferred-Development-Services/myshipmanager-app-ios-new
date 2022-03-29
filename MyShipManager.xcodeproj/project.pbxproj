@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */; };
 		B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */; };
-		B5A0ECA227F11CD300C4057C /* ReadBarcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0ECA127F11CD300C4057C /* ReadBarcode.swift */; };
 		B5A0ECA427F1208900C4057C /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0ECA327F1208900C4057C /* Defaults.swift */; };
+		B5F6DF7C27F3884900B35957 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF7B27F3884900B35957 /* CameraView.swift */; };
+		B5F6DF7E27F3885200B35957 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF7D27F3885200B35957 /* ContentView.swift */; };
+		B5F6DF8027F3886100B35957 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF7F27F3886100B35957 /* ScannerView.swift */; };
+		B5F6DF8227F3886B00B35957 /* ScannerView+Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF8127F3886B00B35957 /* ScannerView+Coordinator.swift */; };
 		C93F0068264622BC00D02FA8 /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93F0067264622BC00D02FA8 /* ForgotPassword.swift */; };
 		C956DCC1263F5981003392FB /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C956DCC0263F5981003392FB /* Brand.swift */; };
 		C9571493265F1B1300B8F442 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9571492265F1B1300B8F442 /* Utils.swift */; };
-		C9CB4E9027E026AA00456093 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CB4E8F27E026AA00456093 /* BarcodeScannerView.swift */; };
 		C9CE0A142633AD3700F6795B /* MyShipManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CE0A132633AD3700F6795B /* MyShipManagerApp.swift */; };
 		C9CE0A162633AD3700F6795B /* ShipmentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CE0A152633AD3700F6795B /* ShipmentList.swift */; };
 		C9CE0A182633AD3700F6795B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9CE0A172633AD3700F6795B /* Assets.xcassets */; };
@@ -50,12 +52,14 @@
 /* Begin PBXFileReference section */
 		B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProduct.swift; sourceTree = "<group>"; };
 		B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShipment.swift; sourceTree = "<group>"; };
-		B5A0ECA127F11CD300C4057C /* ReadBarcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadBarcode.swift; sourceTree = "<group>"; };
 		B5A0ECA327F1208900C4057C /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		B5F6DF7B27F3884900B35957 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		B5F6DF7D27F3885200B35957 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B5F6DF7F27F3886100B35957 /* ScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		B5F6DF8127F3886B00B35957 /* ScannerView+Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScannerView+Coordinator.swift"; sourceTree = "<group>"; };
 		C93F0067264622BC00D02FA8 /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
 		C956DCC0263F5981003392FB /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		C9571492265F1B1300B8F442 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		C9CB4E8F27E026AA00456093 /* BarcodeScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
 		C9CE0A102633AD3700F6795B /* MyShipManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyShipManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9CE0A132633AD3700F6795B /* MyShipManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShipManagerApp.swift; sourceTree = "<group>"; };
 		C9CE0A152633AD3700F6795B /* ShipmentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShipmentList.swift; sourceTree = "<group>"; };
@@ -129,12 +133,15 @@
 				C9571492265F1B1300B8F442 /* Utils.swift */,
 				C9CE0A492633C2E900F6795B /* Models.swift */,
 				C9CE0A132633AD3700F6795B /* MyShipManagerApp.swift */,
+				B5F6DF8127F3886B00B35957 /* ScannerView+Coordinator.swift */,
+				B5F6DF7F27F3886100B35957 /* ScannerView.swift */,
+				B5F6DF7D27F3885200B35957 /* ContentView.swift */,
+				B5F6DF7B27F3884900B35957 /* CameraView.swift */,
 				C9CE0A152633AD3700F6795B /* ShipmentList.swift */,
 				C9CE0A412633AD7F00F6795B /* CreateQueued.swift */,
 				C9F80C33263471DC00442E47 /* Welcome.swift */,
 				C9F80C3B263474AB00442E47 /* SignIn.swift */,
 				C93F0067264622BC00D02FA8 /* ForgotPassword.swift */,
-				C9CB4E8F27E026AA00456093 /* BarcodeScannerView.swift */,
 				C9F80C4B26349C0100442E47 /* Account.swift */,
 				C9F4F72F2634FF7A00225115 /* ImagePickerView.swift */,
 				C956DCC0263F5981003392FB /* Brand.swift */,
@@ -143,7 +150,6 @@
 				C9CE0A192633AD3700F6795B /* Preview Content */,
 				B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */,
 				B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */,
-				B5A0ECA127F11CD300C4057C /* ReadBarcode.swift */,
 				B5A0ECA327F1208900C4057C /* Defaults.swift */,
 			);
 			path = MyShipManager;
@@ -191,6 +197,8 @@
 			dependencies = (
 			);
 			name = MyShipManager;
+			packageProductDependencies = (
+			);
 			productName = MyShipManager;
 			productReference = C9CE0A102633AD3700F6795B /* MyShipManager.app */;
 			productType = "com.apple.product-type.application";
@@ -262,6 +270,8 @@
 				Base,
 			);
 			mainGroup = C9CE0A072633AD3700F6795B;
+			packageReferences = (
+			);
 			productRefGroup = C9CE0A112633AD3700F6795B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -310,13 +320,15 @@
 				C956DCC1263F5981003392FB /* Brand.swift in Sources */,
 				B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */,
 				B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */,
+				B5F6DF7E27F3885200B35957 /* ContentView.swift in Sources */,
 				C9CE0A162633AD3700F6795B /* ShipmentList.swift in Sources */,
+				B5F6DF8227F3886B00B35957 /* ScannerView+Coordinator.swift in Sources */,
 				C9F4F7302634FF7A00225115 /* ImagePickerView.swift in Sources */,
-				B5A0ECA227F11CD300C4057C /* ReadBarcode.swift in Sources */,
 				C9CE0A142633AD3700F6795B /* MyShipManagerApp.swift in Sources */,
 				C9F80C4C26349C0100442E47 /* Account.swift in Sources */,
+				B5F6DF8027F3886100B35957 /* ScannerView.swift in Sources */,
 				B5A0ECA427F1208900C4057C /* Defaults.swift in Sources */,
-				C9CB4E9027E026AA00456093 /* BarcodeScannerView.swift in Sources */,
+				B5F6DF7C27F3884900B35957 /* CameraView.swift in Sources */,
 				C9CE0A4A2633C2E900F6795B /* Models.swift in Sources */,
 				C9F80C44263494E800442E47 /* API.swift in Sources */,
 				C93F0068264622BC00D02FA8 /* ForgotPassword.swift in Sources */,
