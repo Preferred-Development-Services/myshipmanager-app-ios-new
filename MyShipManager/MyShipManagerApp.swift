@@ -7,8 +7,21 @@
 
 import SwiftUI
 
+class AppState: ObservableObject {
+    @Published var barcodeFound: Bool
+    @Published var currentBarcode: String
+    
+    init(barcodeFound: Bool, currentBarcode: String) {
+        self.barcodeFound = barcodeFound
+        self.currentBarcode = currentBarcode
+    }
+}
+
+
 @main
+
 struct MyShipManagerApp: App {
+    @ObservedObject var appState = AppState(barcodeFound: false,currentBarcode: "")
     @ObservedObject var api = API.shared
     
     init() {
@@ -48,8 +61,16 @@ struct MyShipManagerApp: App {
                             .accentColor(.brandPrimary)
                     }
                     NavigationView {
-                        ContentView()
-                            .navigationTitle("Scan Barcode")
+                        if !appState.barcodeFound {
+                            ContentView()
+                                .navigationTitle("Scan Barcode")
+                                .environmentObject(appState)
+                        }
+                        else {
+                            BarcodeInfoView()
+                                .navigationTitle("Product Information")
+                                .environmentObject(appState)
+                        }
                     }
                     .tabItem {
                         Image(systemName: "barcode")
