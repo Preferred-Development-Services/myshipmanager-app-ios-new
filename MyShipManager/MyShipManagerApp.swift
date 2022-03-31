@@ -62,14 +62,16 @@ struct MyShipManagerApp: App {
                     }
                     NavigationView {
                         if !appState.barcodeFound {
-                            ContentView()
+                            BarcodeContentView()
                                 .navigationTitle("Scan Barcode")
                                 .environmentObject(appState)
+                                .transition(.slide)
                         }
                         else {
                             BarcodeInfoView()
                                 .navigationTitle("Product Information")
                                 .environmentObject(appState)
+                                .transition(.slide)
                         }
                     }
                     .tabItem {

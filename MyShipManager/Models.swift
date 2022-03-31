@@ -40,6 +40,29 @@ struct ShipmentListing: Hashable, Identifiable {
     let url: String
 }
 
+struct BarcodeInfo: Hashable, Decodable {
+    let title: String
+    let description: String
+    let brand: String
+    let manufacturer: String
+    let cost: String
+    let size: String
+    let color: String
+}
+
+struct BarcodeInfoPHP: Decodable {
+    let title: String
+    let description: String
+    let brand: String
+    let manufacturer: String
+    let cost: Double
+    let size: String
+    let color: String
+}
+
+
+
+
 
 func convertShipmentListings(_ from: [ShipmentListingPHP]) -> [ShipmentListing] {
     return from.map {
@@ -48,3 +71,5 @@ func convertShipmentListings(_ from: [ShipmentListingPHP]) -> [ShipmentListing] 
         return ShipmentListing(id: id, title: $0.title, start: phpStringToDate($0.start), backgroundColor: color, url: $0.url)
     }
 }
+
+

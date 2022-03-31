@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct BarcodeContentView: View {
     @EnvironmentObject var appState: AppState
     @State var scanResult = ""
 
@@ -48,6 +48,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        BarcodeContentView()
     }
 }

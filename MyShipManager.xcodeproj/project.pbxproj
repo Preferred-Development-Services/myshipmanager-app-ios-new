@@ -12,7 +12,7 @@
 		B5A0ECA427F1208900C4057C /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0ECA327F1208900C4057C /* Defaults.swift */; };
 		B5B7823227F3DF9F000E7A4C /* BarcodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */; };
 		B5F6DF7C27F3884900B35957 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF7B27F3884900B35957 /* CameraView.swift */; };
-		B5F6DF7E27F3885200B35957 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF7D27F3885200B35957 /* ContentView.swift */; };
+		B5F6DF7E27F3885200B35957 /* BarcodeContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF7D27F3885200B35957 /* BarcodeContentView.swift */; };
 		B5F6DF8027F3886100B35957 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF7F27F3886100B35957 /* ScannerView.swift */; };
 		B5F6DF8227F3886B00B35957 /* ScannerView+Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF8127F3886B00B35957 /* ScannerView+Coordinator.swift */; };
 		C93F0068264622BC00D02FA8 /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93F0067264622BC00D02FA8 /* ForgotPassword.swift */; };
@@ -56,7 +56,7 @@
 		B5A0ECA327F1208900C4057C /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeInfo.swift; sourceTree = "<group>"; };
 		B5F6DF7B27F3884900B35957 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
-		B5F6DF7D27F3885200B35957 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B5F6DF7D27F3885200B35957 /* BarcodeContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeContentView.swift; sourceTree = "<group>"; };
 		B5F6DF7F27F3886100B35957 /* ScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		B5F6DF8127F3886B00B35957 /* ScannerView+Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScannerView+Coordinator.swift"; sourceTree = "<group>"; };
 		C93F0067264622BC00D02FA8 /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 				C9CE0A132633AD3700F6795B /* MyShipManagerApp.swift */,
 				B5F6DF8127F3886B00B35957 /* ScannerView+Coordinator.swift */,
 				B5F6DF7F27F3886100B35957 /* ScannerView.swift */,
-				B5F6DF7D27F3885200B35957 /* ContentView.swift */,
+				B5F6DF7D27F3885200B35957 /* BarcodeContentView.swift */,
 				B5F6DF7B27F3884900B35957 /* CameraView.swift */,
 				C9CE0A152633AD3700F6795B /* ShipmentList.swift */,
 				B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */,
@@ -324,7 +324,7 @@
 				B5B7823227F3DF9F000E7A4C /* BarcodeInfo.swift in Sources */,
 				B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */,
 				B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */,
-				B5F6DF7E27F3885200B35957 /* ContentView.swift in Sources */,
+				B5F6DF7E27F3885200B35957 /* BarcodeContentView.swift in Sources */,
 				C9CE0A162633AD3700F6795B /* ShipmentList.swift in Sources */,
 				B5F6DF8227F3886B00B35957 /* ScannerView+Coordinator.swift in Sources */,
 				C9F4F7302634FF7A00225115 /* ImagePickerView.swift in Sources */,
