@@ -80,9 +80,8 @@ struct MyShipManagerApp: App {
                             .accentColor(.brandPrimary)
                     }
                     NavigationView {
-                        SetDefaults(isPresented: $showModal)
+                        SetDefaults()
                             .navigationTitle("Set Defaults")
-                            .navigationBarItems( trailing: Button("Set") {})
                     }
                     .tabItem {
                         Image(systemName: "gearshape")

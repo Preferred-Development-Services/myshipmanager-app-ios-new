@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */; };
 		B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */; };
-		B5A0ECA427F1208900C4057C /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0ECA327F1208900C4057C /* Defaults.swift */; };
 		B5B7823227F3DF9F000E7A4C /* BarcodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */; };
+		B5B8E14327F5F045006D9E2E /* ProductDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8E14227F5F045006D9E2E /* ProductDefaults.swift */; };
 		B5F6DF7C27F3884900B35957 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF7B27F3884900B35957 /* CameraView.swift */; };
 		B5F6DF7E27F3885200B35957 /* BarcodeContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF7D27F3885200B35957 /* BarcodeContentView.swift */; };
 		B5F6DF8027F3886100B35957 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6DF7F27F3886100B35957 /* ScannerView.swift */; };
@@ -53,8 +53,8 @@
 /* Begin PBXFileReference section */
 		B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProduct.swift; sourceTree = "<group>"; };
 		B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShipment.swift; sourceTree = "<group>"; };
-		B5A0ECA327F1208900C4057C /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeInfo.swift; sourceTree = "<group>"; };
+		B5B8E14227F5F045006D9E2E /* ProductDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDefaults.swift; sourceTree = "<group>"; };
 		B5F6DF7B27F3884900B35957 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		B5F6DF7D27F3885200B35957 /* BarcodeContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeContentView.swift; sourceTree = "<group>"; };
 		B5F6DF7F27F3886100B35957 /* ScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
@@ -141,6 +141,7 @@
 				B5F6DF7B27F3884900B35957 /* CameraView.swift */,
 				C9CE0A152633AD3700F6795B /* ShipmentList.swift */,
 				B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */,
+				B5B8E14227F5F045006D9E2E /* ProductDefaults.swift */,
 				C9CE0A412633AD7F00F6795B /* CreateQueued.swift */,
 				C9F80C33263471DC00442E47 /* Welcome.swift */,
 				C9F80C3B263474AB00442E47 /* SignIn.swift */,
@@ -153,7 +154,6 @@
 				C9CE0A192633AD3700F6795B /* Preview Content */,
 				B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */,
 				B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */,
-				B5A0ECA327F1208900C4057C /* Defaults.swift */,
 			);
 			path = MyShipManager;
 			sourceTree = "<group>";
@@ -328,10 +328,10 @@
 				C9CE0A162633AD3700F6795B /* ShipmentList.swift in Sources */,
 				B5F6DF8227F3886B00B35957 /* ScannerView+Coordinator.swift in Sources */,
 				C9F4F7302634FF7A00225115 /* ImagePickerView.swift in Sources */,
+				B5B8E14327F5F045006D9E2E /* ProductDefaults.swift in Sources */,
 				C9CE0A142633AD3700F6795B /* MyShipManagerApp.swift in Sources */,
 				C9F80C4C26349C0100442E47 /* Account.swift in Sources */,
 				B5F6DF8027F3886100B35957 /* ScannerView.swift in Sources */,
-				B5A0ECA427F1208900C4057C /* Defaults.swift in Sources */,
 				B5F6DF7C27F3884900B35957 /* CameraView.swift in Sources */,
 				C9CE0A4A2633C2E900F6795B /* Models.swift in Sources */,
 				C9F80C44263494E800442E47 /* API.swift in Sources */,
