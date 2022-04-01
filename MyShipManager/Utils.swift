@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 
 func phpDateFormatter() -> DateFormatter {
@@ -43,5 +44,12 @@ extension UIColor {
                 green: .init(strtoul(String(chars[2...3]), nil, 16)) / 255,
                  blue: .init(strtoul(String(chars[4...5]), nil, 16)) / 255,
                 alpha: alpha)
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        let resign = #selector(UIResponder.resignFirstResponder)
+        UIApplication.shared.sendAction(resign, to: nil, from: nil, for: nil)
     }
 }

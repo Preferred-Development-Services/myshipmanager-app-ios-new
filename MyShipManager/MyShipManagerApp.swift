@@ -43,7 +43,7 @@ struct MyShipManagerApp: App {
                     }
 
                     NavigationView {
-                        NewProduct()
+                        CreateProduct()
                             .navigationTitle("Add Product")
                     }
                     .tabItem {

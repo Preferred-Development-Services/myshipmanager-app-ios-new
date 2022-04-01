@@ -25,24 +25,29 @@ struct SetDefaults: View {
     @State fileprivate var result = SubmitResult.none
     
     @State var availableVendors = [Vendor]()
+    @State var availableCategories = [Category]()
     @State var newVendor = ""
     @State var vendorId: Int
+    @State var categoryId: Int
     @State var source: String
     @State var tags: String
     @State var sizes: String
     @State var colors: String
     @State var tax: String
     @State var sku: String
+    @State var category: String
     @State private var showingAlert = false
 
     init () {
         self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
+        self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         self.source = defaults.object(forKey: "defaultSource") as? String ?? ""
         self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
         self.colors = defaults.object(forKey: "defaultColors") as? String ?? ""
-        self.sizes = defaults.object(forKey: "sizes") as? String ?? ""
-        self.tax = ""
+        self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
+        self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
+        self.category = defaults.object(forKey: "defaultCategory") as? String ?? ""
     }
 
     var body: some View {
@@ -59,7 +64,18 @@ struct SetDefaults: View {
                         Section(header: Text("Source")) {
                             TextField("Enter Source", text: $source)
                         }
-                        
+                        Section(header: Text("Tax")) {
+                            Picker("Charge tax on this product", selection: $tax, content: {
+                                    Text("No").tag("N")
+                                    Text("Yes").tag("Y")
+                                }
+                            )
+                        }
+                        Section(header: Text("Category")) {
+                            Picker("Pick Category", selection: $categoryId, content: {
+                                ForEach(availableCategories, id: \.code) { Text($0.name) }
+                            })
+                        }
                         Section(header: Text("Tags")) {
                             TextField("Enter tags", text: $tags)
                         }
@@ -78,6 +94,9 @@ struct SetDefaults: View {
                         
                     }
                     
+                }
+                .onTapGesture{
+                    hideKeyboard()
                 }
 
                 if submitting {
@@ -114,7 +133,7 @@ struct SetDefaults: View {
             }
         .onAppear() {
             print("onAppear")
-            loadVendors()
+            loadVendorsAndCategories()
         }
         .sheet(isPresented: $showPicker) {
             ImagePickerView(sourceType: $pickerSource) { image in
@@ -133,8 +152,8 @@ struct SetDefaults: View {
     }
 
     
-    func loadVendors() {
-        let req = API.shared.get(proc: "include/a-manageVendors-get.php")!
+    func loadVendorsAndCategories() {
+        let req = API.shared.get(proc: "include/m-vendors-cats-get.php")!
         let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
             if let err = err {
                 print(err)
@@ -149,6 +168,12 @@ struct SetDefaults: View {
                     let v = vendors(json: vd)
                     print("vendors:  \(v)")
                     availableVendors = v
+                }
+                
+                if let vd = jsonDict["categories"] as? [[String: Any]] {
+                    let v = categories(json: vd)
+                    print("categories:  \(v)")
+                    availableCategories = v
                 }
             }
         }
@@ -232,11 +257,13 @@ struct SetDefaults: View {
             
     func saveDefaults() {
         defaults.set(vendorId, forKey: "defaultVendorId")
+        defaults.set(categoryId, forKey: "defaultCategoryId")
         defaults.set(source, forKey: "defaultSource")
         defaults.set(tags, forKey: "defaultTags")
-        defaults.set(colors, forKey: "defaultSizes")
-        defaults.set(sizes, forKey: "defaultVendorId")
+        defaults.set(colors, forKey: "defaultColors")
+        defaults.set(sizes, forKey: "defaultSizes")
         defaults.set(sku, forKey: "defaultSku")
+        defaults.set(tax, forKey: "defaultTax")
     }
  
 /*    func createOrder() {

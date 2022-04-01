@@ -18,10 +18,25 @@ struct Vendor: Decodable {
     }
 }
 
-
 func vendors(json: [[String: Any]]) -> [Vendor] {
     return json.map { Vendor(json: $0) }
 }
+
+struct Category: Decodable {
+    let code: Int
+    let name: String
+    
+    init(json: [String: Any]) {
+        code = (json["code"] as? Int) ?? 0
+        name = (json["name"] as? String) ?? ""
+    }
+}
+
+func categories(json: [[String: Any]]) -> [Category] {
+    return json.map { Category(json: $0) }
+}
+
+
 
 
 struct ShipmentListingPHP: Decodable {

@@ -1,8 +1,8 @@
 //
-//  QuickEntry.swift
+//  Defaults.swift
 //  MyShipManager
 //
-//  Created by Matt on 4/23/21.
+//  Created by Hayden Peeples on 3/27/22.
 //
 
 import SwiftUI
@@ -11,8 +11,9 @@ fileprivate enum SubmitResult {
     case none, fail, success
 }
 
-struct CreateQueued: View {
-    @Binding var isPresented: Bool
+struct CreateProduct: View {
+
+    let defaults = UserDefaults.standard
     
     @State var showPicker = false
     @State var pickerSource = UIImagePickerController.SourceType.camera
@@ -24,17 +25,33 @@ struct CreateQueued: View {
     @State fileprivate var result = SubmitResult.none
     
     @State var availableVendors = [Vendor]()
+    @State var availableCategories = [Category]()
     @State var newVendor = ""
-    @State var vendorId = 0
-    @State var source = ""
-    @State var styles = 0
-    @State var pieces = 0
-    @State var costText = ""
-    @State var cost = 0.0
-    @State var notes = ""
+    @State var vendorId: Int
+    @State var title: String = ""
+    @State var description: String = ""
+    @State var categoryId: Int
+    @State var source: String
+    @State var tags: String
+    @State var sizes: String
+    @State var colors: String
+    @State var tax: String
+    @State var qty: Int = 0
+    @State var sku: String
+    @State private var showingAlert = false
+
+    init () {
+        self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
+        self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
+        self.source = defaults.object(forKey: "defaultSource") as? String ?? ""
+        self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
+        self.colors = defaults.object(forKey: "defaultColors") as? String ?? ""
+        self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
+        self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
+        self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
+    }
 
     var body: some View {
-        NavigationView {
             ZStack {
                 VStack {
                     Form {
@@ -45,48 +62,40 @@ struct CreateQueued: View {
                             TextField("or Quick Create Vendor", text: $newVendor)
                         }
                         
+                        Section(header: Text("Title")) {
+                            TextField("Enter Title", text: $title)
+                        }
+                        
+                        Section(header: Text("Description")) {
+                            TextEditor(text: $description)
+                        }
+                        
                         Section(header: Text("Source")) {
                             TextField("Enter Source", text: $source)
                         }
-                        
-                        Section(header: Text("Styles")) {
-                            HStack{
-                                TextField("Enter Number", text: Binding(
-                                    get: { String(styles)},
-                                    set: { styles = abs(Int($0) ?? 0) }
-                                ))
-                                    .keyboardType(.numberPad)
-                                Stepper("", value: Binding(get: {styles}, set: {styles = max($0, 0)}))
-                            }
-                        }
-                        
-                        Section(header: Text("Packs/Pieces")) {
-                            HStack {
-                                TextField("Enter Number", text: Binding(
-                                        get: { String(pieces)},
-                                        set: { pieces = abs(Int($0) ?? 0) }
-                                ))
-                                .keyboardType(.numberPad)
-                                    Stepper("", value: Binding(get: {pieces}, set: {pieces = max($0, 0)}))
-                            }
-                        }
-                        
-                        Section(header: Text("Cost")) {
-                            TextField("Enter Number", text: $costText) { editing in
-                                if !editing {
-                                    costText = costText.trimmingCharacters(in: .whitespacesAndNewlines)
-                                    cost = fabs(Double(costText) ?? 0)
-                                    costText = String(format: "%.2f", cost)
-                                    cost = Double(costText) ?? 0
+                        Section(header: Text("Tax")) {
+                            Picker("Charge tax on this product", selection: $tax, content: {
+                                    Text("No").tag("N")
+                                    Text("Yes").tag("Y")
                                 }
-                            } onCommit: {}
-                                .keyboardType(.numbersAndPunctuation)
+                            )
+                        }
+                        Section(header: Text("Category")) {
+                            Picker("Pick Category", selection: $categoryId, content: {
+                                ForEach(availableCategories, id: \.code) { Text($0.name) }
+                            })
+                        }
+                        Section(header: Text("Tags")) {
+                            TextField("Enter tags", text: $tags)
                         }
                         
-                        Section(header: Text("Notes")) {
-                            TextEditor(text: $notes)
+                        Section(header: Text("Varieties")) {
+                                TextField("Enter colors (comma separated)", text: $colors)
+                                TextField("Enter sizes (comman separated)", text: $sizes)
                         }
-                        
+                        Section(header: Text("SKU prefix")) {
+                                TextField("Enter string to prefix SKUS", text: $sku)
+                        }
                         Section(header: Text("Images")) {
                             ForEach(0..<images.count, id: \.self) {
                                 Image(uiImage: images[$0])
@@ -118,9 +127,14 @@ struct CreateQueued: View {
                                     }
                             }
                         }
+
                     }
                     
                 }
+                .onTapGesture{
+                    hideKeyboard()
+                }
+
                 if submitting {
                     VStack {
                         Image(systemName: "arrow.up.arrow.down.circle.fill")
@@ -152,24 +166,31 @@ struct CreateQueued: View {
                         //.background(Color.white)
                     }
                     }
-                
             }
-            .navigationBarTitle("Add Queued")
-            .navigationBarItems(leading: Button("Cancel") { isPresented = false }, trailing: Button("Add") { startSubmit() })
-        }
         .onAppear() {
             print("onAppear")
-            loadVendors()
+            loadVendorsAndCategories()
         }
         .sheet(isPresented: $showPicker) {
             ImagePickerView(sourceType: $pickerSource) { image in
                 images.append(image)
             }
         }
+        .navigationBarItems(
+            trailing: Button("Add") {
+                createProduct()
+                showingAlert = true
+            }
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text("Product Added"), message: Text("This product has been added"), dismissButton: .default(Text("OK")))
+                }
+        )
+ 
     }
+
     
-    func loadVendors() {
-        let req = API.shared.get(proc: "include/a-manageVendors-get.php")!
+    func loadVendorsAndCategories() {
+        let req = API.shared.get(proc: "include/m-vendors-cats-get.php")!
         let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
             if let err = err {
                 print(err)
@@ -185,6 +206,12 @@ struct CreateQueued: View {
                     print("vendors:  \(v)")
                     availableVendors = v
                 }
+                
+                if let vd = jsonDict["categories"] as? [[String: Any]] {
+                    let v = categories(json: vd)
+                    print("categories:  \(v)")
+                    availableCategories = v
+                }
             }
         }
         
@@ -192,7 +219,7 @@ struct CreateQueued: View {
     }
     
     
-    /* because of iOS callbacks: startSubmit -> createVendor -> uploadImages -> createOrder */
+    /* because of iOS callbacks: startSubmit -> createVendor -> uploadImages -> createProduct */
     
     func startSubmit() {
         guard !submitting else {
@@ -215,6 +242,44 @@ struct CreateQueued: View {
                 self.createVendor()
             }
         }
+        
+        task.resume()
+    }
+    
+    func uploadImages(initial: Bool) {
+        if initial {
+            pendingImages = images.count
+        }
+        
+        if pendingImages == 0 {
+            createProduct()
+            return
+        }
+
+        print("uploading image \(pendingImages-1)")
+        let image = images[pendingImages-1]
+        
+        var req = API.shared.post(proc: "include/a-shipment-upload.php", bodyStr: "")!
+        
+        let boundary = UUID().uuidString
+        req.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        var data = Data()
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        data.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(pendingImages).jpeg\"\r\n".data(using: .utf8)!)
+        //data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
+        //data.append(image.pngData()!)
+        data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
+        data.append(image.jpegData(compressionQuality: 0.95)!)
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        
+        let task = URLSession.shared.uploadTask(with: req, from: data, completionHandler: { responseData, response, error in
+            if error == nil {
+                pendingImages -= 1
+                uploadImages(initial: false)
+            }
+        })
         
         task.resume()
     }
@@ -248,7 +313,7 @@ struct CreateQueued: View {
                             return
                         }
                     }
-        
+                    
                     showError(message: "Failed to create vendor")
                 }
             }
@@ -258,55 +323,24 @@ struct CreateQueued: View {
         }
         
         if vendorId == 0 {
-            showError(message: "Please pick a vendor!")
+            showError(message: "Please pick a vendor")
             return
         }
-        
+        if categoryId == 0 {
+            showError(message: "Please pick a category")
+            return
+        }
+        if title == "" {
+            showError(message: "Please pick a title")
+            return
+        }
+
         uploadImages(initial: true)
     }
         
             
-    
-    func uploadImages(initial: Bool) {
-        if initial {
-            pendingImages = images.count
-        }
-        
-        if pendingImages == 0 {
-            createOrder()
-            return
-        }
-
-        print("uploading image \(pendingImages-1)")
-        let image = images[pendingImages-1]
-        
-        var req = API.shared.post(proc: "include/a-shipment-upload.php", bodyStr: "")!
-        
-        let boundary = UUID().uuidString
-        req.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        var data = Data()
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(pendingImages).jpeg\"\r\n".data(using: .utf8)!)
-        //data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
-        //data.append(image.pngData()!)
-        data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
-        data.append(image.jpegData(compressionQuality: 0.95)!)
-        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-        
-        
-        let task = URLSession.shared.uploadTask(with: req, from: data, completionHandler: { responseData, response, error in
-            if error == nil {
-                pendingImages -= 1
-                uploadImages(initial: false)
-            }
-        })
-        
-        task.resume()
-    }
-    
-    func createOrder() {
-        print("createOrder")
+    func createProduct() {
+ /*       print("createProduct")
         /*TODO: make backend accept JSON instead*/
         var allowed = CharacterSet.alphanumerics
         allowed.insert(charactersIn: "-._~")
@@ -335,8 +369,9 @@ struct CreateQueued: View {
         }
         
         task.resume()
+  */
     }
-    
+
     func showError(message: String) {
         DispatchQueue.main.async {
             submitting = false
@@ -354,15 +389,14 @@ struct CreateQueued: View {
             submitting = false
             result = .success
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                isPresented = false
             }
         }
     }
 }
 
-struct CreateQueued_Previews: PreviewProvider {
+struct CreateProduct_Previews: PreviewProvider {
     @State static var f = false
     static var previews: some View {
-        CreateQueued(isPresented: $f)
+        CreateProduct()
     }
 }
