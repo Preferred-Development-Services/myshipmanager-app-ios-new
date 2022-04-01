@@ -51,18 +51,20 @@ struct ShipmentList: View {
         }
         .navigationBarItems(leading: Button(action: {
             loading = true
+            checkSession()
             getOrders()
         }) {
             Image(systemName: "arrow.clockwise")
-        },
-        trailing: Button("Add Order") { showModal = true })
-            .fullScreenCover(isPresented: $showModal, content: {
-                CreateQueued(isPresented: $showModal)
-            })
-            .onAppear() {
-                getOrders()
-                checkSession()
-            }
+        }
+        )
+        .fullScreenCover(isPresented: $showModal, content: {
+            CreateQueued(isPresented: $showModal)
+        })
+        .onAppear() {
+            loading = true
+            checkSession()
+            getOrders()
+        }
     }
 
     func getOrders() {

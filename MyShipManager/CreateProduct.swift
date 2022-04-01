@@ -24,9 +24,8 @@ struct CreateProduct: View {
     @State var failureMessage = ""
     @State fileprivate var result = SubmitResult.none
     
-    @State var availableVendors = [Vendor]()
+
     @State var availableCategories = [Category]()
-    @State var newVendor = ""
     @State var vendorId: Int
     @State var title: String = ""
     @State var description: String = ""
@@ -37,9 +36,14 @@ struct CreateProduct: View {
     @State var colors: String
     @State var tax: String
     @State var qty: Int = 0
+    @State var cost: Double = 0.0
+    @State var costText:String = ""
+    @State var price: Double = 0
+    @State var priceText:String = ""
     @State var sku: String
     @State private var showingAlert = false
-
+   
+    
     init () {
         self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
@@ -49,34 +53,25 @@ struct CreateProduct: View {
         self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
+        self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
     }
 
     var body: some View {
             ZStack {
                 VStack {
                     Form {
-                        Section(header: Text("Vendor")) {
-                            Picker("Pick Vendor", selection: $vendorId, content: {
-                                ForEach(availableVendors, id: \.code) { Text($0.name) }
-                            })
-                            TextField("or Quick Create Vendor", text: $newVendor)
-                        }
-                        
                         Section(header: Text("Title")) {
-                            TextField("Enter Title", text: $title)
+                            TextField("Enter Title", text: $title) 
                         }
                         
                         Section(header: Text("Description")) {
                             TextEditor(text: $description)
                         }
-                        
-                        Section(header: Text("Source")) {
-                            TextField("Enter Source", text: $source)
-                        }
+    
                         Section(header: Text("Tax")) {
                             Picker("Charge tax on this product", selection: $tax, content: {
-                                    Text("No").tag("N")
-                                    Text("Yes").tag("Y")
+                                    Text("No").tag(1)
+                                    Text("Yes").tag(2)
                                 }
                             )
                         }
@@ -89,13 +84,56 @@ struct CreateProduct: View {
                             TextField("Enter tags", text: $tags)
                         }
                         
-                        Section(header: Text("Varieties")) {
-                                TextField("Enter colors (comma separated)", text: $colors)
-                                TextField("Enter sizes (comman separated)", text: $sizes)
+                        Group {
+                            Section(header: Text("Colors")) {
+                                    TextField("Enter colors (comma separated)", text: $colors)
+                            }
+                            Section(header: Text("Sizes")) {
+                                    TextField("Enter sizes (comman separated)", text: $sizes)
+                            }
                         }
+                        
                         Section(header: Text("SKU prefix")) {
                                 TextField("Enter string to prefix SKUS", text: $sku)
                         }
+   
+                        
+                        
+                        Group {
+                            Section(header: Text("Cost")) {
+                                TextField("Enter Cost", text: $costText) { editing in
+                                    if !editing {
+                                        costText = costText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                        cost = fabs(Double(costText) ?? 0)
+                                        costText = String(format: "%.2f", cost)
+                                        cost = Double(costText) ?? 0
+                                    }
+                                } onCommit: {}
+                                    .keyboardType(.decimalPad)
+                            }
+                            Section(header: Text("Price")) {
+                                TextField("Enter Price", text: $priceText) { editing in
+                                    if !editing {
+                                        priceText = priceText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                        price = fabs(Double(priceText) ?? 0)
+                                        priceText = String(format: "%.2f", price)
+                                        price = Double(priceText) ?? 0
+                                    }
+                                } onCommit: {}
+                                    .keyboardType(.decimalPad)
+                            }
+                        }
+
+                        Section(header: Text("Quantity")) {
+                            HStack{
+                                TextField("Enter Quantity", text: Binding(
+                                    get: { String(qty)},
+                                    set: { qty = abs(Int($0) ?? 0) }
+                                ))
+                                    .keyboardType(.numberPad)
+                            }
+                        }
+
                         Section(header: Text("Images")) {
                             ForEach(0..<images.count, id: \.self) {
                                 Image(uiImage: images[$0])
@@ -130,9 +168,6 @@ struct CreateProduct: View {
 
                     }
                     
-                }
-                .onTapGesture{
-                    hideKeyboard()
                 }
 
                 if submitting {
@@ -178,7 +213,7 @@ struct CreateProduct: View {
         }
         .navigationBarItems(
             trailing: Button("Add") {
-                createProduct()
+                startSubmit()
                 showingAlert = true
             }
                 .alert(isPresented: $showingAlert) {
@@ -201,11 +236,6 @@ struct CreateProduct: View {
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
                 let jsonDict = json as! [String: Any]
                 
-                if let vd = jsonDict["vendors"] as? [[String: Any]] {
-                    let v = vendors(json: vd)
-                    print("vendors:  \(v)")
-                    availableVendors = v
-                }
                 
                 if let vd = jsonDict["categories"] as? [[String: Any]] {
                     let v = categories(json: vd)
@@ -239,7 +269,7 @@ struct CreateProduct: View {
             }
             
             if data != nil {
-                self.createVendor()
+                self.uploadImages(initial: true)
             }
         }
         
@@ -247,6 +277,19 @@ struct CreateProduct: View {
     }
     
     func uploadImages(initial: Bool) {
+        if vendorId == 0 {
+            showError(message: "Please pick a vendor")
+            return
+        }
+        if categoryId == 0 {
+            showError(message: "Please pick a category")
+            return
+        }
+        if title == "" {
+            showError(message: "Please pick a title")
+            return
+        }
+        
         if initial {
             pendingImages = images.count
         }
@@ -284,59 +327,6 @@ struct CreateProduct: View {
         task.resume()
     }
     
-    func createVendor() {
-        newVendor = newVendor.trimmingCharacters(in: .whitespacesAndNewlines)
-        if newVendor != "" {
-            var allowed = CharacterSet.alphanumerics
-            allowed.insert(charactersIn: "-._~")
-            let safeName = newVendor.addingPercentEncoding(withAllowedCharacters: allowed)!
-            let payload = "vendorName=\(safeName)&vendor="
-            
-            print("payload: \(payload)")
-            
-            let req = API.shared.post(proc: "include/a-queued-order-vendor-save.php", bodyStr: payload)!
-            let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
-                if let err = err {
-                    print(err)
-                    showError(message: "Failed to create vendor")
-                    return
-                }
-                
-                if let data = data {
-                    let json = try? JSONSerialization.jsonObject(with: data, options: [])
-                    let jsonDict = json as! [String: Any]
-                    
-                    if let vendorCode = jsonDict["vendorCode"]  as? Int {
-                        if vendorCode != 0 {
-                            vendorId = vendorCode
-                            uploadImages(initial: true)
-                            return
-                        }
-                    }
-                    
-                    showError(message: "Failed to create vendor")
-                }
-            }
-            
-            task.resume()
-            return
-        }
-        
-        if vendorId == 0 {
-            showError(message: "Please pick a vendor")
-            return
-        }
-        if categoryId == 0 {
-            showError(message: "Please pick a category")
-            return
-        }
-        if title == "" {
-            showError(message: "Please pick a title")
-            return
-        }
-
-        uploadImages(initial: true)
-    }
         
             
     func createProduct() {

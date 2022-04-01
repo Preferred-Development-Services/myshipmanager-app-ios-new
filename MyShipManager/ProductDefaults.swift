@@ -95,9 +95,7 @@ struct SetDefaults: View {
                     }
                     
                 }
-                .onTapGesture{
-                    hideKeyboard()
-                }
+
 
                 if submitting {
                     VStack {
