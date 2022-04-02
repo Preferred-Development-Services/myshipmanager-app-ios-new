@@ -26,8 +26,10 @@ struct SetDefaults: View {
     
     @State var availableVendors = [Vendor]()
     @State var availableCategories = [Category]()
+    @State var availableStatus = [Status]()
     @State var newVendor = ""
     @State var vendorId: Int
+    @State var statusId: Int
     @State var categoryId: Int
     @State var source: String
     @State var tags: String
@@ -35,7 +37,6 @@ struct SetDefaults: View {
     @State var colors: String
     @State var tax: String
     @State var sku: String
-    @State var category: String
     @State private var showingAlert = false
 
     init () {
@@ -47,7 +48,7 @@ struct SetDefaults: View {
         self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
-        self.category = defaults.object(forKey: "defaultCategory") as? String ?? ""
+        self.statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
     }
 
     var body: some View {
@@ -70,6 +71,11 @@ struct SetDefaults: View {
                                     Text("Yes").tag("Y")
                                 }
                             )
+                        }
+                        Section(header: Text("Status")) {
+                            Picker("Pick Status", selection: $statusId, content: {
+                                ForEach(availableStatus, id: \.code) { Text($0.name) }
+                            })
                         }
                         Section(header: Text("Category")) {
                             Picker("Pick Category", selection: $categoryId, content: {
@@ -131,7 +137,7 @@ struct SetDefaults: View {
             }
         .onAppear() {
             print("onAppear")
-            loadVendorsAndCategories()
+            loadListData()
         }
         .sheet(isPresented: $showPicker) {
             ImagePickerView(sourceType: $pickerSource) { image in
@@ -150,8 +156,8 @@ struct SetDefaults: View {
     }
 
     
-    func loadVendorsAndCategories() {
-        let req = API.shared.get(proc: "include/m-vendors-cats-get.php")!
+    func loadListData() {
+        let req = API.shared.get(proc: "include/m-list-data-get.php")!
         let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
             if let err = err {
                 print(err)
@@ -173,6 +179,14 @@ struct SetDefaults: View {
                     print("categories:  \(v)")
                     availableCategories = v
                 }
+                
+                if let vd = jsonDict["status"] as? [[String: Any]] {
+                    let v = status(json: vd)
+                    print("status:  \(v)")
+                    availableStatus = v
+                }
+                
+                
             }
         }
         
@@ -262,6 +276,7 @@ struct SetDefaults: View {
         defaults.set(sizes, forKey: "defaultSizes")
         defaults.set(sku, forKey: "defaultSku")
         defaults.set(tax, forKey: "defaultTax")
+        defaults.set(statusId, forKey: "defaultStatusId")
     }
  
 /*    func createOrder() {

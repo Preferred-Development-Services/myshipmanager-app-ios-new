@@ -36,6 +36,20 @@ func categories(json: [[String: Any]]) -> [Category] {
     return json.map { Category(json: $0) }
 }
 
+struct Status: Decodable {
+    let code: Int
+    let name: String
+    
+    init(json: [String: Any]) {
+        code = (json["code"] as? Int) ?? 0
+        name = (json["name"] as? String) ?? ""
+    }
+}
+
+func status(json: [[String: Any]]) -> [Status] {
+    return json.map { Status(json: $0) }
+}
+
 
 
 

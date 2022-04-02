@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 fileprivate enum SubmitResult {
     case none, fail, success
 }
@@ -18,67 +19,66 @@ struct CreateProduct: View {
     @State var showPicker = false
     @State var pickerSource = UIImagePickerController.SourceType.camera
     @State var images = [UIImage]()
-    
+
     @State var pendingImages = 0
     @State var submitting = false
     @State var failureMessage = ""
     @State fileprivate var result = SubmitResult.none
-    
+
 
     @State var availableCategories = [Category]()
-    @State var vendorId: Int
+    @State var availableStatus = [Status]()
+    @State var vendorId: Int = 0
+    @State var statusId: Int = 0
     @State var title: String = ""
     @State var description: String = ""
-    @State var categoryId: Int
-    @State var source: String
-    @State var tags: String
-    @State var sizes: String
-    @State var colors: String
-    @State var tax: String
+    @State var categoryId: Int = 0
+    @State var source: String = ""
+    @State var tags: String = ""
+    @State var sizes: String = ""
+    @State var colors: String = ""
+    @State var tax: String = "N"
     @State var qty: Int = 0
     @State var cost: Double = 0.0
     @State var costText:String = ""
     @State var price: Double = 0
     @State var priceText:String = ""
-    @State var sku: String
+    @State var sku: String = ""
+    @State var estDate: Date = Date()
     @State private var showingAlert = false
-   
     
-    init () {
-        self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
-        self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
-        self.source = defaults.object(forKey: "defaultSource") as? String ?? ""
-        self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
-        self.colors = defaults.object(forKey: "defaultColors") as? String ?? ""
-        self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
-        self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
-        self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
-        self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
-    }
 
     var body: some View {
             ZStack {
                 VStack {
                     Form {
-                        Section(header: Text("Title")) {
-                            TextField("Enter Title", text: $title) 
-                        }
-                        
-                        Section(header: Text("Description")) {
-                            TextEditor(text: $description)
-                        }
-    
-                        Section(header: Text("Tax")) {
-                            Picker("Charge tax on this product", selection: $tax, content: {
-                                    Text("No").tag(1)
-                                    Text("Yes").tag(2)
-                                }
-                            )
-                        }
-                        Section(header: Text("Category")) {
-                            Picker("Pick Category", selection: $categoryId, content: {
-                                ForEach(availableCategories, id: \.code) { Text($0.name) }
-                            })
+                        Group {
+                            Section(header: Text("Title")) {
+                                TextField("Enter Title", text: $title)
+                            }
+                            
+                            Section(header: Text("Description")) {
+                                TextEditor(text: $description)
+                            }
+                            
+                            Section(header: Text("Status")) {
+                                Picker("Pick Status", selection: $statusId, content: {
+                                    ForEach(availableStatus, id: \.code) { Text($0.name) }
+                                })
+                            }
+                            
+                            Section(header: Text("Tax")) {
+                                Picker("Charge tax on this product", selection: $tax, content: {
+                                        Text("No").tag(1)
+                                        Text("Yes").tag(2)
+                                    }
+                                )
+                            }
+                            Section(header: Text("Category")) {
+                                Picker("Pick Category", selection: $categoryId, content: {
+                                    ForEach(availableCategories, id: \.code) { Text($0.name) }
+                                })
+                            }
                         }
                         Section(header: Text("Tags")) {
                             TextField("Enter tags", text: $tags)
@@ -134,6 +134,11 @@ struct CreateProduct: View {
                             }
                         }
 
+                        Section(header: Text("Estimated Ship Date:")) {
+                            DatePicker("Date",selection: $estDate,in: Date()..., displayedComponents: .date
+                                )
+                        }
+                        
                         Section(header: Text("Images")) {
                             ForEach(0..<images.count, id: \.self) {
                                 Image(uiImage: images[$0])
@@ -170,6 +175,7 @@ struct CreateProduct: View {
                     
                 }
 
+
                 if submitting {
                     VStack {
                         Image(systemName: "arrow.up.arrow.down.circle.fill")
@@ -177,7 +183,7 @@ struct CreateProduct: View {
                             .frame(width: 150, height: 150, alignment: .center)
                             .foregroundColor(.brandPrimary)
                             .padding()
-                        Text("Adding new queued shipment...")
+                       Text("Adding new queued shipment...")
                             .bold()
                             .padding()
                             .foregroundColor(.brandPrimary)
@@ -201,11 +207,13 @@ struct CreateProduct: View {
                         //.background(Color.white)
                     }
                     }
+
             }
-        .onAppear() {
-            print("onAppear")
-            loadVendorsAndCategories()
-        }
+            .onAppear() {
+                print("onAppear")
+                loadListData()
+                initializeFormVars()
+            }
         .sheet(isPresented: $showPicker) {
             ImagePickerView(sourceType: $pickerSource) { image in
                 images.append(image)
@@ -222,10 +230,23 @@ struct CreateProduct: View {
         )
  
     }
+    
+    func initializeFormVars() {
+        print("Initialize")
+        vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
+        statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
+        categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
+        source = defaults.object(forKey: "defaultSource") as? String ?? ""
+        tags = defaults.object(forKey: "defaultTags") as? String ?? ""
+        colors = defaults.object(forKey: "defaultColors") as? String ?? ""
+        sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
+        tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
+        sku = defaults.object(forKey: "defaultSku") as? String ?? ""
+    }
 
     
-    func loadVendorsAndCategories() {
-        let req = API.shared.get(proc: "include/m-vendors-cats-get.php")!
+    func loadListData() {
+        let req = API.shared.get(proc: "include/m-list-data-get.php")!
         let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
             if let err = err {
                 print(err)
@@ -242,15 +263,21 @@ struct CreateProduct: View {
                     print("categories:  \(v)")
                     availableCategories = v
                 }
+                
+                if let vd = jsonDict["status"] as? [[String: Any]] {
+                    let v = status(json: vd)
+                    print("status:  \(v)")
+                    availableStatus = v
+                }
             }
         }
         
         task.resume()
     }
-    
+ 
     
     /* because of iOS callbacks: startSubmit -> createVendor -> uploadImages -> createProduct */
-    
+
     func startSubmit() {
         guard !submitting else {
             return
@@ -275,7 +302,7 @@ struct CreateProduct: View {
         
         task.resume()
     }
-    
+
     func uploadImages(initial: Bool) {
         if vendorId == 0 {
             showError(message: "Please pick a vendor")
@@ -327,10 +354,10 @@ struct CreateProduct: View {
         task.resume()
     }
     
-        
-            
+ 
+ 
     func createProduct() {
- /*       print("createProduct")
+/*        print("createProduct")
         /*TODO: make backend accept JSON instead*/
         var allowed = CharacterSet.alphanumerics
         allowed.insert(charactersIn: "-._~")
@@ -359,8 +386,9 @@ struct CreateProduct: View {
         }
         
         task.resume()
-  */
+ */
     }
+
 
     func showError(message: String) {
         DispatchQueue.main.async {
