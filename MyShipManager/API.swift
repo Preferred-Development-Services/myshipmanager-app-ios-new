@@ -156,7 +156,7 @@ class API: ObservableObject {
 
     func get(proc: String) -> URLRequest? {
         guard let url = URL(string: base + proc) else { return nil }
-        
+
         var req = URLRequest(url: url)
         req.httpMethod = "GET"
         req.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -170,7 +170,6 @@ class API: ObservableObject {
     
     func post(proc: String, bodyStr: String) -> URLRequest? {
         guard let url = URL(string: base + proc) else { return nil }
-        
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Accept")

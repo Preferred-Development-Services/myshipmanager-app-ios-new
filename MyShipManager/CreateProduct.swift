@@ -45,6 +45,7 @@ struct CreateProduct: View {
     @State var priceText:String = ""
     @State var sku: String = ""
     @State var estDate: Date = Date()
+    @State var mobileStr: String = ""
     @State private var showingAlert = false
     
 
@@ -59,12 +60,6 @@ struct CreateProduct: View {
                             
                             Section(header: Text("Description")) {
                                 TextEditor(text: $description)
-                            }
-                            
-                            Section(header: Text("Status")) {
-                                Picker("Pick Status", selection: $statusId, content: {
-                                    ForEach(availableStatus, id: \.code) { Text($0.name) }
-                                })
                             }
                             
                             Section(header: Text("Tax")) {
@@ -221,8 +216,10 @@ struct CreateProduct: View {
         }
         .navigationBarItems(
             trailing: Button("Add") {
-                startSubmit()
-                showingAlert = true
+                let success = startSubmit()
+                if success {
+                  showingAlert = true
+                }
             }
                 .alert(isPresented: $showingAlert) {
                     Alert(title: Text("Product Added"), message: Text("This product has been added"), dismissButton: .default(Text("OK")))
@@ -234,7 +231,6 @@ struct CreateProduct: View {
     func initializeFormVars() {
         print("Initialize")
         vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
-        statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
         categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         source = defaults.object(forKey: "defaultSource") as? String ?? ""
         tags = defaults.object(forKey: "defaultTags") as? String ?? ""
@@ -242,8 +238,11 @@ struct CreateProduct: View {
         sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
         tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         sku = defaults.object(forKey: "defaultSku") as? String ?? ""
+        if defaults.object(forKey: "defaultMobileStr") == nil {
+            defaults.set(randomString(of:50), forKey: "defaultMobileStr")
+        }
+        mobileStr =  defaults.object(forKey: "defaultMobileStr") as? String ?? ""  // random string to keep products and images linked
     }
-
     
     func loadListData() {
         let req = API.shared.get(proc: "include/m-list-data-get.php")!
@@ -278,9 +277,13 @@ struct CreateProduct: View {
     
     /* because of iOS callbacks: startSubmit -> createVendor -> uploadImages -> createProduct */
 
-    func startSubmit() {
+    func startSubmit() -> Bool {
+        if !requiredFieldsEntered() {
+            return false
+        }
+
         guard !submitting else {
-            return
+            return false
         }
         
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -301,21 +304,39 @@ struct CreateProduct: View {
         }
         
         task.resume()
+        return true
     }
-
-    func uploadImages(initial: Bool) {
+    
+    func requiredFieldsEntered() -> Bool {
+        var ok = true;
         if vendorId == 0 {
             showError(message: "Please pick a vendor")
-            return
+            ok = false
         }
         if categoryId == 0 {
             showError(message: "Please pick a category")
-            return
+            ok = false
         }
         if title == "" {
             showError(message: "Please pick a title")
-            return
+            ok = false
         }
+        if cost == 0 {
+            showError(message: "Please enter cost")
+            ok = false
+        }
+        if price == 0 {
+            showError(message: "Please enter price")
+            ok = false
+        }
+        if qty == 0 {
+            showError(message: "Please enter quantity")
+            ok = false
+        }
+        return ok
+    }
+
+    func uploadImages(initial: Bool) {
         
         if initial {
             pendingImages = images.count
@@ -325,11 +346,10 @@ struct CreateProduct: View {
             createProduct()
             return
         }
-
         print("uploading image \(pendingImages-1)")
         let image = images[pendingImages-1]
         
-        var req = API.shared.post(proc: "include/a-shipment-upload.php", bodyStr: "")!
+        var req = API.shared.post(proc: "include/a-shipment-product-image-upload.php", bodyStr: "")!
         
         let boundary = UUID().uuidString
         req.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
@@ -357,36 +377,53 @@ struct CreateProduct: View {
  
  
     func createProduct() {
-/*        print("createProduct")
+        print("createProduct")
         /*TODO: make backend accept JSON instead*/
         var allowed = CharacterSet.alphanumerics
         allowed.insert(charactersIn: "-._~")
         
-        let safeSource = source.addingPercentEncoding(withAllowedCharacters: allowed)!
-        let safeNotes = notes.addingPercentEncoding(withAllowedCharacters: allowed)!
+
+        let safeTitle = title.addingPercentEncoding(withAllowedCharacters: allowed)!
+        let safeMobileStr = mobileStr.addingPercentEncoding(withAllowedCharacters: allowed)!
+        let safeDescription = description.addingPercentEncoding(withAllowedCharacters: allowed)!
+        let safePrice = price
+        let safeQty = qty
+        let safeSizes = sizes.addingPercentEncoding(withAllowedCharacters: allowed)!
+        let safeColors = colors.addingPercentEncoding(withAllowedCharacters: allowed)!
+        let safeTax = tax
+        let safeSku = sku.addingPercentEncoding(withAllowedCharacters: allowed)!
+        let safeCategory = categoryId
         let safeCost = cost
-        let payload = "vendor=\(vendorId)&source=\(safeSource)&numStyles=\(styles)&numPacks=\(pieces)&cost=\(safeCost)&notes=\(safeNotes)"
+        let payload = "mobileStr=\(safeMobileStr)&title=\(safeTitle)&description=\(safeDescription)&cost=\(safeCost)&price=\(safePrice)&qty=\(safeQty)&sizes=\(safeSizes)&colors=\(safeColors)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)"
         
         print("payload: \(payload)")
         
-        let req = API.shared.post(proc: "include/a-queued-order-save.php", bodyStr: payload)!
+        let req = API.shared.post(proc: "include/m-pending-product-save.php", bodyStr: payload)!
         let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
             if let err = err {
                 print(err)
                 return
             }
-            
             if let data = data {
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
                 let jsonDict = json as! [String: Any]
+                if let rd = jsonDict["success"] as? Int {
+                    if rd == 1 {
+                        showSuccess()
+                    }
+                    else {
+                        showSuccess()
+                    }
+                }
+
                 // TODO: check success == String("1")
-                print(jsonDict)
+                print("results: \(jsonDict)")
                 showSuccess()
             }
         }
         
         task.resume()
- */
+ 
     }
 
 
