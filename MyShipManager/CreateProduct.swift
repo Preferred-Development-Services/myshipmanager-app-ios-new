@@ -46,7 +46,11 @@ struct CreateProduct: View {
     @State var sku: String = ""
     @State var estDate: Date = Date()
     @State var mobileStr: String = ""
-    @State private var showingAlert = false
+    @State var showingSuccessAlert = false
+    @State var showingErrorAlert = false
+    @State var alertTitle = ""
+    @State var alertMessage = ""
+ 
     
 
     var body: some View {
@@ -61,11 +65,10 @@ struct CreateProduct: View {
                             Section(header: Text("Description")) {
                                 TextEditor(text: $description)
                             }
-                            
                             Section(header: Text("Tax")) {
                                 Picker("Charge tax on this product", selection: $tax, content: {
-                                        Text("No").tag(1)
-                                        Text("Yes").tag(2)
+                                        Text("No").tag("N")
+                                        Text("Yes").tag("Y")
                                     }
                                 )
                             }
@@ -173,35 +176,22 @@ struct CreateProduct: View {
 
                 if submitting {
                     VStack {
+                        HStack{
+                            Spacer()
+                        }
                         Image(systemName: "arrow.up.arrow.down.circle.fill")
                             .resizable()
                             .frame(width: 150, height: 150, alignment: .center)
                             .foregroundColor(.brandPrimary)
                             .padding()
-                       Text("Adding new queued shipment...")
+                       Text("Adding product to current shipment...")
                             .bold()
                             .padding()
                             .foregroundColor(.brandPrimary)
+                        Spacer()
                     }
+                    .background(Color.white)
                 }
-                if result == .success {
-                Image(systemName: "checkmark.circle.fill")
-                    .resizable()
-                    .frame(width: 150, height: 150, alignment: .center)
-                    .foregroundColor(.brandPrimary)
-                } else if result == .fail {
-                    VStack {
-                    Image(systemName: "xmark.circle.fill")
-                        .resizable()
-                        .frame(width: 150, height: 150, alignment: .center)
-                        .foregroundColor(.red)
-                    Text(self.failureMessage)
-                        .bold()
-                        .padding()
-                        .foregroundColor(.red)
-                        //.background(Color.white)
-                    }
-                    }
 
             }
             .onAppear() {
@@ -216,20 +206,24 @@ struct CreateProduct: View {
         }
         .navigationBarItems(
             trailing: Button("Add") {
-                let success = startSubmit()
-                if success {
-                  showingAlert = true
-                }
+                startSubmit()
             }
-                .alert(isPresented: $showingAlert) {
-                    Alert(title: Text("Product Added"), message: Text("This product has been added"), dismissButton: .default(Text("OK")))
-                }
         )
- 
+        .alert(isPresented: $showingSuccessAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+        }
     }
+
     
     func initializeFormVars() {
         print("Initialize")
+        title = ""
+        description = ""
+        cost = 0.0
+        price = 0.0
+        costText = ""
+        priceText = ""
+        qty = 0
         vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         source = defaults.object(forKey: "defaultSource") as? String ?? ""
@@ -277,13 +271,18 @@ struct CreateProduct: View {
     
     /* because of iOS callbacks: startSubmit -> createVendor -> uploadImages -> createProduct */
 
-    func startSubmit() -> Bool {
-        if !requiredFieldsEntered() {
-            return false
+    func startSubmit() {
+        let errorMsg:String = requiredFieldsEntered()
+        print(errorMsg)
+        if errorMsg != "" {
+            alertTitle = "Missing Field"
+            alertMessage = errorMsg
+            showingSuccessAlert = true
+            return
         }
 
         guard !submitting else {
-            return false
+            return
         }
         
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -304,36 +303,30 @@ struct CreateProduct: View {
         }
         
         task.resume()
-        return true
     }
     
-    func requiredFieldsEntered() -> Bool {
-        var ok = true;
+    
+    func requiredFieldsEntered() -> String {
+        var msg: String = ""
         if vendorId == 0 {
-            showError(message: "Please pick a vendor")
-            ok = false
+            msg = "Please select a vendor"
         }
         if categoryId == 0 {
-            showError(message: "Please pick a category")
-            ok = false
+            msg = "Please select a category"
         }
         if title == "" {
-            showError(message: "Please pick a title")
-            ok = false
+            msg = "Please enter a title"
         }
         if cost == 0 {
-            showError(message: "Please enter cost")
-            ok = false
+            msg = "Please enter cost"
         }
         if price == 0 {
-            showError(message: "Please enter price")
-            ok = false
+            msg = "Please enter price"
         }
         if qty == 0 {
-            showError(message: "Please enter quantity")
-            ok = false
+            msg = "Please enter quantity"
         }
-        return ok
+        return msg
     }
 
     func uploadImages(initial: Bool) {
@@ -362,7 +355,6 @@ struct CreateProduct: View {
         data.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
         data.append(image.jpegData(compressionQuality: 0.95)!)
         data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-        
         
         let task = URLSession.shared.uploadTask(with: req, from: data, completionHandler: { responseData, response, error in
             if error == nil {
@@ -407,23 +399,34 @@ struct CreateProduct: View {
             if let data = data {
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
                 let jsonDict = json as! [String: Any]
-                if let rd = jsonDict["success"] as? Int {
+
+                if let rd = jsonDict["result"] as? Int {
+                    submitting = false
                     if rd == 1 {
-                        showSuccess()
+                        defaults.set(randomString(of:50), forKey: "defaultMobileStr")
+                        initializeFormVars()
+                        images = [UIImage]()
+                        alertTitle = "Product Added"
+                        alertMessage = "This product has been added"
+                        showingSuccessAlert = true
+                        
                     }
                     else {
-                        showSuccess()
-                    }
+                        alertTitle = "Error adding product"
+                        alertMessage = "There was a problem adding this product"
+                        showingSuccessAlert = true
+                   }
                 }
-
-                // TODO: check success == String("1")
-                print("results: \(jsonDict)")
-                showSuccess()
+                else {
+                    submitting = false
+                    alertTitle = "Error adding product"
+                    alertMessage = "There was a problem adding this product"
+                    showingSuccessAlert = true
+                }
             }
         }
-        
         task.resume()
- 
+        
     }
 
 
