@@ -94,7 +94,7 @@ struct MyShipManagerApp: App {
                     }
                     .tabItem {
                         Image(systemName: "person")
-                        Text("Queued".uppercased())
+                        Text("Account".uppercased())
                             .accentColor(.brandPrimary)
                     }
 /*

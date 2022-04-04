@@ -50,6 +50,8 @@ struct CreateProduct: View {
     @State var showingErrorAlert = false
     @State var alertTitle = ""
     @State var alertMessage = ""
+    @State var loaded = false;
+ 
  
     
 
@@ -131,11 +133,6 @@ struct CreateProduct: View {
                                     .keyboardType(.numberPad)
                             }
                         }
-
-                        Section(header: Text("Estimated Ship Date:")) {
-                            DatePicker("Date",selection: $estDate,in: Date()..., displayedComponents: .date
-                                )
-                        }
                         
                         Section(header: Text("Images")) {
                             ForEach(0..<images.count, id: \.self) {
@@ -196,8 +193,11 @@ struct CreateProduct: View {
             }
             .onAppear() {
                 print("onAppear")
-                loadListData()
-                initializeFormVars()
+                if !loaded {
+                  loadListData()
+                  initializeFormVars()
+                  loaded = true
+                }
             }
         .sheet(isPresented: $showPicker) {
             ImagePickerView(sourceType: $pickerSource) { image in
@@ -383,10 +383,11 @@ struct CreateProduct: View {
         let safeSizes = sizes.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeColors = colors.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeTax = tax
+        let safeTags = tags.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeSku = sku.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeCategory = categoryId
         let safeCost = cost
-        let payload = "mobileStr=\(safeMobileStr)&title=\(safeTitle)&description=\(safeDescription)&cost=\(safeCost)&price=\(safePrice)&qty=\(safeQty)&sizes=\(safeSizes)&colors=\(safeColors)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)"
+        let payload = "mobileStr=\(safeMobileStr)&title=\(safeTitle)&description=\(safeDescription)&cost=\(safeCost)&price=\(safePrice)&qty=\(safeQty)&sizes=\(safeSizes)&colors=\(safeColors)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)"
         
         print("payload: \(payload)")
         
