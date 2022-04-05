@@ -145,6 +145,9 @@ struct SetDefaults: View {
             }
         }
         .navigationBarItems(
+            leading: Button("Hide keyboard") {
+                hideKeyboard()
+            },
             trailing: Button("Set") {
                 saveDefaults()
                 showingAlert = true

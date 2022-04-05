@@ -167,7 +167,14 @@ struct CreateProduct: View {
                         }
 
                     }
-                    
+/*                    .toolbar {
+                        ToolbarItem (placement: .keyboard) {
+                            Button("Done") {
+                                hideKeyboard()
+                            }
+                        }
+                    }
+*/
                 }
 
 
@@ -205,6 +212,9 @@ struct CreateProduct: View {
             }
         }
         .navigationBarItems(
+            leading: Button("Hide keyboard") {
+                hideKeyboard()
+            },
             trailing: Button("Add") {
                 startSubmit()
             }
@@ -236,6 +246,9 @@ struct CreateProduct: View {
             defaults.set(randomString(of:50), forKey: "defaultMobileStr")
         }
         mobileStr =  defaults.object(forKey: "defaultMobileStr") as? String ?? ""  // random string to keep products and images linked
+        if defaults.object(forKey: "productsAdded") == nil {
+            defaults.set(false, forKey: "productsAdded")
+        }
     }
     
     func loadListData() {
@@ -407,6 +420,7 @@ struct CreateProduct: View {
                         defaults.set(randomString(of:50), forKey: "defaultMobileStr")
                         initializeFormVars()
                         images = [UIImage]()
+                        defaults.set("Y", forKey: "productsCreated")
                         alertTitle = "Product Added"
                         alertMessage = "This product has been added"
                         showingSuccessAlert = true

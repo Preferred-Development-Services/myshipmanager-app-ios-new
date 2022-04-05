@@ -32,10 +32,12 @@ extension ScannerView {
                 return
             }
             
-            guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back) else {
+            guard let captureDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back)
+                else {
                 NSLog("Unable to use back camera as capture device")
                 return
             }
+            
             
             guard let input = try? AVCaptureDeviceInput(device: captureDevice) else {
                 NSLog("Unabel to create device input")

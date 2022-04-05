@@ -39,7 +39,9 @@ struct CreateShipment: View {
     @State var alertTitle = ""
     @State var alertMessage = ""
     @State var newVendor = ""
-    @State var loaded = false;
+    @State var loaded = false
+    @State var disableCreate = false
+    
  
     var body: some View {
             ZStack {
@@ -130,6 +132,13 @@ struct CreateShipment: View {
                     initializeFormVars()
                     loaded = true
                 }
+                if defaults.object(forKey: "productsCreated") as! String == "Y" {
+                    disableCreate = false
+                }
+                else {
+                    disableCreate = true;
+                }
+                print("disablecreate \(disableCreate)")
             }
         .sheet(isPresented: $showPicker) {
             ImagePickerView(sourceType: $pickerSource) { image in
@@ -137,28 +146,37 @@ struct CreateShipment: View {
             }
         }
         .navigationBarItems(
-            leading: Button("Delete") {
-                deleteShipment()
+            leading: Button("Hide keyboard") {
+                hideKeyboard()
             },
             trailing: Button("Create") {
                 startSubmit()
             }
+            .disabled(disableCreate)
+ //               .disabled((defaults.object(forKey: "defaultStatusId") as! String == "N" ))
         )
         .alert(isPresented: $showingSuccessAlert) {
-            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK"), action: finishCreate)
+            )
         }
+    }
+    
+    func finishCreate()  {
+        defaults.set("N", forKey: "productsCreated")
+        disableCreate = true;
     }
 
     func deleteShipment() {
         
     }
     
+    
     func initializeFormVars() {
-        print("Initialize")
+        
         vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
-        source = defaults.object(forKey: "defaultSource") as? String ?? ""
+        source = defaults.object(forKey: "defaultSource") as? String ?? "" as! String
     }
     
     func loadListData() {
@@ -325,8 +343,8 @@ struct CreateShipment: View {
                         images = [UIImage]()
                         alertTitle = "Shipment created"
                         alertMessage = "This shipment has been created"
-  //                      showingSuccessAlert = true
-                        ShipmentList()
+                        showingSuccessAlert = true
+//                        ShipmentList()
                         
                     }
                     else {
