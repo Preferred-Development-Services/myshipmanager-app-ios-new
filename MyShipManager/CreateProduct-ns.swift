@@ -36,6 +36,7 @@ struct CreateProductNS: View {
     @State var costText:String = ""
     @State var estDate: Date = Date()
     @State var mobileStr: String = ""
+    @State var sku: String = ""
     @State var showingSuccessAlert = false
     @State var showingErrorAlert = false
     @State var alertTitle = ""
@@ -56,7 +57,11 @@ struct CreateProductNS: View {
                                 })
                             }
                         }
-                    
+                        
+                        Section(header: Text("SKU")) {
+                                TextField("Enter SKU", text: $sku)
+                        }
+                                          
                         Group {
                             Section(header: Text("Cost")) {
                                 TextField("Enter Cost", text: $costText) { editing in
@@ -188,6 +193,7 @@ struct CreateProductNS: View {
         costText = ""
         numStyles = 0
         numPacks = 0
+        sku = ""
         categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         if defaults.object(forKey: "defaultMobileStr") == nil {
             defaults.set(randomString(of:50), forKey: "defaultMobileStr")
@@ -330,12 +336,13 @@ struct CreateProductNS: View {
         
 
         let safeMobileStr = mobileStr.addingPercentEncoding(withAllowedCharacters: allowed)!
+        let safeSku = sku.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeNumStyles = numStyles
         let safeNumPacks = numPacks
 
         let safeCategory = categoryId
         let safeCost = cost
-        let payload = "mobileStr=\(safeMobileStr)&cost=\(safeCost)&numPacks=\(safeNumPacks)&numStyles=\(safeNumStyles)&category=\(safeCategory)"
+        let payload = "mobileStr=\(safeMobileStr)&cost=\(safeCost)&numPacks=\(safeNumPacks)&numStyles=\(safeNumStyles)&category=\(safeCategory)&sku=\(safeSku)"
         
         print("payload: \(payload)")
         
