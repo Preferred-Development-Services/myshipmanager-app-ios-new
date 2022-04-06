@@ -23,6 +23,7 @@ class AppState: ObservableObject {
 struct MyShipManagerApp: App {
     @ObservedObject var appState = AppState(barcodeFound: false,currentBarcode: "")
     @ObservedObject var api = API.shared
+    let defaults = UserDefaults.standard
     
     init() {
         UINavigationBar.appearance().tintColor = UIColor(Color.brandPrimary)
@@ -43,8 +44,14 @@ struct MyShipManagerApp: App {
                     }
 
                     NavigationView {
-                        CreateProduct()
+                        if defaults.object(forKey: "useShopify") as? Bool ?? false == true {
+                          CreateProduct()
+                              .navigationTitle("Add Product")
+                        }
+                        else {
+                           CreateProductNS()
                             .navigationTitle("Add Product")
+                        }
                     }
                     .tabItem {
                         Image(systemName: "bag")

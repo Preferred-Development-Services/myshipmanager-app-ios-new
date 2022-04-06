@@ -18,7 +18,7 @@ struct SignIn: View {
     @State var submitting = false
     @State var failureMessage = ""
     @State fileprivate var result = SubmitResult.none
-        
+    let defaults = UserDefaults.standard
 
     var body: some View {
         ZStack {
@@ -99,8 +99,16 @@ struct SignIn: View {
             if let data = data {
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
                 let jsonDict = json as! [String: Any]
+                let store = jsonDict["connectedStore"] as? String
                 if let success = jsonDict["loginsuccess"] as? String {
                     if success == "1" {
+                        if store == "shopify" {
+                          defaults.set(true, forKey: "useShopify")
+                        }
+                        else {
+                          defaults.set(false, forKey: "useShopify")
+                        }
+                        print(defaults.object(forKey: "useShopify") ?? false) 
                         if let r = resp as? HTTPURLResponse {
                             let sessionCookie = (r.value(forHTTPHeaderField: "Set-Cookie") ?? "").components(separatedBy: ";").first ?? ""
                             if sessionCookie != "" {

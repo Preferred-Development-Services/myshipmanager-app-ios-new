@@ -141,7 +141,7 @@ class API: ObservableObject {
     func loginRequest(reqUser: String? = nil, reqPass: String? = nil) -> URLRequest? {
             let urlUser = (reqUser ?? user).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             let urlPass = (reqPass ?? pass).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-            let proc = "include/a-login.php?email=\(urlUser)&password=\(urlPass)&remember=0&app=1"
+            let proc = "include/m-login.php?email=\(urlUser)&password=\(urlPass)&remember=0&app=1"
                      
         
             guard let url = URL(string: base + proc) else { return nil }

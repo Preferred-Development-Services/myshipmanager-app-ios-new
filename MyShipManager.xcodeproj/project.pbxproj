@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B51EDAB427FD14B1000B00BA /* CreateProduct-ns.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51EDAB327FD14B1000B00BA /* CreateProduct-ns.swift */; };
 		B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */; };
 		B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */; };
 		B5B7823227F3DF9F000E7A4C /* BarcodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B51EDAB327FD14B1000B00BA /* CreateProduct-ns.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateProduct-ns.swift"; sourceTree = "<group>"; };
 		B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProduct.swift; sourceTree = "<group>"; };
 		B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShipment.swift; sourceTree = "<group>"; };
 		B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeInfo.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		C9CE0A122633AD3700F6795B /* MyShipManager */ = {
 			isa = PBXGroup;
 			children = (
+				B51EDAB327FD14B1000B00BA /* CreateProduct-ns.swift */,
 				B5B8393F27F67D41001D0840 /* CreateProduct.swift */,
 				C9F80C43263494E800442E47 /* API.swift */,
 				C9571492265F1B1300B8F442 /* Utils.swift */,
@@ -332,6 +335,7 @@
 				B5F6DF8227F3886B00B35957 /* ScannerView+Coordinator.swift in Sources */,
 				C9F4F7302634FF7A00225115 /* ImagePickerView.swift in Sources */,
 				B5B8E14327F5F045006D9E2E /* ProductDefaults.swift in Sources */,
+				B51EDAB427FD14B1000B00BA /* CreateProduct-ns.swift in Sources */,
 				C9CE0A142633AD3700F6795B /* MyShipManagerApp.swift in Sources */,
 				C9F80C4C26349C0100442E47 /* Account.swift in Sources */,
 				B5F6DF8027F3886100B35957 /* ScannerView.swift in Sources */,
