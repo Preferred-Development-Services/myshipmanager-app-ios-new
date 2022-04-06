@@ -10,6 +10,7 @@
 		B51EDAB427FD14B1000B00BA /* CreateProduct-ns.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51EDAB327FD14B1000B00BA /* CreateProduct-ns.swift */; };
 		B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */; };
 		B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */; };
+		B5A7462627FDC399008A0CE6 /* ProductDefaultsNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A7462527FDC399008A0CE6 /* ProductDefaultsNS.swift */; };
 		B5B7823227F3DF9F000E7A4C /* BarcodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */; };
 		B5B8394027F67D41001D0840 /* CreateProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8393F27F67D41001D0840 /* CreateProduct.swift */; };
 		B5B8E14327F5F045006D9E2E /* ProductDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8E14227F5F045006D9E2E /* ProductDefaults.swift */; };
@@ -56,6 +57,7 @@
 		B51EDAB327FD14B1000B00BA /* CreateProduct-ns.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateProduct-ns.swift"; sourceTree = "<group>"; };
 		B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProduct.swift; sourceTree = "<group>"; };
 		B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShipment.swift; sourceTree = "<group>"; };
+		B5A7462527FDC399008A0CE6 /* ProductDefaultsNS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDefaultsNS.swift; sourceTree = "<group>"; };
 		B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeInfo.swift; sourceTree = "<group>"; };
 		B5B8393F27F67D41001D0840 /* CreateProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProduct.swift; sourceTree = "<group>"; };
 		B5B8E14227F5F045006D9E2E /* ProductDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDefaults.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 		C9CE0A122633AD3700F6795B /* MyShipManager */ = {
 			isa = PBXGroup;
 			children = (
+				B5A7462527FDC399008A0CE6 /* ProductDefaultsNS.swift */,
 				B51EDAB327FD14B1000B00BA /* CreateProduct-ns.swift */,
 				B5B8393F27F67D41001D0840 /* CreateProduct.swift */,
 				C9F80C43263494E800442E47 /* API.swift */,
@@ -326,6 +329,7 @@
 				C9CE0A422633AD7F00F6795B /* CreateQueued.swift in Sources */,
 				C9F80C3C263474AB00442E47 /* SignIn.swift in Sources */,
 				C9F80C34263471DC00442E47 /* Welcome.swift in Sources */,
+				B5A7462627FDC399008A0CE6 /* ProductDefaultsNS.swift in Sources */,
 				C956DCC1263F5981003392FB /* Brand.swift in Sources */,
 				B5B7823227F3DF9F000E7A4C /* BarcodeInfo.swift in Sources */,
 				B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */,

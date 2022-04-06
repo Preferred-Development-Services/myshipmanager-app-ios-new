@@ -87,8 +87,14 @@ struct MyShipManagerApp: App {
                             .accentColor(.brandPrimary)
                     }
                     NavigationView {
-                        SetDefaults()
+                        if defaults.object(forKey: "useShopify") as? Bool ?? false == true {
+                            SetDefaults()
                             .navigationTitle("Set Defaults")
+                        }
+                        else {
+                                SetDefaultsNS()
+                                .navigationTitle("Set Defaults")
+                        }
                     }
                     .tabItem {
                         Image(systemName: "gearshape")
