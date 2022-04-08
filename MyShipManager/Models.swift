@@ -7,6 +7,7 @@
 
 import UIKit
 import Foundation
+import Combine
 
 class TextItem: Identifiable {
     var id: String
@@ -16,6 +17,7 @@ class TextItem: Identifiable {
         id = UUID().uuidString
     }
 }
+
 
 
 class RecognizedContent: ObservableObject {

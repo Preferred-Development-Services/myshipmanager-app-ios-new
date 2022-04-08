@@ -13,7 +13,6 @@ fileprivate enum SubmitResult {
 }
 
 struct CreateProduct: View {
-
     let defaults = UserDefaults.standard
     
     @State var showPicker = false
@@ -25,7 +24,7 @@ struct CreateProduct: View {
     @State var failureMessage = ""
     @State fileprivate var result = SubmitResult.none
 
-
+    @State var lastScan = ""
     @State var availableCategories = [Category]()
     @State var availableStatus = [Status]()
     @State var availableVendors = [Vendor]()
@@ -34,6 +33,7 @@ struct CreateProduct: View {
     @State var statusId: Int = 0
     @State var categoryId: Int = 0
     @State var source: String = ""
+    @State var scannedText: String = ""
     @State var tags: String = ""
     @State var tax: String = "N"
     @State var cost: Double = 0.0
@@ -146,7 +146,16 @@ struct CreateProduct: View {
                                     }
                             }
                         }
-                        Button("Scan Tags", action:{self.showScanner=true})
+                        Button("Scan Tags", action:{
+                            lastScan = ""
+                            self.showScanner=true
+                        })
+                        Button("Show scanned text", action:{
+                            lastScan = defaults.object(forKey: "lastScan") as? String ?? ""
+                        })
+                        Section(header: Text("Scanned Label Text")) {
+                            TextEditor(text:$lastScan)
+                        }
 
                     }
 /*                    .toolbar {
