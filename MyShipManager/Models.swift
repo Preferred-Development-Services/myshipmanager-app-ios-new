@@ -6,6 +6,21 @@
 //
 
 import UIKit
+import Foundation
+
+class TextItem: Identifiable {
+    var id: String
+    var text: String = ""
+    
+    init() {
+        id = UUID().uuidString
+    }
+}
+
+
+class RecognizedContent: ObservableObject {
+    @Published var items = [TextItem]()
+}
 
 
 struct Vendor: Decodable {

@@ -58,6 +58,7 @@ struct MyShipManagerApp: App {
                         Text("Product".uppercased())
                             .accentColor(.brandPrimary)
                     }
+/*
                     NavigationView {
                         CreateShipment()
                             .navigationTitle("Create Shipment")
@@ -67,7 +68,10 @@ struct MyShipManagerApp: App {
                         Text("Create".uppercased())
                             .accentColor(.brandPrimary)
                     }
+                    
                     NavigationView {
+                        TextScanView()
+
                         if !appState.barcodeFound {
                             BarcodeContentView()
                                 .navigationTitle("Scan Barcode")
@@ -80,12 +84,15 @@ struct MyShipManagerApp: App {
                                 .environmentObject(appState)
                                 .transition(.slide)
                         }
+ 
                     }
+
                     .tabItem {
                         Image(systemName: "barcode")
                         Text("Barcode".uppercased())
                             .accentColor(.brandPrimary)
                     }
+*/
                     NavigationView {
                         if defaults.object(forKey: "useShopify") as? Bool ?? false == true {
                             SetDefaults()

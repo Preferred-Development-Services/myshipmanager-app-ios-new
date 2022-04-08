@@ -11,6 +11,10 @@
 		B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */; };
 		B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */; };
 		B5A7462627FDC399008A0CE6 /* ProductDefaultsNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A7462527FDC399008A0CE6 /* ProductDefaultsNS.swift */; };
+		B5AC616127FE6E11009F02D2 /* TextScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AC616027FE6E11009F02D2 /* TextScannerView.swift */; };
+		B5AC616327FE6F4E009F02D2 /* TextScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AC616227FE6F4E009F02D2 /* TextScanView.swift */; };
+		B5AC616527FE6F60009F02D2 /* TextPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AC616427FE6F60009F02D2 /* TextPreviewView.swift */; };
+		B5AC616727FE6F72009F02D2 /* TextRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AC616627FE6F72009F02D2 /* TextRecognition.swift */; };
 		B5B7823227F3DF9F000E7A4C /* BarcodeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */; };
 		B5B8394027F67D41001D0840 /* CreateProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8393F27F67D41001D0840 /* CreateProduct.swift */; };
 		B5B8E14327F5F045006D9E2E /* ProductDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B8E14227F5F045006D9E2E /* ProductDefaults.swift */; };
@@ -58,6 +62,10 @@
 		B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProduct.swift; sourceTree = "<group>"; };
 		B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShipment.swift; sourceTree = "<group>"; };
 		B5A7462527FDC399008A0CE6 /* ProductDefaultsNS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDefaultsNS.swift; sourceTree = "<group>"; };
+		B5AC616027FE6E11009F02D2 /* TextScannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextScannerView.swift; sourceTree = "<group>"; };
+		B5AC616227FE6F4E009F02D2 /* TextScanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextScanView.swift; sourceTree = "<group>"; };
+		B5AC616427FE6F60009F02D2 /* TextPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextPreviewView.swift; sourceTree = "<group>"; };
+		B5AC616627FE6F72009F02D2 /* TextRecognition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextRecognition.swift; sourceTree = "<group>"; };
 		B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeInfo.swift; sourceTree = "<group>"; };
 		B5B8393F27F67D41001D0840 /* CreateProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProduct.swift; sourceTree = "<group>"; };
 		B5B8E14227F5F045006D9E2E /* ProductDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDefaults.swift; sourceTree = "<group>"; };
@@ -137,6 +145,10 @@
 		C9CE0A122633AD3700F6795B /* MyShipManager */ = {
 			isa = PBXGroup;
 			children = (
+				B5AC616027FE6E11009F02D2 /* TextScannerView.swift */,
+				B5AC616627FE6F72009F02D2 /* TextRecognition.swift */,
+				B5AC616427FE6F60009F02D2 /* TextPreviewView.swift */,
+				B5AC616227FE6F4E009F02D2 /* TextScanView.swift */,
 				B5A7462527FDC399008A0CE6 /* ProductDefaultsNS.swift */,
 				B51EDAB327FD14B1000B00BA /* CreateProduct-ns.swift */,
 				B5B8393F27F67D41001D0840 /* CreateProduct.swift */,
@@ -333,13 +345,17 @@
 				C956DCC1263F5981003392FB /* Brand.swift in Sources */,
 				B5B7823227F3DF9F000E7A4C /* BarcodeInfo.swift in Sources */,
 				B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */,
+				B5AC616727FE6F72009F02D2 /* TextRecognition.swift in Sources */,
 				B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */,
 				B5F6DF7E27F3885200B35957 /* BarcodeContentView.swift in Sources */,
 				C9CE0A162633AD3700F6795B /* ShipmentList.swift in Sources */,
+				B5AC616127FE6E11009F02D2 /* TextScannerView.swift in Sources */,
 				B5F6DF8227F3886B00B35957 /* ScannerView+Coordinator.swift in Sources */,
 				C9F4F7302634FF7A00225115 /* ImagePickerView.swift in Sources */,
 				B5B8E14327F5F045006D9E2E /* ProductDefaults.swift in Sources */,
+				B5AC616327FE6F4E009F02D2 /* TextScanView.swift in Sources */,
 				B51EDAB427FD14B1000B00BA /* CreateProduct-ns.swift in Sources */,
+				B5AC616527FE6F60009F02D2 /* TextPreviewView.swift in Sources */,
 				C9CE0A142633AD3700F6795B /* MyShipManagerApp.swift in Sources */,
 				C9F80C4C26349C0100442E47 /* Account.swift in Sources */,
 				B5F6DF8027F3886100B35957 /* ScannerView.swift in Sources */,

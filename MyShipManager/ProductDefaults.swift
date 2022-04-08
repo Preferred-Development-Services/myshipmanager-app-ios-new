@@ -33,8 +33,6 @@ struct SetDefaults: View {
     @State var categoryId: Int
     @State var source: String
     @State var tags: String
-    @State var sizes: String
-    @State var colors: String
     @State var tax: String
     @State var sku: String
     @State private var showingAlert = false
@@ -44,8 +42,6 @@ struct SetDefaults: View {
         self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         self.source = defaults.object(forKey: "defaultSource") as? String ?? ""
         self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
-        self.colors = defaults.object(forKey: "defaultColors") as? String ?? ""
-        self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
         self.statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
@@ -84,14 +80,6 @@ struct SetDefaults: View {
                         }
                         Section(header: Text("Tags")) {
                             TextField("Enter tags", text: $tags)
-                        }
-                        
-                        Section(header: Text("Colors")) {
-                                TextField("Enter colors (comma separated)", text: $colors)
-                        }
-                        
-                        Section(header: Text("Sizes")) {
-                                TextField("Enter sizes (comman separated)", text: $sizes)
                         }
                         
                         Section(header: Text("SKU prefix")) {
@@ -275,8 +263,6 @@ struct SetDefaults: View {
         defaults.set(categoryId, forKey: "defaultCategoryId")
         defaults.set(source, forKey: "defaultSource")
         defaults.set(tags, forKey: "defaultTags")
-        defaults.set(colors, forKey: "defaultColors")
-        defaults.set(sizes, forKey: "defaultSizes")
         defaults.set(sku, forKey: "defaultSku")
         defaults.set(tax, forKey: "defaultTax")
         defaults.set(statusId, forKey: "defaultStatusId")
