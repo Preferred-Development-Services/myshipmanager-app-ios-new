@@ -14,7 +14,7 @@ fileprivate enum SubmitResult {
 
 struct CreateProduct: View {
     let defaults = UserDefaults.standard
-    
+    @AppStorage("lastScan") var lastScan: String = ""
     @State var showPicker = false
     @State var pickerSource = UIImagePickerController.SourceType.camera
     @State var images = [UIImage]()
@@ -24,7 +24,7 @@ struct CreateProduct: View {
     @State var failureMessage = ""
     @State fileprivate var result = SubmitResult.none
 
-    @State var lastScan = ""
+//    @State var lastScan = ""
     @State var availableCategories = [Category]()
     @State var availableStatus = [Status]()
     @State var availableVendors = [Vendor]()
@@ -47,10 +47,9 @@ struct CreateProduct: View {
     @State var alertMessage = ""
     @State var loaded = false;
     @State var showScanner = false
-    @State var test = ""
     @ObservedObject var recognizedContent = RecognizedContent()
     @State private var isRecognizing = false
-        
+    
 
     var body: some View {
             ZStack {
@@ -150,9 +149,7 @@ struct CreateProduct: View {
                             lastScan = ""
                             self.showScanner=true
                         })
-                        Button("Show scanned text", action:{
-                            lastScan = defaults.object(forKey: "lastScan") as? String ?? ""
-                        })
+
                         Section(header: Text("Scanned Label Text")) {
                             TextEditor(text:$lastScan)
                         }
@@ -195,7 +192,7 @@ struct CreateProduct: View {
                   loadListData()
                   initializeFormVars()
                   loaded = true
-                }
+              }
             }
         .sheet(isPresented: $showPicker) {
             ImagePickerView(sourceType: $pickerSource) { image in
@@ -243,29 +240,30 @@ struct CreateProduct: View {
     
     func initializeFormVars() {
         print("Initialize")
-        cost = 0.0
-        costText = ""
+        self.cost = 0.0
+        self.costText = ""
         
-        defaults.set("", forKey: "lastScan")
+        self.defaults.set("", forKey: "lastScan")
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
         self.statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
-        vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
-        categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
-        source = defaults.object(forKey: "defaultSource") as? String ?? ""
-        tags = defaults.object(forKey: "defaultTags") as? String ?? ""
-        tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
-        sku = defaults.object(forKey: "defaultSku") as? String ?? ""
+        self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
+        self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
+        self.source = defaults.object(forKey: "defaultSource") as? String ?? ""
+        self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
+        self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
+        self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
         if defaults.object(forKey: "defaultMobileStr") == nil {
             defaults.set(randomString(of:50), forKey: "defaultMobileStr")
         }
-        mobileStr =  defaults.object(forKey: "defaultMobileStr") as? String ?? ""  // random string to keep products and images linked
+        self.mobileStr =  defaults.object(forKey: "defaultMobileStr") as? String ?? ""  // random string to keep products and images linked
         if defaults.object(forKey: "productsAdded") == nil {
             defaults.set(false, forKey: "productsAdded")
         }
     }
     
     func loadListData() {
+
         let req = API.shared.get(proc: "include/m-list-data-get.php")!
         let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
             if let err = err {
@@ -274,6 +272,8 @@ struct CreateProduct: View {
             }
             if let data = data {
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
+                let responseStr: String = String(data:data, encoding: .utf8) ?? ""
+                print("RESPONSE: \(responseStr)")
                 let jsonDict = json as! [String: Any]
                 
                 if let vd = jsonDict["vendors"] as? [[String: Any]] {

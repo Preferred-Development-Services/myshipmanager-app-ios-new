@@ -22,7 +22,7 @@ struct TextScanView: View {
  //                   }
                 }
                 
-                
+
                 if isRecognizing {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: Color(UIColor.systemIndigo)))

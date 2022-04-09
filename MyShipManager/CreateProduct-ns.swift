@@ -15,7 +15,7 @@ fileprivate enum SubmitResult {
 struct CreateProductNS: View {
 
     let defaults = UserDefaults.standard
-    
+    @AppStorage("lastScan") var lastScan: String = ""
     @State var showPicker = false
     @State var pickerSource = UIImagePickerController.SourceType.camera
     @State var images = [UIImage]()
@@ -29,19 +29,26 @@ struct CreateProductNS: View {
     @State var availableCategories = [Category]()
     @State var availableStatus = [Status]()
     @State var statusId: Int = 0
+    @State var availableVendors = [Vendor]()
+    @State var newVendor = ""
+    @State var vendorId: Int = 0
     @State var categoryId: Int = 0
     @State var numPacks: Int = 0
     @State var numStyles: Int = 0
     @State var cost: Double = 0.0
     @State var costText:String = ""
+    @State var scannedText: String = ""
     @State var estDate: Date = Date()
     @State var mobileStr: String = ""
     @State var sku: String = ""
+    @State var showScanner = false
     @State var showingSuccessAlert = false
     @State var showingErrorAlert = false
     @State var alertTitle = ""
     @State var alertMessage = ""
     @State var loaded = false;
+    @ObservedObject var recognizedContent = RecognizedContent()
+    @State private var isRecognizing = false
  
  
     
@@ -51,6 +58,13 @@ struct CreateProductNS: View {
                 VStack {
                     Form {
                         Group {
+                            Section(header: Text("Vendor")) {
+                                Picker("Pick Vendor", selection: $vendorId, content: {
+                                    ForEach(availableVendors, id: \.code) { Text($0.name) }
+                                })
+                                TextField("or Quick Create Vendor", text: $newVendor)
+                            }
+                            
                             Section(header: Text("Category")) {
                                 Picker("Pick Category", selection: $categoryId, content: {
                                     ForEach(availableCategories, id: \.code) { Text($0.name) }
@@ -127,7 +141,14 @@ struct CreateProductNS: View {
                                     }
                             }
                         }
+                        Button("Scan Tags", action:{
+                            lastScan = ""
+                            self.showScanner=true
+                        })
 
+                        Section(header: Text("Scanned Label Text")) {
+                            TextEditor(text:$lastScan)
+                        }
                     }
 /*                    .toolbar {
                         ToolbarItem (placement: .keyboard) {
@@ -150,7 +171,7 @@ struct CreateProductNS: View {
                             .frame(width: 150, height: 150, alignment: .center)
                             .foregroundColor(.brandPrimary)
                             .padding()
-                       Text("Adding product to current shipment...")
+                       Text("Saving current product")
                             .bold()
                             .padding()
                             .foregroundColor(.brandPrimary)
@@ -184,21 +205,47 @@ struct CreateProductNS: View {
         .alert(isPresented: $showingSuccessAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
+        .sheet(isPresented: $showScanner, content: {
+                TextScannerView { result in
+                    switch result {
+                        case .success(let scannedImages):
+                            isRecognizing = true
+                            
+                            TextRecognition(scannedImages: scannedImages,
+                                            recognizedContent: recognizedContent) {
+                                // Text recognition is finished, hide the progress indicator.
+                                isRecognizing = false
+                            }
+                            .recognizeText()
+                            
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                    }
+                    
+                    showScanner = false
+                    
+                } didCancelScanning: {
+                    // Dismiss the scanner controller and the sheet.
+                    showScanner = false
+                }
+            })
     }
 
     
     func initializeFormVars() {
         print("Initialize")
-        cost = 0.0
-        costText = ""
-        numStyles = 0
-        numPacks = 0
-        sku = ""
-        categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
+        defaults.set("", forKey: "lastScan")
+        self.cost = 0.0
+        self.costText = ""
+        self.numStyles = 0
+        self.numPacks = 0
+        self.sku = ""
+        self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
+        self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         if defaults.object(forKey: "defaultMobileStr") == nil {
             defaults.set(randomString(of:50), forKey: "defaultMobileStr")
         }
-        mobileStr =  defaults.object(forKey: "defaultMobileStr") as? String ?? ""  // random string to keep products and images linked
+        self.mobileStr =  defaults.object(forKey: "defaultMobileStr") as? String ?? ""  // random string to keep products and images linked
         if defaults.object(forKey: "productsAdded") == nil {
             defaults.set(false, forKey: "productsAdded")
         }
@@ -216,6 +263,11 @@ struct CreateProductNS: View {
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
                 let jsonDict = json as! [String: Any]
                 
+                if let vd = jsonDict["vendors"] as? [[String: Any]] {
+                    let v = vendors(json: vd)
+                    print("vendors:  \(v)")
+                    availableVendors = v
+                }
                 
                 if let vd = jsonDict["categories"] as? [[String: Any]] {
                     let v = categories(json: vd)
@@ -339,10 +391,12 @@ struct CreateProductNS: View {
         let safeSku = sku.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeNumStyles = numStyles
         let safeNumPacks = numPacks
-
+        let safeVendor = vendorId
         let safeCategory = categoryId
         let safeCost = cost
-        let payload = "mobileStr=\(safeMobileStr)&cost=\(safeCost)&numPacks=\(safeNumPacks)&numStyles=\(safeNumStyles)&category=\(safeCategory)&sku=\(safeSku)"
+
+        
+        let payload = "mobileStr=\(safeMobileStr)&vendor=\(safeVendor)&cost=\(safeCost)&numPacks=\(safeNumPacks)&numStyles=\(safeNumStyles)&category=\(safeCategory)&sku=\(safeSku)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
         
         print("payload: \(payload)")
         
