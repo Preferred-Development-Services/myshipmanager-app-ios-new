@@ -394,9 +394,9 @@ struct CreateProductNS: View {
         let safeVendor = vendorId
         let safeCategory = categoryId
         let safeCost = cost
-
+        let safeEstDate = dateToPHPString(estDate)
         
-        let payload = "mobileStr=\(safeMobileStr)&vendor=\(safeVendor)&cost=\(safeCost)&numPacks=\(safeNumPacks)&numStyles=\(safeNumStyles)&category=\(safeCategory)&sku=\(safeSku)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
+        let payload = "mobileStr=\(safeMobileStr)&estDate=\(safeEstDate)&vendor=\(safeVendor)&cost=\(safeCost)&numPacks=\(safeNumPacks)&numStyles=\(safeNumStyles)&category=\(safeCategory)&sku=\(safeSku)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
         
         print("payload: \(payload)")
         

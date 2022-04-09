@@ -44,7 +44,7 @@ struct MyShipManagerApp: App {
                     }
 
                     NavigationView {
-                        if defaults.object(forKey: "useShopify") as? Bool ?? false == false {
+                        if defaults.object(forKey: "useShopify") as? Bool ?? false == true {
                           CreateProduct()
                               .navigationTitle("Add Product")
                         }
@@ -94,7 +94,7 @@ struct MyShipManagerApp: App {
                     }
 */
                     NavigationView {
-                        if defaults.object(forKey: "useShopify") as? Bool ?? false == false {
+                        if defaults.object(forKey: "useShopify") as? Bool ?? false == true {
                             SetDefaults()
                             .navigationTitle("Set Defaults")
                         }

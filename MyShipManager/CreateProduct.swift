@@ -402,8 +402,9 @@ struct CreateProduct: View {
         let safeCost = cost
         let safeStatus = statusId
         let safeVendor = vendorId
+        let safeEstDate = dateToPHPString(estDate)
         let safeSource = source.addingPercentEncoding(withAllowedCharacters: allowed)!
-        let payload = "mobileStr=\(safeMobileStr)&vendor=\(safeVendor)&cost=\(safeCost)&source=\(safeSource)&status=\(safeStatus)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
+        let payload = "mobileStr=\(safeMobileStr)&vendor=\(safeVendor)&cost=\(safeCost)&estDate=\(safeEstDate)&source=\(safeSource)&status=\(safeStatus)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
         
         print("payload: \(payload)")
         
