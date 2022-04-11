@@ -26,10 +26,8 @@ struct SetDefaults: View {
     
     @State var availableVendors = [Vendor]()
     @State var availableCategories = [Category]()
-    @State var availableStatus = [Status]()
     @State var newVendor = ""
     @State var vendorId: Int
-    @State var statusId: Int
     @State var categoryId: Int
     @State var source: String
     @State var tags: String
@@ -44,7 +42,6 @@ struct SetDefaults: View {
         self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
-        self.statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
     }
 
     var body: some View {
@@ -67,11 +64,6 @@ struct SetDefaults: View {
                                     Text("Yes").tag("Y")
                                 }
                             )
-                        }
-                        Section(header: Text("Status")) {
-                            Picker("Pick Status", selection: $statusId, content: {
-                                ForEach(availableStatus, id: \.code) { Text($0.name) }
-                            })
                         }
                         Section(header: Text("Category")) {
                             Picker("Pick Category", selection: $categoryId, content: {
@@ -170,14 +162,6 @@ struct SetDefaults: View {
                     print("categories:  \(v)")
                     availableCategories = v
                 }
-                
-                if let vd = jsonDict["status"] as? [[String: Any]] {
-                    let v = status(json: vd)
-                    print("status:  \(v)")
-                    availableStatus = v
-                }
-                
-                
             }
         }
         
@@ -265,7 +249,6 @@ struct SetDefaults: View {
         defaults.set(tags, forKey: "defaultTags")
         defaults.set(sku, forKey: "defaultSku")
         defaults.set(tax, forKey: "defaultTax")
-        defaults.set(statusId, forKey: "defaultStatusId")
     }
  
 /*    func createOrder() {

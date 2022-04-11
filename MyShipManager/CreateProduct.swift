@@ -26,11 +26,9 @@ struct CreateProduct: View {
 
 //    @State var lastScan = ""
     @State var availableCategories = [Category]()
-    @State var availableStatus = [Status]()
     @State var availableVendors = [Vendor]()
     @State var newVendor = ""
     @State var vendorId: Int = 0
-    @State var statusId: Int = 0
     @State var categoryId: Int = 0
     @State var source: String = ""
     @State var scannedText: String = ""
@@ -63,11 +61,6 @@ struct CreateProduct: View {
                                 TextField("or Quick Create Vendor", text: $newVendor)
                             }
                             
-                            Section(header: Text("Status")) {
-                                Picker("Pick Status", selection: $statusId, content: {
-                                    ForEach(availableStatus, id: \.code) { Text($0.name) }
-                                })
-                            }
                             Section(header: Text("Source")) {
                                 TextField("Enter Source", text: $source)
                             }
@@ -242,11 +235,10 @@ struct CreateProduct: View {
         print("Initialize")
         self.cost = 0.0
         self.costText = ""
-        
+        self.lastScan = ""
         self.defaults.set("", forKey: "lastScan")
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
-        self.statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
         self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         self.source = defaults.object(forKey: "defaultSource") as? String ?? ""
@@ -288,11 +280,6 @@ struct CreateProduct: View {
                     availableCategories = v
                 }
                 
-                if let vd = jsonDict["status"] as? [[String: Any]] {
-                    let v = status(json: vd)
-                    print("status:  \(v)")
-                    availableStatus = v
-                }
             }
         }
         
@@ -344,6 +331,9 @@ struct CreateProduct: View {
         }
         if categoryId == 0 {
             msg = "Please select a category"
+        }
+        if images.count == 0 {
+            msg = "Please upload an image"
         }
         return msg
     }
@@ -400,11 +390,10 @@ struct CreateProduct: View {
         let safeSku = sku.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeCategory = categoryId
         let safeCost = cost
-        let safeStatus = statusId
         let safeVendor = vendorId
         let safeEstDate = dateToPHPString(estDate)
         let safeSource = source.addingPercentEncoding(withAllowedCharacters: allowed)!
-        let payload = "mobileStr=\(safeMobileStr)&vendor=\(safeVendor)&cost=\(safeCost)&estDate=\(safeEstDate)&source=\(safeSource)&status=\(safeStatus)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
+        let payload = "mobileStr=\(safeMobileStr)&vendor=\(safeVendor)&cost=\(safeCost)&estDate=\(safeEstDate)&source=\(safeSource)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
         
         print("payload: \(payload)")
         

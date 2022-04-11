@@ -26,10 +26,8 @@ struct SetDefaultsNS: View {
     
     @State var availableVendors = [Vendor]()
     @State var availableCategories = [Category]()
-    @State var availableStatus = [Status]()
     @State var newVendor = ""
     @State var vendorId: Int
-    @State var statusId: Int
     @State var categoryId: Int
     @State var source: String
     @State private var showingAlert = false
@@ -38,7 +36,6 @@ struct SetDefaultsNS: View {
         self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         self.source = defaults.object(forKey: "defaultSource") as? String ?? ""
-        self.statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
     }
 
     var body: some View {
@@ -54,12 +51,6 @@ struct SetDefaultsNS: View {
                         
                         Section(header: Text("Source")) {
                             TextField("Enter Source", text: $source)
-                        }
-
-                        Section(header: Text("Status")) {
-                            Picker("Pick Status", selection: $statusId, content: {
-                                ForEach(availableStatus, id: \.code) { Text($0.name) }
-                            })
                         }
                         
                         Section(header: Text("Category")) {
@@ -152,13 +143,6 @@ struct SetDefaultsNS: View {
                     availableCategories = v
                 }
                 
-                if let vd = jsonDict["status"] as? [[String: Any]] {
-                    let v = status(json: vd)
-                    print("status:  \(v)")
-                    availableStatus = v
-                }
-                
-                
             }
         }
         
@@ -243,7 +227,6 @@ struct SetDefaultsNS: View {
         defaults.set(vendorId, forKey: "defaultVendorId")
         defaults.set(categoryId, forKey: "defaultCategoryId")
         defaults.set(source, forKey: "defaultSource")
-        defaults.set(statusId, forKey: "defaultStatusId")
     }
  
 /*    func createOrder() {

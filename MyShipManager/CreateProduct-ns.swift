@@ -27,8 +27,6 @@ struct CreateProductNS: View {
 
 
     @State var availableCategories = [Category]()
-    @State var availableStatus = [Status]()
-    @State var statusId: Int = 0
     @State var availableVendors = [Vendor]()
     @State var newVendor = ""
     @State var vendorId: Int = 0
@@ -240,6 +238,7 @@ struct CreateProductNS: View {
         self.numStyles = 0
         self.numPacks = 0
         self.sku = ""
+        self.lastScan = ""
         self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         if defaults.object(forKey: "defaultMobileStr") == nil {
@@ -273,12 +272,6 @@ struct CreateProductNS: View {
                     let v = categories(json: vd)
                     print("categories:  \(v)")
                     availableCategories = v
-                }
-                
-                if let vd = jsonDict["status"] as? [[String: Any]] {
-                    let v = status(json: vd)
-                    print("status:  \(v)")
-                    availableStatus = v
                 }
             }
         }
@@ -337,6 +330,9 @@ struct CreateProductNS: View {
         }
         if numStyles == 0 {
             msg = "Please enter number of styles"
+        }
+        if images.count == 0 {
+            msg = "Please upload an image"
         }
         return msg
     }

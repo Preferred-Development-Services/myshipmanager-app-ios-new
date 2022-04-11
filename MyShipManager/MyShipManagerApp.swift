@@ -117,6 +117,15 @@ struct MyShipManagerApp: App {
                         Text("Account".uppercased())
                             .accentColor(.brandPrimary)
                     }
+                    NavigationView {
+                        ShowHelp()
+                            .navigationTitle("Help")
+                    }
+                    .tabItem {
+                        Image(systemName: "questionmark.circle.fill")
+                        Text("Help".uppercased())
+                            .accentColor(.brandPrimary)
+                    }
 /*
                     NavigationView{
                         Account()
