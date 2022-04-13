@@ -31,6 +31,8 @@ struct SetDefaults: View {
     @State var categoryId: Int
     @State var source: String
     @State var tags: String
+    @State var colors: String
+    @State var sizes: String
     @State var tax: String
     @State var sku: String
     @State private var showingAlert = false
@@ -39,6 +41,8 @@ struct SetDefaults: View {
         self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         self.source = defaults.object(forKey: "defaultSource") as? String ?? ""
+        self.colors = defaults.object(forKey: "defaultColors") as? String ?? ""
+        self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
         self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
@@ -57,6 +61,12 @@ struct SetDefaults: View {
                         
                         Section(header: Text("Source")) {
                             TextField("Enter Source", text: $source)
+                        }
+                        Section(header: Text("Colors")) {
+                            TextField("Enter Colors", text: $colors)
+                        }
+                        Section(header: Text("Sizes")) {
+                            TextField("Enter Sizes", text: $sizes)
                         }
                         Section(header: Text("Tax")) {
                             Picker("Charge tax on this product", selection: $tax, content: {
@@ -249,6 +259,8 @@ struct SetDefaults: View {
         defaults.set(tags, forKey: "defaultTags")
         defaults.set(sku, forKey: "defaultSku")
         defaults.set(tax, forKey: "defaultTax")
+        defaults.set(colors, forKey: "defaultColors")
+        defaults.set(sizes, forKey: "defaultSizes")
     }
  
 /*    func createOrder() {

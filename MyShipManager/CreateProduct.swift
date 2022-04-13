@@ -18,26 +18,32 @@ struct CreateProduct: View {
     @State var showPicker = false
     @State var pickerSource = UIImagePickerController.SourceType.camera
     @State var images = [UIImage]()
+    @State var colorArray = [String]()
+    @State var sizeArray = [String]()
 
     @State var pendingImages = 0
     @State var submitting = false
+    @State var colors = ""
+    @State var sizes = ""
     @State var failureMessage = ""
+    @State var title = ""
+    @State var description = ""
     @State fileprivate var result = SubmitResult.none
 
 //    @State var lastScan = ""
     @State var availableCategories = [Category]()
     @State var availableVendors = [Vendor]()
-    @State var newVendor = ""
-    @State var vendorId: Int = 0
+    @State var varieties = [Variety]()
     @State var categoryId: Int = 0
-    @State var source: String = ""
     @State var scannedText: String = ""
     @State var tags: String = ""
     @State var tax: String = "N"
     @State var cost: Double = 0.0
+    @State var qty: String = ""
     @State var costText:String = ""
+    @State var price: Double = 0.0
+    @State var priceText:String = ""
     @State var sku: String = ""
-    @State var estDate: Date = Date()
     @State var mobileStr: String = ""
     @State var showingSuccessAlert = false
     @State var showingErrorAlert = false
@@ -45,6 +51,7 @@ struct CreateProduct: View {
     @State var alertMessage = ""
     @State var loaded = false;
     @State var showScanner = false
+    @State var showVarieties = false
     @ObservedObject var recognizedContent = RecognizedContent()
     @State private var isRecognizing = false
     
@@ -54,22 +61,12 @@ struct CreateProduct: View {
                 VStack {
                     Form {
                         Group {
-                            Section(header: Text("Vendor")) {
-                                Picker("Pick Vendor", selection: $vendorId, content: {
-                                    ForEach(availableVendors, id: \.code) { Text($0.name) }
-                                })
-                                TextField("or Quick Create Vendor", text: $newVendor)
+                            Section(header: Text("Title")) {
+                                TextField("Enter title", text: $title)
                             }
-                            
-                            Section(header: Text("Source")) {
-                                TextField("Enter Source", text: $source)
-                            }
-                            
-                            Section(header: Text("Estimated Ship Date:")) {
-                                DatePicker("Date",selection: $estDate,in: Date()..., displayedComponents: .date
-                                    )
-                            }
-
+                            Section(header: Text("Description")) {
+                                TextEditor(text: $description)
+                                                 }
                             Section(header: Text("Tax")) {
                                 Picker("Charge tax on this product", selection: $tax, content: {
                                         Text("No").tag("N")
@@ -82,6 +79,12 @@ struct CreateProduct: View {
                                     ForEach(availableCategories, id: \.code) { Text($0.name) }
                                 })
                             }
+                        }
+                        Section(header: Text("Colors (comma  separated)")) {
+                            TextField("Enter colors", text: $colors)
+                        }
+                        Section(header: Text("Sizes (comma separated)")) {
+                            TextField("Enter sizes", text: $sizes)
                         }
                         Section(header: Text("Tags")) {
                             TextField("Enter tags", text: $tags)
@@ -105,8 +108,21 @@ struct CreateProduct: View {
                                 } onCommit: {}
                                     .keyboardType(.decimalPad)
                             }
+                            Section(header: Text("Retail Price")) {
+                                TextField("Enter Retail Price", text: $priceText) { editing in
+                                    if !editing {
+                                        priceText = priceText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                        price = fabs(Double(priceText) ?? 0)
+                                        priceText = String(format: "%.2f", cost)
+                                        price = Double(priceText) ?? 0
+                                    }
+                                } onCommit: {}
+                                    .keyboardType(.decimalPad)
+                            }
+                            TextField("Enter quantity", text: $qty).keyboardType(.numberPad)
                         }
-                        
+
+
                         Section(header: Text("Images")) {
                             ForEach(0..<images.count, id: \.self) {
                                 Image(uiImage: images[$0])
@@ -138,6 +154,12 @@ struct CreateProduct: View {
                                     }
                             }
                         }
+                        Button("Create Varieties", action:{
+                            generateVarieties()
+                            print(self.colors)
+                            print(self.sizes)
+                            self.showVarieties=true
+                        })
                         Button("Scan Tags", action:{
                             lastScan = ""
                             self.showScanner=true
@@ -203,6 +225,9 @@ struct CreateProduct: View {
         .alert(isPresented: $showingSuccessAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
+        .sheet(isPresented: $showVarieties, content: {
+            VarietiesView(varieties: $varieties)
+        })
         .sheet(isPresented: $showScanner, content: {
                 TextScannerView { result in
                     switch result {
@@ -235,16 +260,21 @@ struct CreateProduct: View {
         print("Initialize")
         self.cost = 0.0
         self.costText = ""
+        self.price = 0.0
+        self.qty = ""
+        self.priceText = ""
         self.lastScan = ""
+        self.title = ""
+        self.description = ""
         self.defaults.set("", forKey: "lastScan")
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
-        self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
-        self.source = defaults.object(forKey: "defaultSource") as? String ?? ""
         self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
+        self.colors = defaults.object(forKey: "defaultColors") as? String ?? ""
+        self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
         if defaults.object(forKey: "defaultMobileStr") == nil {
             defaults.set(randomString(of:50), forKey: "defaultMobileStr")
         }
@@ -252,6 +282,11 @@ struct CreateProduct: View {
         if defaults.object(forKey: "productsAdded") == nil {
             defaults.set(false, forKey: "productsAdded")
         }
+    }
+    
+    func generateVarieties() {
+        colorArray = colors.components(separatedBy: ",")
+        sizeArray = sizes.components(separatedBy: ",")
     }
     
     func loadListData() {
@@ -326,11 +361,17 @@ struct CreateProduct: View {
     
     func requiredFieldsEntered() -> String {
         var msg: String = ""
-        if vendorId == 0 {
-            msg = "Please select a vendor"
-        }
         if categoryId == 0 {
             msg = "Please select a category"
+        }
+        if cost == 0 {
+            msg = "Please select a default cost"
+        }
+        if price == 0 {
+            msg = "Please select a default retail price"
+        }
+        if title == "" {
+            msg = "Please enter a title"
         }
         if images.count == 0 {
             msg = "Please upload an image"
@@ -386,14 +427,17 @@ struct CreateProduct: View {
 
         let safeMobileStr = mobileStr.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeTax = tax
+        let safeTitle = title.addingPercentEncoding(withAllowedCharacters: allowed)!
+        let safeDesc = description.addingPercentEncoding(withAllowedCharacters: allowed)!
+        let safeSizes = sizes.addingPercentEncoding(withAllowedCharacters: allowed)!
+        let safeColors = colors.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeTags = tags.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeSku = sku.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeCategory = categoryId
         let safeCost = cost
-        let safeVendor = vendorId
-        let safeEstDate = dateToPHPString(estDate)
-        let safeSource = source.addingPercentEncoding(withAllowedCharacters: allowed)!
-        let payload = "mobileStr=\(safeMobileStr)&vendor=\(safeVendor)&cost=\(safeCost)&estDate=\(safeEstDate)&source=\(safeSource)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
+        let safePrice = price
+        let safeQty = qty
+        let payload = "title=\(safeTitle)&description=\(safeDesc)&mobileStr=\(safeMobileStr)&qty=\(safeQty)&colors=\(safeColors)&sizes=\(safeSizes)&cost=\(safeCost)&price=\(safePrice)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
         
         print("payload: \(payload)")
         

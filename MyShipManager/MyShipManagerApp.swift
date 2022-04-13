@@ -58,7 +58,7 @@ struct MyShipManagerApp: App {
                         Text("Product".uppercased())
                             .accentColor(.brandPrimary)
                     }
-/*
+
                     NavigationView {
                         CreateShipment()
                             .navigationTitle("Create Shipment")
@@ -68,7 +68,7 @@ struct MyShipManagerApp: App {
                         Text("Create".uppercased())
                             .accentColor(.brandPrimary)
                     }
-                    
+  /*
                     NavigationView {
                         TextScanView()
 
