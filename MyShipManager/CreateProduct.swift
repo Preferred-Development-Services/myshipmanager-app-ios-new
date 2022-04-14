@@ -33,7 +33,7 @@ struct CreateProduct: View {
 //    @State var lastScan = ""
     @State var availableCategories = [Category]()
     @State var availableVendors = [Vendor]()
-    @State var varieties =  [Variety]()
+    @State var variants =  [Variant]()
     @State var categoryId: Int = 0
     @State var scannedText: String = ""
     @State var tags: String = ""
@@ -51,7 +51,7 @@ struct CreateProduct: View {
     @State var alertMessage = ""
     @State var loaded = false;
     @State var showScanner = false
-    @State var showVarieties = false
+    @State var showVariants = false
     @ObservedObject var recognizedContent = RecognizedContent()
     @State private var isRecognizing = false
     
@@ -154,11 +154,11 @@ struct CreateProduct: View {
                                     }
                             }
                         }
-                        Button("Create Varieties", action:{
-                            generateVarieties()
+                        Button("Create Variants", action:{
+                            generateVariants()
                             print(self.colors)
                             print(self.sizes)
-                            self.showVarieties=true
+                            self.showVariants=true
                         })
                         Button("Scan Tags", action:{
                             lastScan = ""
@@ -225,11 +225,11 @@ struct CreateProduct: View {
         .alert(isPresented: $showingSuccessAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
-        .sheet(isPresented: $showVarieties, content: {
+        .sheet(isPresented: $showVariants, content: {
             VStack{
                 List {
-                    ForEach($varieties) { $variety in
-                        TextField("Color", text: $variety.color)
+                    ForEach($variants) { $variant in
+                        TextField("Color", text: $variant.color)
                     }
                 }
             }
@@ -290,22 +290,22 @@ struct CreateProduct: View {
         }
     }
     
-    func generateVarieties() {
-        varieties = [Variety]()
-        var oneVariety = Variety()
+    func generateVariants() {
+        variants = [Variant]()
+        var oneVariant = Variant()
         colorArray = colors.components(separatedBy: ",")
         sizeArray = sizes.components(separatedBy: ",")
         print("COLORARAY - \(colorArray)")
         print("SIZEARRAY - \(sizeArray)")
         for oneSize in 0...sizeArray.count-1 {
             for oneColor in 0...colorArray.count-1 {
-                oneVariety.color = self.colorArray[oneColor]
-                oneVariety.size = self.sizeArray[oneSize]
-                oneVariety.qty = Int(self.qty) ?? 0
-                oneVariety.cost = self.cost
-                oneVariety.price = self.price
-                oneVariety.sku = self.sku
-                varieties.append(oneVariety)
+                oneVariant.color = self.colorArray[oneColor]
+                oneVariant.size = self.sizeArray[oneSize]
+                oneVariant.qty = Int(self.qty) ?? 0
+                oneVariant.cost = self.cost
+                oneVariant.price = self.price
+                oneVariant.sku = self.sku
+                variants.append(oneVariant)
             }
         }
     }

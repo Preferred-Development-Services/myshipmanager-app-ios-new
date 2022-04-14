@@ -106,7 +106,7 @@ struct BarcodeInfoPHP: Decodable {
     let color: String
 }
 
-struct Variety: Identifiable {
+struct Variant: Identifiable {
     let id = UUID()
     var color: String = ""
     var size: String = ""
@@ -116,9 +116,9 @@ struct Variety: Identifiable {
     var sku: String = ""
 }
 
-extension Variety {
+extension Variant {
     static let samples = [
-        Variety(color: "Red", size: "small", qty: 1, cost: 4.50, price: 6.50,sku: "sku10")
+        Variant(color: "Red", size: "small", qty: 1, cost: 4.50, price: 6.50,sku: "sku10")
     ]
 }
 
