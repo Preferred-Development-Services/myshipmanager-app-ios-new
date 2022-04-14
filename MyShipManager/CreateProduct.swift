@@ -33,7 +33,7 @@ struct CreateProduct: View {
 //    @State var lastScan = ""
     @State var availableCategories = [Category]()
     @State var availableVendors = [Vendor]()
-    @State var varieties = [Variety]()
+    @State var varieties =  [Variety]()
     @State var categoryId: Int = 0
     @State var scannedText: String = ""
     @State var tags: String = ""
@@ -226,7 +226,13 @@ struct CreateProduct: View {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
         .sheet(isPresented: $showVarieties, content: {
-            VarietiesView(varieties: $varieties)
+            VStack{
+                List {
+                    ForEach($varieties) { $variety in
+                        TextField("Color", text: $variety.color)
+                    }
+                }
+            }
         })
         .sheet(isPresented: $showScanner, content: {
                 TextScannerView { result in
@@ -285,8 +291,23 @@ struct CreateProduct: View {
     }
     
     func generateVarieties() {
+        varieties = [Variety]()
+        var oneVariety = Variety()
         colorArray = colors.components(separatedBy: ",")
         sizeArray = sizes.components(separatedBy: ",")
+        print("COLORARAY - \(colorArray)")
+        print("SIZEARRAY - \(sizeArray)")
+        for oneSize in 0...sizeArray.count-1 {
+            for oneColor in 0...colorArray.count-1 {
+                oneVariety.color = self.colorArray[oneColor]
+                oneVariety.size = self.sizeArray[oneSize]
+                oneVariety.qty = Int(self.qty) ?? 0
+                oneVariety.cost = self.cost
+                oneVariety.price = self.price
+                oneVariety.sku = self.sku
+                varieties.append(oneVariety)
+            }
+        }
     }
     
     func loadListData() {
