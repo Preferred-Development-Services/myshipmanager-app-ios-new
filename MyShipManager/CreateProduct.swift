@@ -12,6 +12,7 @@ fileprivate enum SubmitResult {
     case none, fail, success
 }
 
+
 struct CreateProduct: View {
     let defaults = UserDefaults.standard
     @AppStorage("lastScan") var lastScan: String = ""
@@ -34,6 +35,7 @@ struct CreateProduct: View {
     @State var availableCategories = [Category]()
     @State var availableVendors = [Vendor]()
     @State var variants =  [Variant]()
+
     @State var categoryId: Int = 0
     @State var scannedText: String = ""
     @State var tags: String = ""
@@ -215,6 +217,8 @@ struct CreateProduct: View {
         .navigationBarItems(
             leading: Button("Hide keyboard") {
                 hideKeyboard()
+                print("HERE")
+                print(defaults.object(forKey: "currentVariants"))
             },
             trailing: Button("Add") {
                 startSubmit()
@@ -224,7 +228,7 @@ struct CreateProduct: View {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
         .sheet(isPresented: $showVariants, content: {
-              VariantsListView()
+            VariantsListView(showVariants: $showVariants)
         })
         .sheet(isPresented: $showScanner, content: {
                 TextScannerView { result in
@@ -251,6 +255,7 @@ struct CreateProduct: View {
                 }
             })
     }
+
  
 
     

@@ -7,32 +7,43 @@
 
 import SwiftUI
 
-private class VariantsViewModel: ObservableObject {
+private class VariantsViewModel: ObservableObject{
 
     @Published var variants: [Variant]
     
     init() {
         let savedVariants = defaults.object(forKey: "currentVariants") as? Data
         let decoder = JSONDecoder()
-        self.variants = try! decoder.decode([Variant].self, from: savedVariants!) ?? []
+        self.variants = try! decoder.decode([Variant].self, from: savedVariants!)
+        defaults.removeObject(forKey: "currentVariants")
         print("VARIANTA")
         print(self.variants)
+    }
+    func save() {
+        print("VARIANTS \(self.variants)")
+        let jsonData = try! JSONEncoder().encode(self.variants);
+        let jsonString = String(data: jsonData, encoding: .utf8)!
+        print("JSONDATA \(jsonString)")
+        defaults.set(jsonString, forKey: "currentVariants")
+        print(defaults.object(forKey: "currentVariants"))
     }
 }
 
 
 struct VariantsListView: View {
+    @Binding var showVariants: Bool
     @StateObject fileprivate var viewModel = VariantsViewModel()
 
+
     var body: some View {
-        NavigationView {
-            List($viewModel.variants) { $variant in
-                EditableVariantRowView(variant: $variant)
-            }
+        Button("Save", action: {
+            viewModel.save()
+            showVariants = false
+        })
+        List($viewModel.variants) { $variant in
+            EditableVariantRowView(variant: $variant)
         }
-
     }
-
 }
 
 
@@ -69,8 +80,8 @@ private struct EditableVariantRowView: View {
     }
 }
 
-struct VariantsListView_Previews: PreviewProvider {
-    static var previews: some View {
-        VariantsListView()
-    }
-}
+//struct VariantsListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VariantsListView($showVariants)
+//  }
+//}
