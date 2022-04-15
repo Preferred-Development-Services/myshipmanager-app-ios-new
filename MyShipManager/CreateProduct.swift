@@ -54,6 +54,7 @@ struct CreateProduct: View {
     @State var loaded = false;
     @State var showScanner = false
     @State var showVariants = false
+    @State var variantsSaved = false
     @ObservedObject var recognizedContent = RecognizedContent()
     @State private var isRecognizing = false
     
@@ -83,10 +84,12 @@ struct CreateProduct: View {
                             }
                         }
                         Section(header: Text("Colors (comma  separated)")) {
-                            TextField("Enter colors", text: $colors)
+                            TextField("Enter colors", text: $colors).disabled(variantsSaved == true)
+                                .foregroundColor(variantsSaved ? Color.gray: Color.black)
                         }
                         Section(header: Text("Sizes (comma separated)")) {
-                            TextField("Enter sizes", text: $sizes)
+                            TextField("Enter sizes", text: $sizes).disabled(variantsSaved == true)
+                                .foregroundColor(variantsSaved ? Color.gray: Color.black)
                         }
                         Section(header: Text("Tags")) {
                             TextField("Enter tags", text: $tags)
@@ -121,9 +124,23 @@ struct CreateProduct: View {
                                 } onCommit: {}
                                     .keyboardType(.decimalPad)
                             }
-                            TextField("Enter quantity", text: $qty).keyboardType(.numberPad)
+                            Section(header: Text("Quantity")) {
+                                TextField("Enter quantity", text: $qty).keyboardType(.numberPad)
+                            }
                         }
-
+                        Section(header: Text("Variants")) {
+                            Button("Edit Variants", action:{
+                                generateVariants()
+                                self.showVariants=true
+                            })
+                        }
+                        Section(header: Text("Scans")) {
+                            Button("Scan Tags", action:{
+                                lastScan = ""
+                                self.showScanner=true
+                            })
+                            TextEditor(text:$lastScan)
+                        }
 
                         Section(header: Text("Images")) {
                             ForEach(0..<images.count, id: \.self) {
@@ -156,18 +173,7 @@ struct CreateProduct: View {
                                     }
                             }
                         }
-                        Button("Create Variants", action:{
-                            generateVariants()
-                            self.showVariants=true
-                        })
-                        Button("Scan Tags", action:{
-                            lastScan = ""
-                            self.showScanner=true
-                        })
 
-                        Section(header: Text("Scanned Label Text")) {
-                            TextEditor(text:$lastScan)
-                        }
 
                     }
 /*                    .toolbar {
@@ -228,7 +234,7 @@ struct CreateProduct: View {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
         .sheet(isPresented: $showVariants, content: {
-            VariantsListView(showVariants: $showVariants)
+            VariantsListView(showVariants: $showVariants,variantsSaved: $variantsSaved)
         })
         .sheet(isPresented: $showScanner, content: {
                 TextScannerView { result in
@@ -269,6 +275,7 @@ struct CreateProduct: View {
         self.lastScan = ""
         self.title = ""
         self.description = ""
+        self.defaults.removeObject(forKey: "currentVariants")
         self.defaults.set("", forKey: "lastScan")
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
@@ -289,32 +296,35 @@ struct CreateProduct: View {
     
     func generateVariants() {
         print(variants)
-        variants = [Variant]()
-        var oneVariant = Variant()
-        colorArray = colors.components(separatedBy: ",")
-        sizeArray = sizes.components(separatedBy: ",")
-        for oneSize in 0...sizeArray.count-1 {
-            for oneColor in 0...colorArray.count-1 {
-                oneVariant = Variant()
-                oneVariant.color = self.colorArray[oneColor]
-                oneVariant.size = self.sizeArray[oneSize]
-                oneVariant.qty = Int(self.qty) ?? 0
-                oneVariant.qtyText = String(oneVariant.qty)
-                oneVariant.cost = self.cost
-                oneVariant.costText = String(oneVariant.cost)
-                oneVariant.price = self.price
-                oneVariant.priceText = String(oneVariant.price)
-                oneVariant.sku = self.sku
-                variants.append(oneVariant)
+        let check = defaults.object(forKey: "currentVariants")
+        print("CHECK \(check)")
+        if variants.count == 0 || check == nil {
+print("IN IF")
+            variants = [Variant]()
+            var oneVariant = Variant()
+            colorArray = colors.components(separatedBy: ",")
+            sizeArray = sizes.components(separatedBy: ",")
+            for oneSize in 0...sizeArray.count-1 {
+                for oneColor in 0...colorArray.count-1 {
+                    oneVariant = Variant()
+                    oneVariant.color = self.colorArray[oneColor]
+                    oneVariant.size = self.sizeArray[oneSize]
+                    oneVariant.qty = Int(self.qty) ?? 0
+                    oneVariant.qtyText = String(oneVariant.qty)
+                    oneVariant.cost = self.cost
+                    oneVariant.costText = String(oneVariant.cost)
+                    oneVariant.price = self.price
+                    oneVariant.priceText = String(oneVariant.price)
+                    oneVariant.sku = self.sku
+                    variants.append(oneVariant)
+                }
             }
+            let jsonData = try! JSONEncoder().encode(variants);
+     //       let jsonString = String(data: jsonData, encoding: .utf8)!
+            defaults.set(jsonData, forKey: "currentVariants")
+            print("JSON! \(jsonData)")
+            print(defaults.object(forKey: "currentVariants") ?? [])
         }
-    print("VARIANTS")
-    print(variants)
-        let jsonData = try! JSONEncoder().encode(variants);
- //       let jsonString = String(data: jsonData, encoding: .utf8)!
-        defaults.set(jsonData, forKey: "currentVariants")
-    print("EXISTING GENERATE")
-        print(defaults.object(forKey: "currentVariants") ?? [])
     }
     
     func loadListData() {

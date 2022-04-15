@@ -13,33 +13,45 @@ private class VariantsViewModel: ObservableObject{
     
     init() {
         let savedVariants = defaults.object(forKey: "currentVariants") as? Data
+        print("JSON2 \(savedVariants)")
         let decoder = JSONDecoder()
         self.variants = try! decoder.decode([Variant].self, from: savedVariants!)
-        defaults.removeObject(forKey: "currentVariants")
+ //       defaults.removeObject(forKey: "currentVariants")
         print("VARIANTA")
         print(self.variants)
     }
+    
     func save() {
         print("VARIANTS \(self.variants)")
         let jsonData = try! JSONEncoder().encode(self.variants);
-        let jsonString = String(data: jsonData, encoding: .utf8)!
-        print("JSONDATA \(jsonString)")
-        defaults.set(jsonString, forKey: "currentVariants")
-        print(defaults.object(forKey: "currentVariants"))
+ //       let jsonString = String(data: jsonData, encoding: .utf8)!
+        defaults.set(jsonData, forKey: "currentVariants")
     }
+    
+    
 }
 
 
 struct VariantsListView: View {
     @Binding var showVariants: Bool
+    @Binding var variantsSaved: Bool
     @StateObject fileprivate var viewModel = VariantsViewModel()
 
 
     var body: some View {
-        Button("Save", action: {
-            viewModel.save()
-            showVariants = false
-        })
+        HStack {
+            Button("Reset", action: {
+                showVariants = false
+                variantsSaved = false
+                defaults.removeObject(forKey: "currentVariants")
+            })
+            Spacer()
+            Button("Save", action: {
+                viewModel.save()
+                showVariants = false
+                variantsSaved = true
+            })
+        }.padding()
         List($viewModel.variants) { $variant in
             EditableVariantRowView(variant: $variant)
         }
