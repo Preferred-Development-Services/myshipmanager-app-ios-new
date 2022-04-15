@@ -223,8 +223,6 @@ struct CreateProduct: View {
         .navigationBarItems(
             leading: Button("Hide keyboard") {
                 hideKeyboard()
-                print("HERE")
-                print(defaults.object(forKey: "currentVariants"))
             },
             trailing: Button("Add") {
                 startSubmit()
@@ -297,9 +295,7 @@ struct CreateProduct: View {
     func generateVariants() {
         print(variants)
         let check = defaults.object(forKey: "currentVariants")
-        print("CHECK \(check)")
         if variants.count == 0 || check == nil {
-print("IN IF")
             variants = [Variant]()
             var oneVariant = Variant()
             colorArray = colors.components(separatedBy: ",")

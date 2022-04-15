@@ -176,7 +176,7 @@ struct CreateShipment: View {
         vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
-        source = defaults.object(forKey: "defaultSource") as? String ?? "" as! String
+        source = defaults.object(forKey: "defaultSource") as! String 
     }
     
     func loadListData() {

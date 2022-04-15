@@ -13,7 +13,6 @@ private class VariantsViewModel: ObservableObject{
     
     init() {
         let savedVariants = defaults.object(forKey: "currentVariants") as? Data
-        print("JSON2 \(savedVariants)")
         let decoder = JSONDecoder()
         self.variants = try! decoder.decode([Variant].self, from: savedVariants!)
  //       defaults.removeObject(forKey: "currentVariants")
