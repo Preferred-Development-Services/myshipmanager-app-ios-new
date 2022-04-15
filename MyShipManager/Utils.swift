@@ -39,6 +39,17 @@ func randomString(of length: Int) -> String {
     return s
 }
 
+func ArraytoJson(arrayObject: [Any]) -> String? {
+    do {
+        let jsonData: Data = try JSONSerialization.data(withJSONObject: arrayObject, options: [])
+        if let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) {
+            return jsonString as String
+        }
+    } catch let error as NSError {
+        print ("Array convertIntoJson - \(error.description)")
+    }
+    return nil
+}
 
 // HWS below:
 extension UIColor {

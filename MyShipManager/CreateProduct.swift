@@ -113,7 +113,7 @@ struct CreateProduct: View {
                                     if !editing {
                                         priceText = priceText.trimmingCharacters(in: .whitespacesAndNewlines)
                                         price = fabs(Double(priceText) ?? 0)
-                                        priceText = String(format: "%.2f", cost)
+                                        priceText = String(format: "%.2f", price)
                                         price = Double(priceText) ?? 0
                                     }
                                 } onCommit: {}
@@ -156,8 +156,6 @@ struct CreateProduct: View {
                         }
                         Button("Create Variants", action:{
                             generateVariants()
-                            print(self.colors)
-                            print(self.sizes)
                             self.showVariants=true
                         })
                         Button("Scan Tags", action:{
@@ -226,13 +224,7 @@ struct CreateProduct: View {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
         .sheet(isPresented: $showVariants, content: {
-            VStack{
-                List {
-                    ForEach($variants) { $variant in
-                        TextField("Color", text: $variant.color)
-                    }
-                }
-            }
+              VariantsListView()
         })
         .sheet(isPresented: $showScanner, content: {
                 TextScannerView { result in
@@ -291,23 +283,33 @@ struct CreateProduct: View {
     }
     
     func generateVariants() {
+        print(variants)
         variants = [Variant]()
         var oneVariant = Variant()
         colorArray = colors.components(separatedBy: ",")
         sizeArray = sizes.components(separatedBy: ",")
-        print("COLORARAY - \(colorArray)")
-        print("SIZEARRAY - \(sizeArray)")
         for oneSize in 0...sizeArray.count-1 {
             for oneColor in 0...colorArray.count-1 {
+                oneVariant = Variant()
                 oneVariant.color = self.colorArray[oneColor]
                 oneVariant.size = self.sizeArray[oneSize]
                 oneVariant.qty = Int(self.qty) ?? 0
+                oneVariant.qtyText = String(oneVariant.qty)
                 oneVariant.cost = self.cost
+                oneVariant.costText = String(oneVariant.cost)
                 oneVariant.price = self.price
+                oneVariant.priceText = String(oneVariant.price)
                 oneVariant.sku = self.sku
                 variants.append(oneVariant)
             }
         }
+    print("VARIANTS")
+    print(variants)
+        let jsonData = try! JSONEncoder().encode(variants);
+ //       let jsonString = String(data: jsonData, encoding: .utf8)!
+        defaults.set(jsonData, forKey: "currentVariants")
+    print("EXISTING GENERATE")
+        print(defaults.object(forKey: "currentVariants") ?? [])
     }
     
     func loadListData() {
