@@ -130,8 +130,9 @@ struct CreateProduct: View {
                         }
                         Section(header: Text("Variants")) {
                             Button("Edit Variants", action:{
-                                generateVariants()
-                                self.showVariants=true
+                                if generateVariants() {
+                                  self.showVariants=true
+                                }
                             })
                         }
                         Section(header: Text("Scans")) {
@@ -232,7 +233,7 @@ struct CreateProduct: View {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
         }
         .sheet(isPresented: $showVariants, content: {
-            VariantsListView(showVariants: $showVariants,variantsSaved: $variantsSaved)
+                VariantsListView(showVariants: $showVariants,variantsSaved: $variantsSaved)
         })
         .sheet(isPresented: $showScanner, content: {
                 TextScannerView { result in
@@ -292,35 +293,53 @@ struct CreateProduct: View {
         }
     }
     
-    func generateVariants() {
+    func generateVariants() -> Bool {
         print(variants)
-        let check = defaults.object(forKey: "currentVariants")
-        if variants.count == 0 || check == nil {
-            variants = [Variant]()
-            var oneVariant = Variant()
-            colorArray = colors.components(separatedBy: ",")
-            sizeArray = sizes.components(separatedBy: ",")
-            for oneSize in 0...sizeArray.count-1 {
-                for oneColor in 0...colorArray.count-1 {
-                    oneVariant = Variant()
-                    oneVariant.color = self.colorArray[oneColor]
-                    oneVariant.size = self.sizeArray[oneSize]
-                    oneVariant.qty = Int(self.qty) ?? 0
-                    oneVariant.qtyText = String(oneVariant.qty)
-                    oneVariant.cost = self.cost
-                    oneVariant.costText = String(oneVariant.cost)
-                    oneVariant.price = self.price
-                    oneVariant.priceText = String(oneVariant.price)
-                    oneVariant.sku = self.sku
-                    variants.append(oneVariant)
-                }
-            }
-            let jsonData = try! JSONEncoder().encode(variants);
-     //       let jsonString = String(data: jsonData, encoding: .utf8)!
-            defaults.set(jsonData, forKey: "currentVariants")
-            print("JSON! \(jsonData)")
-            print(defaults.object(forKey: "currentVariants") ?? [])
+        let errorMsg:String = requiredVariantFieldsEntered()
+        print(errorMsg)
+        if errorMsg != "" {
+            alertTitle = "Missing Field"
+            alertMessage = errorMsg
+            showingSuccessAlert = true
+            return false
         }
+        else {
+            let check = defaults.object(forKey: "currentVariants")
+            if variants.count == 0 || check == nil {
+                variants = [Variant]()
+                var oneVariant = Variant()
+                self.sku = self.sku.trimmingCharacters(in: .whitespacesAndNewlines)
+                if self.sku == "" {
+                    self.sku = "SKU"
+                }
+                colorArray = colors.components(separatedBy: ",")
+                sizeArray = sizes.components(separatedBy: ",")
+                var skucnt = 1
+                for oneSize in 0...sizeArray.count-1 {
+                    for oneColor in 0...colorArray.count-1 {
+                        oneVariant = Variant()
+                        oneVariant.color = self.colorArray[oneColor]
+                        oneVariant.size = self.sizeArray[oneSize]
+                        oneVariant.qty = Int(self.qty) ?? 0
+                        oneVariant.qtyText = String(oneVariant.qty)
+                        oneVariant.costText = String(format: "%.2f", oneVariant.cost)
+                        oneVariant.cost = self.cost
+                        oneVariant.costText = String(format: "%.2f", oneVariant.cost)
+                        oneVariant.price = self.price
+                        oneVariant.priceText = String(format: "%.2f", oneVariant.price)
+                        oneVariant.sku = self.sku + String(skucnt)
+                        skucnt = skucnt + 1
+                        variants.append(oneVariant)
+                    }
+                }
+                let jsonData = try! JSONEncoder().encode(variants);
+     //       let jsonString = String(data: jsonData, encoding: .utf8)!
+                defaults.set(jsonData, forKey: "currentVariants")
+                print("JSON! \(jsonData)")
+                print(defaults.object(forKey: "currentVariants") ?? [])
+            }
+        }
+        return true
     }
     
     func loadListData() {
@@ -412,6 +431,21 @@ struct CreateProduct: View {
         }
         return msg
     }
+    
+    func requiredVariantFieldsEntered() -> String {
+        var msg: String = ""
+        if cost == 0 {
+            msg = "Please select a default cost"
+        }
+        if price == 0 {
+            msg = "Please select a default retail price"
+        }
+        if colors == "" && sizes == "" {
+            msg = "Please enter colors and/or sizes"
+        }
+        return msg
+    }
+    
 
     func uploadImages(initial: Bool) {
         

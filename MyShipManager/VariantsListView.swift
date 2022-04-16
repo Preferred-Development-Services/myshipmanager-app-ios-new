@@ -67,11 +67,12 @@ private struct EditableVariantRowView: View {
             Group {
                 Text("\(variant.color) / \(variant.size)")
                     .foregroundColor(Color.red)
-                HStack {
+ /*               HStack {
                   Text("SKU: ")
                     TextField("sku", text: $variant.sku)
                         .textFieldStyle(.roundedBorder)
                 }
+*/
                 HStack {
                     Text("Cost: ")
                     TextField("Enter Cost", text: $variant.costText) { editing in
@@ -100,7 +101,14 @@ private struct EditableVariantRowView: View {
                 }
                 HStack {
                   Text("Quantity: ")
-                    TextField("Enter Quantity", text: $variant.qtyText)
+                    TextField("Enter Quantity", text: $variant.qtyText) { editing in
+                    if !editing {
+                        variant.qtyText = variant.qtyText.trimmingCharacters(in: .whitespacesAndNewlines)
+                        if variant.qtyText == "" {
+                            variant.qtyText = "0"
+                        }
+                    }
+                } onCommit: {}
                     .keyboardType(.numberPad)
                     .textFieldStyle(.roundedBorder)
                 }
