@@ -66,26 +66,44 @@ private struct EditableVariantRowView: View {
         VStack {
             Group {
                 Text("\(variant.color) / \(variant.size)")
+                    .foregroundColor(Color.red)
                 HStack {
                   Text("SKU: ")
-                  TextField("sku", text: $variant.sku)
+                    TextField("sku", text: $variant.sku)
+                        .textFieldStyle(.roundedBorder)
                 }
                 HStack {
-                  Text("Cost: ")
-                      TextField("Enter Cost", text: $variant.costText)
-                      .keyboardType(.decimalPad)
+                    Text("Cost: ")
+                    TextField("Enter Cost", text: $variant.costText) { editing in
+                        if !editing {
+                            variant.costText = variant.costText.trimmingCharacters(in: .whitespacesAndNewlines)
+                            variant.cost = fabs(Double(variant.costText) ?? 0)
+                            variant.costText = String(format: "%.2f", variant.cost)
+                            variant.cost = Double(variant.costText) ?? 0
+                        }
+                    } onCommit: {}
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(.roundedBorder)
                 }
                 HStack {
-                  Text("Retail Price: ")
-                    TextField("Enter Retail Price", text: $variant.priceText)
-                    .keyboardType(.decimalPad)
+                    Text("Retail Price: ")
+                    TextField("Enter Retail Price", text: $variant.priceText) { editing in
+                        if !editing {
+                            variant.priceText = variant.priceText.trimmingCharacters(in: .whitespacesAndNewlines)
+                            variant.price = fabs(Double(variant.priceText) ?? 0)
+                            variant.priceText = String(format: "%.2f", variant.price)
+                            variant.price = Double(variant.priceText) ?? 0
+                        }
+                    } onCommit: {}
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(.roundedBorder)
                 }
                 HStack {
                   Text("Quantity: ")
                     TextField("Enter Quantity", text: $variant.qtyText)
                     .keyboardType(.numberPad)
+                    .textFieldStyle(.roundedBorder)
                 }
-
             }
         }
     }

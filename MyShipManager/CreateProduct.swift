@@ -40,10 +40,10 @@ struct CreateProduct: View {
     @State var scannedText: String = ""
     @State var tags: String = ""
     @State var tax: String = "N"
-    @State var cost: Double = 0.0
+    @State var cost: Double = 0.00
     @State var qty: String = ""
     @State var costText:String = ""
-    @State var price: Double = 0.0
+    @State var price: Double = 0.00
     @State var priceText:String = ""
     @State var sku: String = ""
     @State var mobileStr: String = ""

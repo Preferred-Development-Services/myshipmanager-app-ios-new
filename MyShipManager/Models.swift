@@ -113,9 +113,9 @@ struct Variant: Identifiable, Codable {
     var size: String = ""
     var qty: Int = 0
     var qtyText: String = ""
-    var cost: Double = 0.0
+    var cost: Double = 0.00
     var costText = ""
-    var price: Double = 0.0
+    var price: Double = 0.00
     var priceText = ""
     var sku: String = ""
     
