@@ -41,7 +41,8 @@ struct CreateProduct: View {
     @State var tags: String = ""
     @State var tax: String = "N"
     @State var cost: Double = 0.00
-    @State var qty: String = ""
+    @State var qty: Int = 0
+    @State var qtyText: String = ""
     @State var costText:String = ""
     @State var price: Double = 0.00
     @State var priceText:String = ""
@@ -125,7 +126,8 @@ struct CreateProduct: View {
                                     .keyboardType(.decimalPad)
                             }
                             Section(header: Text("Quantity")) {
-                                TextField("Enter quantity", text: $qty).keyboardType(.numberPad)
+                                TextField("Enter quantity", text: $qtyText)
+                                    .keyboardType(.numberPad)
                             }
                         }
                         Section(header: Text("Variants")) {
@@ -269,7 +271,8 @@ struct CreateProduct: View {
         self.cost = 0.0
         self.costText = ""
         self.price = 0.0
-        self.qty = ""
+        self.qty = 0
+        self.qtyText = ""
         self.priceText = ""
         self.lastScan = ""
         self.title = ""
@@ -294,6 +297,7 @@ struct CreateProduct: View {
     }
     
     func generateVariants() -> Bool {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for:  nil)
         print(variants)
         let errorMsg:String = requiredVariantFieldsEntered()
         print(errorMsg)
@@ -320,8 +324,8 @@ struct CreateProduct: View {
                         oneVariant = Variant()
                         oneVariant.color = self.colorArray[oneColor]
                         oneVariant.size = self.sizeArray[oneSize]
-                        oneVariant.qty = Int(self.qty) ?? 0
-                        oneVariant.qtyText = String(oneVariant.qty)
+                        oneVariant.qty = Int(self.qtyText) ?? 0
+                        oneVariant.qtyText = self.qtyText
                         oneVariant.costText = String(format: "%.2f", oneVariant.cost)
                         oneVariant.cost = self.cost
                         oneVariant.costText = String(format: "%.2f", oneVariant.cost)
@@ -512,9 +516,9 @@ struct CreateProduct: View {
         let safeTags = tags.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeSku = sku.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeCategory = categoryId
-        let safeCost = cost
-        let safePrice = price
-        let safeQty = qty
+        let safeCost = costText
+        let safePrice = priceText
+        let safeQty = qtyText
         let payload = "title=\(safeTitle)&description=\(safeDesc)&mobileStr=\(safeMobileStr)&qty=\(safeQty)&colors=\(safeColors)&sizes=\(safeSizes)&cost=\(safeCost)&price=\(safePrice)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&addedVariants=\(addedVariants)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
         
         print("payload: \(payload)")

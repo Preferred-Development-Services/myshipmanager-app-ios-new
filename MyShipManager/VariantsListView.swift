@@ -65,8 +65,19 @@ private struct EditableVariantRowView: View {
     var body: some View {
         VStack {
             Group {
-                Text("\(variant.color) / \(variant.size)")
+                if variant.color != "" && variant.size != "" {
+                  Text("\(variant.color) / \(variant.size)")
                     .foregroundColor(Color.red)
+                }
+                else if variant.color != "" {
+                  Text("\(variant.color)")
+                    .foregroundColor(Color.red)
+                }
+                else {
+                  Text("\(variant.color)")
+                    .foregroundColor(Color.red)
+                }
+                    
  /*               HStack {
                   Text("SKU: ")
                     TextField("sku", text: $variant.sku)
@@ -107,6 +118,7 @@ private struct EditableVariantRowView: View {
                         if variant.qtyText == "" {
                             variant.qtyText = "0"
                         }
+                        variant.qty = Int(variant.qtyText) ?? 0
                     }
                 } onCommit: {}
                     .keyboardType(.numberPad)
