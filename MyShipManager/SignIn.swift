@@ -87,15 +87,16 @@ struct SignIn: View {
         submitting = true
         
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        
+  print("HERE1")
         let req = API.shared.loginRequest(reqUser: user, reqPass: pass)!
+print("HERE2")
         let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
             if let err = err {
                 showError(message: "Issue signing in")
                 print(err)
                 return
             }
-
+print("HERE3")
             if let data = data {
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
                 let jsonDict = json as! [String: Any]

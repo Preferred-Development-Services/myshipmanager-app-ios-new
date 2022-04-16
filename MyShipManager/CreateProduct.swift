@@ -487,8 +487,18 @@ struct CreateProduct: View {
  
  
     func createProduct() {
-        print("createProduct")
-        /*TODO: make backend accept JSON instead*/
+        var myVariants = [Variant]()
+        var addedVariants = "[]"
+        let savedVariants = defaults.object(forKey:
+                                                "currentVariants") as? Data
+        if savedVariants != nil {
+//        print("Variants \(savedVariants)")
+          let decoder = JSONDecoder()
+          myVariants = try! decoder.decode([Variant].self, from: savedVariants!)
+          let jsonData = try! JSONEncoder().encode(myVariants);
+          addedVariants = String(data: jsonData, encoding: .utf8)!
+        }
+
         var allowed = CharacterSet.alphanumerics
         allowed.insert(charactersIn: "-._~")
         
@@ -505,7 +515,7 @@ struct CreateProduct: View {
         let safeCost = cost
         let safePrice = price
         let safeQty = qty
-        let payload = "title=\(safeTitle)&description=\(safeDesc)&mobileStr=\(safeMobileStr)&qty=\(safeQty)&colors=\(safeColors)&sizes=\(safeSizes)&cost=\(safeCost)&price=\(safePrice)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
+        let payload = "title=\(safeTitle)&description=\(safeDesc)&mobileStr=\(safeMobileStr)&qty=\(safeQty)&colors=\(safeColors)&sizes=\(safeSizes)&cost=\(safeCost)&price=\(safePrice)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&addedVariants=\(addedVariants)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
         
         print("payload: \(payload)")
         
@@ -524,12 +534,13 @@ struct CreateProduct: View {
                     if rd == 1 {
                         defaults.set(randomString(of:50), forKey: "defaultMobileStr")
                         initializeFormVars()
+                        variantsSaved = false
+                        defaults.removeObject(forKey: "currentVariants")
                         images = [UIImage]()
                         defaults.set("Y", forKey: "productsCreated")
                         alertTitle = "Product Added"
                         alertMessage = "This product has been added"
                         showingSuccessAlert = true
-                        
                     }
                     else {
                         alertTitle = "Error adding product"
