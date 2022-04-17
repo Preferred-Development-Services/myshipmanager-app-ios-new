@@ -176,7 +176,29 @@ class API: ObservableObject {
         let urlUser = user.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let urlPass = pass.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         
+        
         guard let url = URL(string: base + proc + "?email=\(urlUser)&password=\(urlPass)&remember=0&app=1") else { return nil }
+        
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Accept")
+        req.setValue("application/x-www-form-urlencoded; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        
+        if sessionCookie != "" {
+            req.setValue(sessionCookie, forHTTPHeaderField: "Cookie")
+        }
+        
+        if bodyStr != "" {
+            req.httpBody = bodyStr.data(using: .utf8)
+        }
+        
+        return req
+    }
+    
+    func postNoAuth(proc: String, bodyStr: String) -> URLRequest? {
+
+        guard let url = URL(string: base + proc) else { return nil }
+        
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Accept")

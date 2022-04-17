@@ -51,7 +51,7 @@ struct ShipmentList: View {
         }
         .navigationBarItems(leading: Button(action: {
             loading = true
-            checkSession()
+ //           checkSession()
             getOrders()
         }) {
             Image(systemName: "arrow.clockwise")

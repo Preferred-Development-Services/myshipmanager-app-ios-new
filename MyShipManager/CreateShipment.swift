@@ -279,7 +279,7 @@ struct CreateShipment: View {
         print("uploading image \(pendingImages-1)")
         let image = images[pendingImages-1]
         
-        var req = API.shared.post(proc: "include/a-shipment-upload.php?filearraycode=10", bodyStr: "")!
+        var req = API.shared.postNoAuth(proc: "include/a-shipment-upload.php?filearraycode=10", bodyStr: "")!
         
         let boundary = UUID().uuidString
         req.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")

@@ -430,9 +430,7 @@ struct CreateProduct: View {
         if title == "" {
             msg = "Please enter a title"
         }
-        if images.count == 0 {
-            msg = "Please upload an image"
-        }
+
         return msg
     }
     

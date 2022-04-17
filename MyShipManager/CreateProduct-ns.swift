@@ -331,9 +331,7 @@ struct CreateProductNS: View {
         if numStyles == 0 {
             msg = "Please enter number of styles"
         }
-        if images.count == 0 {
-            msg = "Please upload an image"
-        }
+
         return msg
     }
 

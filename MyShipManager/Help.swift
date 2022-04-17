@@ -25,14 +25,28 @@ struct ShowHelp: View {
                     Text("Upcoming").font(.callout)
                     Spacer()
                 }
-                Text("This screen shows deliveries expected in the next 3 days").font(.caption)
-                
+                HStack {
+                    Text("This screen shows deliveries expected in the next 3 days").font(.caption)
+                    Spacer()
+                }
                 Text(" ")
                 HStack {
                     Text("Product").font(.callout)
                     Spacer()
                 }
-                Text("This screen shows shipments expected to be delivered in the next 3 days").font(.caption)
+                HStack {
+                    Text("This screen allows you to create a product").font(.caption)
+                    Spacer()
+                }
+                Text(" ")
+                HStack {
+                    Text("Shipment").font(.callout)
+                    Spacer()
+                }
+                HStack {
+                    Text("This screen allows you to create a shipment from previously created products").font(.caption)
+                    Spacer()
+                }
             }
             Group {
                 Text(" ")
@@ -40,8 +54,10 @@ struct ShowHelp: View {
                     Text("Defaults").font(.callout)
                     Spacer()
                 }
-                Text("This screen allows you to set defaults for certain fields when creating a product").font(.caption)
-
+                HStack {
+                    Text("This screen allows you to set defaults for certain fields when creating a product").font(.caption)
+                    Spacer()
+                }
                 Text(" ")
                 HStack {
                     Text("Account").font(.callout)
