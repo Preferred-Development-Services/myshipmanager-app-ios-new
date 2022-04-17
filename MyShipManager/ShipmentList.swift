@@ -62,7 +62,7 @@ struct ShipmentList: View {
         })
         .onAppear() {
             loading = true
-            checkSession()
+ //           checkSession()
             getOrders()
         }
     }

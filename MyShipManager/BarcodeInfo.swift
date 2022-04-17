@@ -55,7 +55,7 @@ struct BarcodeInfoView: View {
             }
             .padding()
             .onAppear() {
-                checkSession()
+ //               checkSession()
                 GetInfo()
             }
             if loading {
