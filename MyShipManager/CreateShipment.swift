@@ -128,6 +128,7 @@ struct CreateShipment: View {
             .onAppear() {
                 print("onAppear")
                 if !loaded {
+                    print("not loaded")
                     loadListData()
                     initializeFormVars()
                     loaded = true

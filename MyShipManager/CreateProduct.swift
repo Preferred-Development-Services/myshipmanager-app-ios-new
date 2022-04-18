@@ -15,6 +15,7 @@ fileprivate enum SubmitResult {
 
 struct CreateProduct: View {
     let defaults = UserDefaults.standard
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     @AppStorage("lastScan") var lastScan: String = ""
     @State var showPicker = false
     @State var pickerSource = UIImagePickerController.SourceType.camera
@@ -86,11 +87,11 @@ struct CreateProduct: View {
                         }
                         Section(header: Text("Colors (comma  separated)")) {
                             TextField("Enter colors", text: $colors).disabled(variantsSaved == true)
-                                .foregroundColor(variantsSaved ? Color.gray: Color.black)
+                                .foregroundColor(variantsSaved ? Color.gray : colorScheme == .dark ? .white : .black)
                         }
                         Section(header: Text("Sizes (comma separated)")) {
                             TextField("Enter sizes", text: $sizes).disabled(variantsSaved == true)
-                                .foregroundColor(variantsSaved ? Color.gray: Color.black)
+                                .foregroundColor(variantsSaved ? Color.gray : colorScheme == .dark ? .white : .black)
                         }
                         Section(header: Text("Tags")) {
                             TextField("Enter tags", text: $tags)
@@ -213,8 +214,11 @@ struct CreateProduct: View {
             .onAppear() {
                 print("onAppear")
                 if !loaded {
+                  print("notloaded")
                   loadListData()
+                  print("dataloaded")
                   initializeFormVars()
+                  print("initformvars")
                   loaded = true
               }
             }
@@ -268,6 +272,7 @@ struct CreateProduct: View {
     
     func initializeFormVars() {
         print("Initialize")
+ //       print(UserDefaults.standard.dictionaryRepresentation())
         self.cost = 0.0
         self.costText = ""
         self.price = 0.0
@@ -356,19 +361,19 @@ struct CreateProduct: View {
             }
             if let data = data {
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
-                let responseStr: String = String(data:data, encoding: .utf8) ?? ""
-                print("RESPONSE: \(responseStr)")
+//                let responseStr: String = String(data:data, encoding: .utf8) ?? ""
+ //               print("RESPONSE: \(responseStr)")
                 let jsonDict = json as! [String: Any]
                 
                 if let vd = jsonDict["vendors"] as? [[String: Any]] {
                     let v = vendors(json: vd)
-                    print("vendors:  \(v)")
+ //                   print("vendors:  \(v)")
                     availableVendors = v
                 }
                 
                 if let vd = jsonDict["categories"] as? [[String: Any]] {
                     let v = categories(json: vd)
-                    print("categories:  \(v)")
+ //                   print("categories:  \(v)")
                     availableCategories = v
                 }
                 

@@ -13,6 +13,8 @@ struct ForgotPassword: View {
     
     var body: some View {
         VStack {
+            Text("Please enter your email, and we'll send you a link to reset your password")
+                .font(.caption)
             TextField("email", text: $email) { _ in } onCommit: {
                 submit()
             }
@@ -31,7 +33,7 @@ struct ForgotPassword: View {
         
         let safeEmail = email.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         
-        let req = API.shared.post(proc: "include/a-recover_password.php", bodyStr: "email=\(safeEmail)")!
+        let req = API.shared.postNoAuth(proc: "include/a-recover_password.php", bodyStr: "email=\(safeEmail)")!
         let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
             print("TODO: handle error/success")
             DispatchQueue.main.async {

@@ -65,16 +65,18 @@ private struct EditableVariantRowView: View {
     var body: some View {
         VStack {
             Group {
-                if variant.color != "" && variant.size != "" {
-                  Text("\(variant.color) / \(variant.size)")
+                let trimmedColor = variant.color.trimmingCharacters(in: .whitespacesAndNewlines)
+                let trimmedSize = variant.size.trimmingCharacters(in: .whitespacesAndNewlines)
+                if trimmedColor != "" && trimmedSize != "" {
+                  Text("\(trimmedColor) / \(trimmedSize)")
                     .foregroundColor(Color.red)
                 }
-                else if variant.color != "" {
-                  Text("\(variant.color)")
+                else if trimmedColor != "" {
+                  Text("\(trimmedColor)")
                     .foregroundColor(Color.red)
                 }
                 else {
-                  Text("\(variant.color)")
+                  Text("\(trimmedSize)")
                     .foregroundColor(Color.red)
                 }
                     
