@@ -55,14 +55,7 @@ struct CreateProductNS: View {
             ZStack {
                 VStack {
                     Form {
-                        Group {
-                            Section(header: Text("Vendor")) {
-                                Picker("Pick Vendor", selection: $vendorId, content: {
-                                    ForEach(availableVendors, id: \.code) { Text($0.name) }
-                                })
-                                TextField("or Quick Create Vendor", text: $newVendor)
-                            }
-                            
+                        Group {                            
                             Section(header: Text("Category")) {
                                 Picker("Pick Category", selection: $categoryId, content: {
                                     ForEach(availableCategories, id: \.code) { Text($0.name) }
@@ -108,37 +101,7 @@ struct CreateProductNS: View {
                             }
                         }
                         
-                        Section(header: Text("Images")) {
-                            ForEach(0..<images.count, id: \.self) {
-                                Image(uiImage: images[$0])
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(alignment: .center)
-                                    .padding()
-                            }
-                            HStack {
-                                Image(systemName: "photo.fill.on.rectangle.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.brandPrimary)
-                                    .frame(height: 100)
-                                    .padding()
-                                    .onTapGesture {
-                                        pickerSource = .photoLibrary
-                                        showPicker = true
-                                    }
-                                Image(systemName: "camera.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.brandPrimary)
-                                    .frame(height: 100)
-                                    .padding()
-                                    .onTapGesture {
-                                        pickerSource = .camera
-                                        showPicker = true
-                                    }
-                            }
-                        }
+
                         Button("Scan Tags", action:{
                             lastScan = ""
                             self.showScanner=true
@@ -239,7 +202,6 @@ struct CreateProductNS: View {
         self.numPacks = 0
         self.sku = ""
         self.lastScan = ""
-        self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         if defaults.object(forKey: "defaultMobileStr") == nil {
             defaults.set(randomString(of:50), forKey: "defaultMobileStr")
@@ -262,11 +224,6 @@ struct CreateProductNS: View {
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
                 let jsonDict = json as! [String: Any]
                 
-                if let vd = jsonDict["vendors"] as? [[String: Any]] {
-                    let v = vendors(json: vd)
-                    print("vendors:  \(v)")
-                    availableVendors = v
-                }
                 
                 if let vd = jsonDict["categories"] as? [[String: Any]] {
                     let v = categories(json: vd)
@@ -385,12 +342,11 @@ struct CreateProductNS: View {
         let safeSku = sku.addingPercentEncoding(withAllowedCharacters: allowed)!
         let safeNumStyles = numStyles
         let safeNumPacks = numPacks
-        let safeVendor = vendorId
         let safeCategory = categoryId
         let safeCost = cost
         let safeEstDate = dateToPHPString(estDate)
         
-        let payload = "mobileStr=\(safeMobileStr)&estDate=\(safeEstDate)&vendor=\(safeVendor)&cost=\(safeCost)&numPacks=\(safeNumPacks)&numStyles=\(safeNumStyles)&category=\(safeCategory)&sku=\(safeSku)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
+        let payload = "mobileStr=\(safeMobileStr)&estDate=\(safeEstDate)&cost=\(safeCost)&numPacks=\(safeNumPacks)&numStyles=\(safeNumStyles)&category=\(safeCategory)&sku=\(safeSku)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
         
         print("payload: \(payload)")
         
