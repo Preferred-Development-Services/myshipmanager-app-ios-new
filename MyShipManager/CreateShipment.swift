@@ -139,7 +139,7 @@ struct CreateShipment: View {
                 else {
                     disableCreate = true;
                 }
-                print("disablecreate \(disableCreate)")
+  //              print("disablecreate \(disableCreate)")
             }
         .sheet(isPresented: $showPicker) {
             ImagePickerView(sourceType: $pickerSource) { image in
@@ -177,7 +177,7 @@ struct CreateShipment: View {
         vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
-        source = defaults.object(forKey: "defaultSource") as! String 
+        source = defaults.object(forKey: "defaultSource") as? String ?? ""
     }
     
     func loadListData() {
