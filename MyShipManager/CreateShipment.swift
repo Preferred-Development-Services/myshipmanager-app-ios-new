@@ -34,6 +34,7 @@ struct CreateShipment: View {
     @State var categoryId: Int = 0
     @State var source: String = ""
     @State var estDate: Date = Date()
+    @State var shipDate: Date = Date()
     @State var showingSuccessAlert = false
     @State var showingErrorAlert = false
     @State var alertTitle = ""
@@ -64,10 +65,15 @@ struct CreateShipment: View {
                         }
                         
                         Section(header: Text("Estimated Ship Date:")) {
-                            DatePicker("Date",selection: $estDate,in: Date()..., displayedComponents: .date
+                            DatePicker("Date",selection: $shipDate,in: Date()..., displayedComponents: .date
                                 )
                         }
                         
+                        Section(header: Text("Estimated Delivery Date:")) {
+                            DatePicker("Date",selection: $estDate,in: Date()..., displayedComponents: .date
+                                )
+                        }
+                                                
                         Section(header: Text("Images")) {
                             ForEach(0..<images.count, id: \.self) {
                                 Image(uiImage: images[$0])
@@ -133,7 +139,7 @@ struct CreateShipment: View {
                     initializeFormVars()
                     loaded = true
                 }
-                if defaults.object(forKey: "productsCreated") as! String == "Y" {
+                if defaults.object(forKey: "productsCreated") as? String == "Y" {
                     disableCreate = false
                 }
                 else {
@@ -158,6 +164,10 @@ struct CreateShipment: View {
         )
         .alert(isPresented: $showingSuccessAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK"), action: finishCreate)
+            )
+        }
+        .alert(isPresented: $showingErrorAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK"))
             )
         }
     }
@@ -224,7 +234,7 @@ struct CreateShipment: View {
         if errorMsg != "" {
             alertTitle = "Missing Field"
             alertMessage = errorMsg
-            showingSuccessAlert = true
+            showingErrorAlert = true
             return
         }
 
@@ -319,9 +329,10 @@ struct CreateShipment: View {
         let safeVendor = vendorId
         let safeStatus = statusId
         let safeEst = dateToPHPString(estDate)
+        let safeShipDate = dateToPHPString(shipDate)
         let safeSource = source.addingPercentEncoding(withAllowedCharacters: allowed)!
 
-        let payload = "category=\(safeCategory)&vendor=\(safeVendor)&estDate=\(safeEst)&status=\(safeStatus)&source=\(safeSource)"
+        let payload = "category=\(safeCategory)&vendor=\(safeVendor)&estDate=\(safeEst)&status=\(safeStatus)&source=\(safeSource)&shipDate=\(safeShipDate)"
         
         print("payload: \(payload)")
         

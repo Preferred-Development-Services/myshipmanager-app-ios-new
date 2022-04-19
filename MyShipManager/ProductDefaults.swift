@@ -26,9 +26,11 @@ struct SetDefaults: View {
     
     @State var availableVendors = [Vendor]()
     @State var availableCategories = [Category]()
+    @State var availableStatus = [Status]()
     @State var newVendor = ""
     @State var vendorId: Int
     @State var categoryId: Int
+    @State var statusId: Int
     @State var source: String
     @State var tags: String
     @State var colors: String
@@ -40,6 +42,7 @@ struct SetDefaults: View {
     init () {
         self.vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         self.categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
+        self.statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
         self.source = defaults.object(forKey: "defaultSource") as? String ?? ""
         self.colors = defaults.object(forKey: "defaultColors") as? String ?? ""
         self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
@@ -78,6 +81,11 @@ struct SetDefaults: View {
                         Section(header: Text("Category")) {
                             Picker("Pick Category", selection: $categoryId, content: {
                                 ForEach(availableCategories, id: \.code) { Text($0.name) }
+                            })
+                        }
+                        Section(header: Text("Status")) {
+                            Picker("Pick Status", selection: $statusId, content: {
+                                ForEach(availableStatus, id: \.code) { Text($0.name) }
                             })
                         }
                         Section(header: Text("Tags")) {
@@ -172,6 +180,12 @@ struct SetDefaults: View {
                     print("categories:  \(v)")
                     availableCategories = v
                 }
+                
+                if let vd = jsonDict["status"] as? [[String: Any]] {
+                    let v = status(json: vd)
+                    print("status:  \(v)")
+                    availableStatus = v
+                }
             }
         }
         
@@ -255,6 +269,7 @@ struct SetDefaults: View {
     func saveDefaults() {
         defaults.set(vendorId, forKey: "defaultVendorId")
         defaults.set(categoryId, forKey: "defaultCategoryId")
+        defaults.set(statusId, forKey: "defaultStatusId")
         defaults.set(source, forKey: "defaultSource")
         defaults.set(tags, forKey: "defaultTags")
         defaults.set(sku, forKey: "defaultSku")
