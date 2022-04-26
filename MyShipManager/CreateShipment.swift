@@ -163,10 +163,6 @@ struct CreateShipment: View {
  //               .disabled((defaults.object(forKey: "defaultStatusId") as! String == "N" ))
         )
         .alert(isPresented: $showingSuccessAlert) {
-            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK"), action: finishCreate)
-            )
-        }
-        .alert(isPresented: $showingErrorAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK"))
             )
         }
@@ -268,9 +264,6 @@ struct CreateShipment: View {
         if vendorId == 0 {
             msg = "Please select a vendor"
         }
-        if categoryId == 0 {
-            msg = "Please select a category"
-        }
         if statusId == 0 {
             msg = "Please select a status"
         }
@@ -353,6 +346,8 @@ struct CreateShipment: View {
                     if rd == 1 {
                         initializeFormVars()
                         images = [UIImage]()
+                        defaults.set("N", forKey: "productsCreated")
+                        disableCreate = true;
                         alertTitle = "Shipment created"
                         alertMessage = "This shipment has been created"
                         showingSuccessAlert = true
@@ -369,6 +364,7 @@ struct CreateShipment: View {
                     submitting = false
                     alertTitle = "Error creating shipment"
                     alertMessage = "There was a problem creating this shipment"
+                    defaults.set(false, forKey: "productsCreated")
                     showingSuccessAlert = true
                 }
             }

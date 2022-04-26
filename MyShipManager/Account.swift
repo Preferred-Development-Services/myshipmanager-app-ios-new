@@ -21,7 +21,7 @@ struct Account: View {
             .accentColor(.white)
             .navigationTitle("Account")
         Spacer()
-        Text("Version 2.1#21")
+        Text("Version 2.1#24")
             .font(.footnote)
             .foregroundColor(Color(UIColor.lightGray))
             .padding()
