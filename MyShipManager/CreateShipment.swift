@@ -230,7 +230,7 @@ struct CreateShipment: View {
         if errorMsg != "" {
             alertTitle = "Missing Field"
             alertMessage = errorMsg
-            showingErrorAlert = true
+            showingSuccessAlert = true
             return
         }
 
