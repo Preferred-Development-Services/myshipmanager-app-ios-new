@@ -132,14 +132,23 @@ struct Variant: Identifiable, Codable {
 //}
 
 
-
-
-
 func convertShipmentListings(_ from: [ShipmentListingPHP]) -> [ShipmentListing] {
     return from.map {
         let id = Int($0.url.split(separator: "=").last ?? "") ?? 0
         let color = UIColor(hex: $0.backgroundColor) ?? UIColor.black
         return ShipmentListing(id: id, title: $0.title, start: phpStringToDate($0.start), backgroundColor: color, url: $0.url)
+    }
+}
+
+extension UIApplication {
+    static var release: String {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String? ?? "x.x"
+    }
+    static var build: String {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String? ?? "x"
+    }
+    static var version: String {
+        return "\(release)#\(build)"
     }
 }
 
