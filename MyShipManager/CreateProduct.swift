@@ -57,6 +57,7 @@ struct CreateProduct: View {
     @State var showScanner = false
     @State var showVariants = false
     @State var variantsSaved = false
+    @State var shipDate: Date = Date()
     @ObservedObject var recognizedContent = RecognizedContent()
     @State private var isRecognizing = false
     
@@ -72,6 +73,10 @@ struct CreateProduct: View {
                             Section(header: Text("Description")) {
                                 TextEditor(text: $description)
                                                  }
+                            Section(header: Text("Estimated Ship Date:")) {
+                                DatePicker("Date",selection: $shipDate,in: Date()..., displayedComponents: .date
+                                    )
+                            }
                             Section(header: Text("Tax")) {
                                 Picker("Charge tax on this product", selection: $tax, content: {
                                         Text("No").tag("N")
@@ -499,7 +504,7 @@ struct CreateProduct: View {
         let savedVariants = defaults.object(forKey:
                                                 "currentVariants") as? Data
         if savedVariants != nil {
-//        print("Variants \(savedVariants)")
+        print("Variants \(savedVariants)")
           let decoder = JSONDecoder()
           myVariants = try! decoder.decode([Variant].self, from: savedVariants!)
           let jsonData = try! JSONEncoder().encode(myVariants);
@@ -522,7 +527,8 @@ struct CreateProduct: View {
         let safeCost = costText
         let safePrice = priceText
         let safeQty = qtyText
-        let payload = "title=\(safeTitle)&description=\(safeDesc)&mobileStr=\(safeMobileStr)&qty=\(safeQty)&colors=\(safeColors)&sizes=\(safeSizes)&cost=\(safeCost)&price=\(safePrice)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&addedVariants=\(addedVariants)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
+        let safeShipDate = dateToPHPString(shipDate)
+        let payload = "title=\(safeTitle)&description=\(safeDesc)&mobileStr=\(safeMobileStr)&qty=\(safeQty)&colors=\(safeColors)&sizes=\(safeSizes)&cost=\(safeCost)&price=\(safePrice)&shipDate=\(safeShipDate)&taxable=\(safeTax)&sku=\(safeSku)&category=\(safeCategory)&tags=\(safeTags)&addedVariants=\(addedVariants)&scanText=\(defaults.object(forKey: "lastScan") as? String ?? "")"
         
         print("payload: \(payload)")
         
