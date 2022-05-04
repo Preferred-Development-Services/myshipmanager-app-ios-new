@@ -73,6 +73,19 @@ struct CreateShipment: View {
                             DatePicker("Date",selection: $estDate,in: Date()..., displayedComponents: .date
                                 )
                         }
+                        
+                        Section(header: Text("Products (required before creating)")) {
+                                if defaults.object(forKey: "useShopify") as? Bool ?? false == true {
+                                    NavigationLink("Add Product", destination: CreateProduct()
+                                        .navigationTitle("Add Product")
+                                    )
+                                }
+                                else {
+                                    NavigationLink("Add Product", destination: CreateProductNS()
+                                        .navigationTitle("Add Product")
+                                    )
+                                }
+                        }
                                                 
                         Section(header: Text("Images")) {
                             ForEach(0..<images.count, id: \.self) {

@@ -28,7 +28,9 @@ struct MyShipManagerApp: App {
     init() {
         UINavigationBar.appearance().tintColor = UIColor(Color.brandPrimary)
     }
+    
     @State private var showModal = false
+    @State var showCreateProduct = false;
     var body: some Scene {
         WindowGroup {
             if api.isAuthed {
@@ -43,7 +45,7 @@ struct MyShipManagerApp: App {
                             .accentColor(.brandPrimary)
                     }
 
-                    NavigationView {
+ /*                   NavigationView {
                         if defaults.object(forKey: "useShopify") as? Bool ?? false == true {
                           CreateProduct()
                               .navigationTitle("Add Product")
@@ -58,6 +60,7 @@ struct MyShipManagerApp: App {
                         Text("Product".uppercased())
                             .accentColor(.brandPrimary)
                     }
+*/
 
                     NavigationView {
                         CreateShipment()
@@ -65,7 +68,7 @@ struct MyShipManagerApp: App {
                     }
                     .tabItem {
                         Image(systemName: "shippingbox")
-                        Text("Create".uppercased())
+                        Text("Shipment".uppercased())
                             .accentColor(.brandPrimary)
                     }
   /*
