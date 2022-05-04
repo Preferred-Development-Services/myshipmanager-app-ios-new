@@ -172,7 +172,7 @@ struct CreateShipment: View {
             trailing: Button("Create") {
                 startSubmit()
             }
-            .disabled(disableCreate)
+ //           .disabled(disableCreate)
  //               .disabled((defaults.object(forKey: "defaultStatusId") as! String == "N" ))
         )
         .alert(isPresented: $showingSuccessAlert) {
@@ -279,6 +279,9 @@ struct CreateShipment: View {
         }
         if statusId == 0 {
             msg = "Please select a status"
+        }
+        if disableCreate {
+            msg = "Please add at least one product"
         }
         return msg
     }
