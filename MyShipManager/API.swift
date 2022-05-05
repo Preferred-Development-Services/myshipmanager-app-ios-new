@@ -172,6 +172,25 @@ class API: ObservableObject {
         return req
     }
     
+    func getAppendAuth(proc: String) -> URLRequest? {
+        let urlUser = user.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let urlPass = pass.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        
+        guard let url = URL(string: base + proc + "&email=\(urlUser)&password=\(urlPass)&remember=0&app=1") else { return nil }
+        print("FINAL URL - \(url)")
+//        guard let url = URL(string: base + proc) else { return nil }
+
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+        req.setValue("application/json", forHTTPHeaderField: "Accept")
+        
+        if sessionCookie != "" {
+            req.setValue(sessionCookie, forHTTPHeaderField: "Cookie")
+        }
+        
+        return req
+    }
+    
     func post(proc: String, bodyStr: String) -> URLRequest? {
         let urlUser = user.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let urlPass = pass.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!

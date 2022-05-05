@@ -11,6 +11,8 @@ struct ShipmentList: View {
     @State var showModal = false
     @State var checked = false
     @State var loading = true
+    @State var shipmentListFilter = 0
+    @State var showFilter = false
     
     @State var listings = [ShipmentListing]()
     
@@ -51,12 +53,20 @@ struct ShipmentList: View {
         }
         .navigationBarItems(leading: Button(action: {
             loading = true
- //           checkSession()
             getOrders()
         }) {
             Image(systemName: "arrow.clockwise")
+        },
+        trailing: Button(action: {
+            showFilter = true
+        }) {
+            Image(systemName: "line.3.horizontal.decrease.circle")
         }
+                            
         )
+        .sheet(isPresented: $showFilter, onDismiss: {getOrders()} , content: {
+            ShipmentListFilterView(shipmentListFilter: $shipmentListFilter,showFilter: $showFilter)
+        })
         .fullScreenCover(isPresented: $showModal, content: {
             CreateQueued(isPresented: $showModal)
         })
@@ -70,11 +80,11 @@ struct ShipmentList: View {
     func getOrders() {
         //let start = dateToPHPString(Date(timeInterval: -86400 * 1, since: Date()))
         //let end = dateToPHPString(Date(timeInterval: 86400 * 4, since: Date()))
-        let url = "include/m-calendarView-get.php"//?start=\(start)&end=\(end)"
+        let url = "include/m-calendarView-get.php?filter=\(shipmentListFilter)"//?start=\(start)&end=\(end)"
 
         print("url: \(url)")
         
-        let req = API.shared.get(proc: url)!
+        let req = API.shared.getAppendAuth(proc: url)!
         
         let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
             if let err = err {
