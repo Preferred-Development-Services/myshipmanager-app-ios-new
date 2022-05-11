@@ -22,8 +22,11 @@ struct ShipmentList: View {
             LazyVStack {
             ForEach(listings) { l in
                 VStack {
-                    Color(l.backgroundColor)
-                        .frame(height: 20)
+                    ZStack {
+                        Color(l.backgroundColor)
+                            .frame(height: 20)
+                        Text(l.status)
+                    }
                     Text(dateToHuman(l.start))
                         .font(.subheadline)
                         .bold()
@@ -95,10 +98,11 @@ struct ShipmentList: View {
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
                 print("dataString: \(dataString)")
                 let listingsPHP = (try? JSONDecoder().decode([ShipmentListingPHP].self, from: data)) ?? []
+                print(listingsPHP)
                 DispatchQueue.main.async {
                     listings = convertShipmentListings(listingsPHP)
                     loading = false
-                    print(listings)
+ //                   print(listings)
                 }
             }
         }

@@ -31,15 +31,6 @@ struct ShowHelp: View {
                 }
                 Text(" ")
                 HStack {
-                    Text("Product").font(.callout)
-                    Spacer()
-                }
-                HStack {
-                    Text("This screen allows you to create a product").font(.caption)
-                    Spacer()
-                }
-                Text(" ")
-                HStack {
                     Text("Shipment").font(.callout)
                     Spacer()
                 }
