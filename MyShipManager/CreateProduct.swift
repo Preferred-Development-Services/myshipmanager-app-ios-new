@@ -68,72 +68,96 @@ struct CreateProduct: View {
                     Form {
                         Group {
                             Section(header: Text("Title")) {
-                                TextField("Enter title", text: $title)
+                                VStack {
+                                    TextField("Enter title", text: $title)
+                                }
                             }
                             Section(header: Text("Description")) {
-                                TextEditor(text: $description)
-                                                 }
+                                VStack {
+                                    TextEditor(text: $description)
+                                }
+                            }
                             Section(header: Text("Estimated Ship Date:")) {
-                                DatePicker("Date",selection: $shipDate,in: Date()..., displayedComponents: .date
-                                    )
+                                VStack {
+                                    DatePicker("Date",selection: $shipDate,in: Date()..., displayedComponents: .date
+                                        )
+                                }
                             }
                             Section(header: Text("Tax")) {
-                                Picker("Charge tax on this product", selection: $tax, content: {
-                                        Text("No").tag("N")
-                                        Text("Yes").tag("Y")
-                                    }
-                                )
+                                VStack {
+                                    Picker("Charge tax on this product", selection: $tax, content: {
+                                            Text("No").tag("N")
+                                            Text("Yes").tag("Y")
+                                        }
+                                    )
+                                }
                             }
                             Section(header: Text("Category")) {
-                                Picker("Pick Category", selection: $categoryId, content: {
-                                    ForEach(availableCategories, id: \.code) { Text($0.name) }
-                                })
+                                VStack {
+                                    Picker("Pick Category", selection: $categoryId, content: {
+                                        ForEach(availableCategories, id: \.code) { Text($0.name) }
+                                    })
+                                }
                             }
                         }
                         Section(header: Text("Colors (comma  separated)")) {
-                            TextField("Enter colors", text: $colors).disabled(variantsSaved == true)
-                                .foregroundColor(variantsSaved ? Color.gray : colorScheme == .dark ? .white : .black)
+                            VStack {
+                                TextField("Enter colors", text: $colors).disabled(variantsSaved == true)
+                                    .foregroundColor(variantsSaved ? Color.gray : colorScheme == .dark ? .white : .black)
+                            }
                         }
                         Section(header: Text("Sizes (comma separated)")) {
-                            TextField("Enter sizes", text: $sizes).disabled(variantsSaved == true)
-                                .foregroundColor(variantsSaved ? Color.gray : colorScheme == .dark ? .white : .black)
+                            VStack {
+                                TextField("Enter sizes", text: $sizes).disabled(variantsSaved == true)
+                                    .foregroundColor(variantsSaved ? Color.gray : colorScheme == .dark ? .white : .black)
+                            }
                         }
                         Section(header: Text("Tags")) {
-                            TextField("Enter tags", text: $tags)
+                            VStack {
+                              TextField("Enter tags", text: $tags)
+                            }
                         }
                         
                         Section(header: Text("SKU prefix")) {
+                            VStack {
                                 TextField("Enter string to prefix SKUS", text: $sku)
+                            }
                         }
    
                         
                         
                         Group {
                             Section(header: Text("Cost")) {
-                                TextField("Enter Cost", text: $costText) { editing in
-                                    if !editing {
-                                        costText = costText.trimmingCharacters(in: .whitespacesAndNewlines)
-                                        cost = fabs(Double(costText) ?? 0)
-                                        costText = String(format: "%.2f", cost)
-                                        cost = Double(costText) ?? 0
-                                    }
-                                } onCommit: {}
-                                    .keyboardType(.decimalPad)
+                                VStack {
+                                    TextField("Enter Cost", text: $costText) { editing in
+                                        if !editing {
+                                            costText = costText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                            cost = fabs(Double(costText) ?? 0)
+                                            costText = String(format: "%.2f", cost)
+                                            cost = Double(costText) ?? 0
+                                        }
+                                    } onCommit: {}
+                                        .keyboardType(.decimalPad)
+                                }
                             }
                             Section(header: Text("Retail Price")) {
-                                TextField("Enter Retail Price", text: $priceText) { editing in
-                                    if !editing {
-                                        priceText = priceText.trimmingCharacters(in: .whitespacesAndNewlines)
-                                        price = fabs(Double(priceText) ?? 0)
-                                        priceText = String(format: "%.2f", price)
-                                        price = Double(priceText) ?? 0
-                                    }
-                                } onCommit: {}
-                                    .keyboardType(.decimalPad)
+                                VStack {
+                                    TextField("Enter Retail Price", text: $priceText) { editing in
+                                        if !editing {
+                                            priceText = priceText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                            price = fabs(Double(priceText) ?? 0)
+                                            priceText = String(format: "%.2f", price)
+                                            price = Double(priceText) ?? 0
+                                        }
+                                    } onCommit: {}
+                                        .keyboardType(.decimalPad)
+                                }
                             }
                             Section(header: Text("Quantity")) {
-                                TextField("Enter quantity", text: $qtyText)
-                                    .keyboardType(.numberPad)
+                                VStack {
+                                    TextField("Enter quantity", text: $qtyText)
+                                        .keyboardType(.numberPad)
+                                }
                             }
                         }
                         Section(header: Text("Variants")) {
@@ -295,6 +319,8 @@ struct CreateProduct: View {
         self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
+print("DEFAULTCOLORS")
+print(defaults.object(forKey:"defaultColors"))
         self.colors = defaults.object(forKey: "defaultColors") as? String ?? ""
         self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
         if defaults.object(forKey: "defaultMobileStr") == nil {
@@ -504,7 +530,7 @@ struct CreateProduct: View {
         let savedVariants = defaults.object(forKey:
                                                 "currentVariants") as? Data
         if savedVariants != nil {
-        print("Variants \(savedVariants)")
+//        print("Variants \(savedVariants)")
           let decoder = JSONDecoder()
           myVariants = try! decoder.decode([Variant].self, from: savedVariants!)
           let jsonData = try! JSONEncoder().encode(myVariants);
