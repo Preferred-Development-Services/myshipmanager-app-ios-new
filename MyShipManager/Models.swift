@@ -154,4 +154,46 @@ extension UIApplication {
     }
 }
 
+struct VarietyColor: Hashable, Identifiable {
+    var name: String
+    var id: String { name }
+}
+
+struct VarietySize: Hashable, Identifiable {
+    var name: String
+    var id: String { name }
+}
+
+struct MultiSelector<LabelView: View, Selectable: Identifiable & Hashable>: View {
+    let label: LabelView
+    let options: [Selectable]
+    let optionToString: (Selectable) -> String
+    var selected: Binding<Set<Selectable>>
+    var selectedStr: Binding<String>
+
+    private var formattedSelectedListString: String {
+        ListFormatter.localizedString(byJoining: selected.wrappedValue.map { optionToString($0) })
+    }
+
+    var body: some View {
+        NavigationLink(destination: multiSelectionView()) {
+            HStack {
+                label
+                Spacer()
+                Text(formattedSelectedListString)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.trailing)
+            }
+        }
+    }
+
+    private func multiSelectionView() -> some View {
+        MultiSelectionView(
+            options: options,
+            optionToString: optionToString,
+            selected: selected,
+            selectedStr: selectedStr
+        )
+    }
+}
 

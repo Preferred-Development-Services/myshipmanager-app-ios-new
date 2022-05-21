@@ -48,6 +48,37 @@ struct CreateShipment: View {
             ZStack {
                 VStack {
                     Form {
+                        Section(header: Text("Images")) {
+                            ForEach(0..<images.count, id: \.self) {
+                                Image(uiImage: images[$0])
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(alignment: .center)
+                                    .padding()
+                            }
+                            HStack {
+                                Image(systemName: "photo.fill.on.rectangle.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(.brandPrimary)
+                                    .frame(height: 100)
+                                    .padding()
+                                    .onTapGesture {
+                                        pickerSource = .photoLibrary
+                                        showPicker = true
+                                    }
+                                Image(systemName: "camera.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(.brandPrimary)
+                                    .frame(height: 100)
+                                    .padding()
+                                    .onTapGesture {
+                                        pickerSource = .camera
+                                        showPicker = true
+                                    }
+                            }
+                        }
                         Section(header: Text("Vendor")) {
                             Picker("Pick Vendor", selection: $vendorId, content: {
                                 ForEach(availableVendors, id: \.code) { Text($0.name) }
@@ -87,37 +118,7 @@ struct CreateShipment: View {
                                 }
                         }
                                                 
-                        Section(header: Text("Images")) {
-                            ForEach(0..<images.count, id: \.self) {
-                                Image(uiImage: images[$0])
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(alignment: .center)
-                                    .padding()
-                            }
-                            HStack {
-                                Image(systemName: "photo.fill.on.rectangle.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.brandPrimary)
-                                    .frame(height: 100)
-                                    .padding()
-                                    .onTapGesture {
-                                        pickerSource = .photoLibrary
-                                        showPicker = true
-                                    }
-                                Image(systemName: "camera.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.brandPrimary)
-                                    .frame(height: 100)
-                                    .padding()
-                                    .onTapGesture {
-                                        pickerSource = .camera
-                                        showPicker = true
-                                    }
-                            }
-                        }
+
 
                     }
                     

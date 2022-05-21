@@ -8,15 +8,30 @@
 import SwiftUI
 
 
+
 fileprivate enum SubmitResult {
     case none, fail, success
 }
+
 
 
 struct CreateProduct: View {
     let defaults = UserDefaults.standard
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @AppStorage("lastScan") var lastScan: String = ""
+    
+    let allColors: [VarietyColor] = [
+        VarietyColor(name: "Red"),
+        VarietyColor(name: "Blue"),
+        VarietyColor(name: "Yellow")
+    ]
+    
+    let allSizes: [VarietySize] = [
+        VarietySize(name: "S"),
+        VarietySize(name: "M"),
+        VarietySize(name: "L")
+    ]
+    
     @State var showPicker = false
     @State var pickerSource = UIImagePickerController.SourceType.camera
     @State var images = [UIImage]()
@@ -57,15 +72,57 @@ struct CreateProduct: View {
     @State var showScanner = false
     @State var showVariants = false
     @State var variantsSaved = false
+    @State var selectedColors: Set<VarietyColor> = []
+    @State var selectedSizes: Set<VarietySize> = []
     @State var shipDate: Date = Date()
     @ObservedObject var recognizedContent = RecognizedContent()
     @State private var isRecognizing = false
+    
+
     
 
     var body: some View {
             ZStack {
                 VStack {
                     Form {
+                        Section(header: Text("Images")) {
+                            ForEach(0..<images.count, id: \.self) {
+                                Image(uiImage: images[$0])
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(alignment: .center)
+                                    .padding()
+                            }
+                            HStack {
+                                Image(systemName: "photo.fill.on.rectangle.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(.brandPrimary)
+                                    .frame(height: 100)
+                                    .padding()
+                                    .onTapGesture {
+                                        pickerSource = .photoLibrary
+                                        showPicker = true
+                                    }
+                                Image(systemName: "camera.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(.brandPrimary)
+                                    .frame(height: 100)
+                                    .padding()
+                                    .onTapGesture {
+                                        pickerSource = .camera
+                                        showPicker = true
+                                    }
+                            }
+                        }
+                        Section(header: Text("Scans")) {
+                            Button("Scan Tags", action:{
+                                lastScan = ""
+                                self.showScanner=true
+                            })
+                            TextEditor(text:$lastScan)
+                        }
                         Group {
                             Section(header: Text("Title")) {
                                 VStack {
@@ -100,17 +157,40 @@ struct CreateProduct: View {
                                 }
                             }
                         }
-                        Section(header: Text("Colors (comma  separated)")) {
+                        Section(header: Text("Colors")) {
+                            MultiSelector(
+                                label: Text("Colors") ,
+                                options: allColors,
+                                optionToString: { $0.name },
+                                selected: $selectedColors,
+                                selectedStr: $colors
+                            )
+                        }
+  /*                      Section(header: Text("Colors (comma  separated)")) {
                             VStack {
                                 TextField("Enter colors", text: $colors).disabled(variantsSaved == true)
                                     .foregroundColor(variantsSaved ? Color.gray : colorScheme == .dark ? .white : .black)
                             }
                         }
-                        Section(header: Text("Sizes (comma separated)")) {
-                            VStack {
-                                TextField("Enter sizes", text: $sizes).disabled(variantsSaved == true)
-                                    .foregroundColor(variantsSaved ? Color.gray : colorScheme == .dark ? .white : .black)
+   */
+                        Group {
+                            Section(header: Text("Sizes")) {
+                                MultiSelector(
+                                    label: Text("Sizes") ,
+                                    options: allSizes,
+                                    optionToString: { $0.name },
+                                    selected: $selectedSizes,
+                                    selectedStr: $sizes
+                                )
                             }
+/*
+                            Section(header: Text("Sizes (comma separated)")) {
+                                VStack {
+                                    TextField("Enter sizes", text: $sizes).disabled(variantsSaved == true)
+                                        .foregroundColor(variantsSaved ? Color.gray : colorScheme == .dark ? .white : .black)
+                                }
+                            }
+*/
                         }
                         Section(header: Text("Tags")) {
                             VStack {
@@ -167,45 +247,8 @@ struct CreateProduct: View {
                                 }
                             })
                         }
-                        Section(header: Text("Scans")) {
-                            Button("Scan Tags", action:{
-                                lastScan = ""
-                                self.showScanner=true
-                            })
-                            TextEditor(text:$lastScan)
-                        }
 
-                        Section(header: Text("Images")) {
-                            ForEach(0..<images.count, id: \.self) {
-                                Image(uiImage: images[$0])
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(alignment: .center)
-                                    .padding()
-                            }
-                            HStack {
-                                Image(systemName: "photo.fill.on.rectangle.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.brandPrimary)
-                                    .frame(height: 100)
-                                    .padding()
-                                    .onTapGesture {
-                                        pickerSource = .photoLibrary
-                                        showPicker = true
-                                    }
-                                Image(systemName: "camera.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.brandPrimary)
-                                    .frame(height: 100)
-                                    .padding()
-                                    .onTapGesture {
-                                        pickerSource = .camera
-                                        showPicker = true
-                                    }
-                            }
-                        }
+
 
 
                     }
@@ -319,10 +362,7 @@ struct CreateProduct: View {
         self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
-print("DEFAULTCOLORS")
-print(defaults.object(forKey:"defaultColors"))
-        self.colors = defaults.object(forKey: "defaultColors") as? String ?? ""
-        self.sizes = defaults.object(forKey: "defaultSizes") as? String ?? ""
+        print(defaults.object(forKey:"defaultColors") as Any)
         if defaults.object(forKey: "defaultMobileStr") == nil {
             defaults.set(randomString(of:50), forKey: "defaultMobileStr")
         }

@@ -11,6 +11,7 @@
 		B529396A2808E24F0063CDBA /* VariantsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52939692808E24F0063CDBA /* VariantsListView.swift */; };
 		B54968CC2803C47100D51727 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54968CB2803C47100D51727 /* Help.swift */; };
 		B58186D528231AA9006F5FB7 /* ShipmentListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58186D428231AA9006F5FB7 /* ShipmentListFilter.swift */; };
+		B58BCDDE283988BE00F76463 /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58BCDDD283988BE00F76463 /* MultiSelectionView.swift */; };
 		B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */; };
 		B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */; };
 		B5A7462627FDC399008A0CE6 /* ProductDefaultsNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A7462527FDC399008A0CE6 /* ProductDefaultsNS.swift */; };
@@ -65,6 +66,7 @@
 		B52939692808E24F0063CDBA /* VariantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantsListView.swift; sourceTree = "<group>"; };
 		B54968CB2803C47100D51727 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
 		B58186D428231AA9006F5FB7 /* ShipmentListFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShipmentListFilter.swift; sourceTree = SOURCE_ROOT; };
+		B58BCDDD283988BE00F76463 /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
 		B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProduct.swift; sourceTree = "<group>"; };
 		B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShipment.swift; sourceTree = "<group>"; };
 		B5A7462527FDC399008A0CE6 /* ProductDefaultsNS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDefaultsNS.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */,
 				B54968CB2803C47100D51727 /* Help.swift */,
 				B52939692808E24F0063CDBA /* VariantsListView.swift */,
+				B58BCDDD283988BE00F76463 /* MultiSelectionView.swift */,
 			);
 			path = MyShipManager;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				C9F80C4C26349C0100442E47 /* Account.swift in Sources */,
 				B58186D528231AA9006F5FB7 /* ShipmentListFilter.swift in Sources */,
 				B5F6DF8027F3886100B35957 /* ScannerView.swift in Sources */,
+				B58BCDDE283988BE00F76463 /* MultiSelectionView.swift in Sources */,
 				B5F6DF7C27F3884900B35957 /* CameraView.swift in Sources */,
 				C9CE0A4A2633C2E900F6795B /* Models.swift in Sources */,
 				B5B8394027F67D41001D0840 /* CreateProduct.swift in Sources */,
