@@ -155,7 +155,7 @@ extension UIApplication {
 }
 
 struct VarietyColor: Hashable, Identifiable {
-    var name: String
+    var name: String = ""
     var id: String { name }
 }
 

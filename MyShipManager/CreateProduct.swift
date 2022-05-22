@@ -20,16 +20,16 @@ struct CreateProduct: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @AppStorage("lastScan") var lastScan: String = ""
     
-    let allColors: [VarietyColor] = [
-        VarietyColor(name: "Red"),
-        VarietyColor(name: "Blue"),
-        VarietyColor(name: "Yellow")
+    @State var allColors: [VarietyColor] = [
+//        VarietyColor(name: "Red"),
+//        VarietyColor(name: "Blue"),
+//        VarietyColor(name: "Yellow")
     ]
     
-    let allSizes: [VarietySize] = [
-        VarietySize(name: "S"),
-        VarietySize(name: "M"),
-        VarietySize(name: "L")
+    @State var allSizes: [VarietySize] = [
+//        VarietySize(name: "S"),
+//        VarietySize(name: "M"),
+//        VarietySize(name: "L")
     ]
     
     @State var showPicker = false
@@ -71,6 +71,8 @@ struct CreateProduct: View {
     @State var loaded = false;
     @State var showScanner = false
     @State var showVariants = false
+    @State var showAddColor = false
+    @State var showAddSize = false
     @State var variantsSaved = false
     @State var selectedColors: Set<VarietyColor> = []
     @State var selectedSizes: Set<VarietySize> = []
@@ -157,14 +159,16 @@ struct CreateProduct: View {
                                 }
                             }
                         }
-                        Section(header: Text("Colors")) {
+                        Section(header: Button("Create New",action: {
+                            self.showAddColor = true
+                        })) {
                             MultiSelector(
-                                label: Text("Colors") ,
+                                label: Text("Colors"),
                                 options: allColors,
                                 optionToString: { $0.name },
                                 selected: $selectedColors,
                                 selectedStr: $colors
-                            )
+                            ).disabled(variantsSaved == true)
                         }
   /*                      Section(header: Text("Colors (comma  separated)")) {
                             VStack {
@@ -174,7 +178,10 @@ struct CreateProduct: View {
                         }
    */
                         Group {
-                            Section(header: Text("Sizes")) {
+                            Section(header: Button("Create New",action: {
+                                self.showAddSize = true
+                            })
+                            ) {
                                 MultiSelector(
                                     label: Text("Sizes") ,
                                     options: allSizes,
@@ -182,7 +189,7 @@ struct CreateProduct: View {
                                     selected: $selectedSizes,
                                     selectedStr: $sizes
                                 )
-                            }
+                            }.disabled(variantsSaved == true)
 /*
                             Section(header: Text("Sizes (comma separated)")) {
                                 VStack {
@@ -313,6 +320,9 @@ struct CreateProduct: View {
         .sheet(isPresented: $showVariants, content: {
                 VariantsListView(showVariants: $showVariants,variantsSaved: $variantsSaved)
         })
+        .sheet(isPresented: $showAddColor, content: {
+            AddColorView(showAddColor: $showAddColor,colors: $allColors)
+        })
         .sheet(isPresented: $showScanner, content: {
                 TextScannerView { result in
                     switch result {
@@ -423,7 +433,6 @@ struct CreateProduct: View {
     }
     
     func loadListData() {
-
         let req = API.shared.get(proc: "include/m-list-data-get.php")!
         let task = URLSession.shared.dataTask(with: req) { (data, resp, err) in
             if let err = err {
@@ -432,10 +441,10 @@ struct CreateProduct: View {
             }
             if let data = data {
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
-//                let responseStr: String = String(data:data, encoding: .utf8) ?? ""
- //               print("RESPONSE: \(responseStr)")
+  //              let responseStr: String = String(data:data, encoding: .utf8) ?? ""
+  //              print("RESPONSE: \(responseStr)")
                 let jsonDict = json as! [String: Any]
-                
+
                 if let vd = jsonDict["vendors"] as? [[String: Any]] {
                     let v = vendors(json: vd)
  //                   print("vendors:  \(v)")
@@ -446,6 +455,14 @@ struct CreateProduct: View {
                     let v = categories(json: vd)
  //                   print("categories:  \(v)")
                     availableCategories = v
+                }
+                
+                if let vd = jsonDict["variantColors"]  as? [[String:Any]] {
+                    for  oneColor in vd {
+                        let tmp = oneColor["color"] as! String;
+                        let acolor = VarietyColor(name: tmp)
+                        self.allColors.append(acolor)
+                    }
                 }
                 
             }
