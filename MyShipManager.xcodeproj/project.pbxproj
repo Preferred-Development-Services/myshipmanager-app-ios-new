@@ -13,6 +13,7 @@
 		B58186D528231AA9006F5FB7 /* ShipmentListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58186D428231AA9006F5FB7 /* ShipmentListFilter.swift */; };
 		B58BCDDE283988BE00F76463 /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58BCDDD283988BE00F76463 /* MultiSelectionView.swift */; };
 		B58BCDE0283993D800F76463 /* AddColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58BCDDF283993D800F76463 /* AddColorView.swift */; };
+		B58BCDE2283AD39300F76463 /* AddSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58BCDE1283AD39300F76463 /* AddSizeView.swift */; };
 		B5A0EC9E27F11BEB00C4057C /* NewProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */; };
 		B5A0ECA027F11CA400C4057C /* CreateShipment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */; };
 		B5A7462627FDC399008A0CE6 /* ProductDefaultsNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A7462527FDC399008A0CE6 /* ProductDefaultsNS.swift */; };
@@ -69,6 +70,7 @@
 		B58186D428231AA9006F5FB7 /* ShipmentListFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShipmentListFilter.swift; sourceTree = SOURCE_ROOT; };
 		B58BCDDD283988BE00F76463 /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
 		B58BCDDF283993D800F76463 /* AddColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddColorView.swift; sourceTree = "<group>"; };
+		B58BCDE1283AD39300F76463 /* AddSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSizeView.swift; sourceTree = "<group>"; };
 		B5A0EC9D27F11BEB00C4057C /* NewProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProduct.swift; sourceTree = "<group>"; };
 		B5A0EC9F27F11CA400C4057C /* CreateShipment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShipment.swift; sourceTree = "<group>"; };
 		B5A7462527FDC399008A0CE6 /* ProductDefaultsNS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductDefaultsNS.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				B52939692808E24F0063CDBA /* VariantsListView.swift */,
 				B58BCDDD283988BE00F76463 /* MultiSelectionView.swift */,
 				B58BCDDF283993D800F76463 /* AddColorView.swift */,
+				B58BCDE1283AD39300F76463 /* AddSizeView.swift */,
 			);
 			path = MyShipManager;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				B58BCDE0283993D800F76463 /* AddColorView.swift in Sources */,
 				B5AC616327FE6F4E009F02D2 /* TextScanView.swift in Sources */,
 				B51EDAB427FD14B1000B00BA /* CreateProduct-ns.swift in Sources */,
+				B58BCDE2283AD39300F76463 /* AddSizeView.swift in Sources */,
 				B5AC616527FE6F60009F02D2 /* TextPreviewView.swift in Sources */,
 				C9CE0A142633AD3700F6795B /* MyShipManagerApp.swift in Sources */,
 				C9F80C4C26349C0100442E47 /* Account.swift in Sources */,
@@ -542,7 +546,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_ASSET_PATHS = "\"MyShipManager/Preview Content\"";
 				DEVELOPMENT_TEAM = 2WJ3HU959U;
 				ENABLE_PREVIEWS = YES;
@@ -552,7 +556,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.myshipmanager.MyShipManagerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -566,7 +570,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_ASSET_PATHS = "\"MyShipManager/Preview Content\"";
 				DEVELOPMENT_TEAM = 2WJ3HU959U;
 				ENABLE_PREVIEWS = YES;
@@ -576,7 +580,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.myshipmanager.MyShipManagerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

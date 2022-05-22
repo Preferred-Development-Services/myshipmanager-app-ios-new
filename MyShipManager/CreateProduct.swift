@@ -20,13 +20,13 @@ struct CreateProduct: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @AppStorage("lastScan") var lastScan: String = ""
     
-    @State var allColors: [VarietyColor] = [
+    @State var allColors: [VariantColor] = [
 //        VarietyColor(name: "Red"),
 //        VarietyColor(name: "Blue"),
 //        VarietyColor(name: "Yellow")
     ]
     
-    @State var allSizes: [VarietySize] = [
+    @State var allSizes: [VariantSize] = [
 //        VarietySize(name: "S"),
 //        VarietySize(name: "M"),
 //        VarietySize(name: "L")
@@ -74,8 +74,8 @@ struct CreateProduct: View {
     @State var showAddColor = false
     @State var showAddSize = false
     @State var variantsSaved = false
-    @State var selectedColors: Set<VarietyColor> = []
-    @State var selectedSizes: Set<VarietySize> = []
+    @State var selectedColors: Set<VariantColor> = []
+    @State var selectedSizes: Set<VariantSize> = []
     @State var shipDate: Date = Date()
     @ObservedObject var recognizedContent = RecognizedContent()
     @State private var isRecognizing = false
@@ -159,7 +159,7 @@ struct CreateProduct: View {
                                 }
                             }
                         }
-                        Section(header: Button("Create New",action: {
+                        Section(header: Button("Create New Color",action: {
                             self.showAddColor = true
                         })) {
                             MultiSelector(
@@ -178,7 +178,7 @@ struct CreateProduct: View {
                         }
    */
                         Group {
-                            Section(header: Button("Create New",action: {
+                            Section(header: Button("Create New Size",action: {
                                 self.showAddSize = true
                             })
                             ) {
@@ -323,6 +323,10 @@ struct CreateProduct: View {
         .sheet(isPresented: $showAddColor, content: {
             AddColorView(showAddColor: $showAddColor,colors: $allColors)
         })
+        .sheet(isPresented: $showAddSize, content: {
+            AddSizeView(showAddSize: $showAddSize,sizes: $allSizes)
+        })
+        
         .sheet(isPresented: $showScanner, content: {
                 TextScannerView { result in
                     switch result {
@@ -460,8 +464,16 @@ struct CreateProduct: View {
                 if let vd = jsonDict["variantColors"]  as? [[String:Any]] {
                     for  oneColor in vd {
                         let tmp = oneColor["color"] as! String;
-                        let acolor = VarietyColor(name: tmp)
+                        let acolor = VariantColor(name: tmp)
                         self.allColors.append(acolor)
+                    }
+                }
+                
+                if let vd = jsonDict["variantSizes"]  as? [[String:Any]] {
+                    for  oneSize in vd {
+                        let tmp = oneSize["size"] as! String;
+                        let asize = VariantSize(name: tmp)
+                        self.allSizes.append(asize)
                     }
                 }
                 
