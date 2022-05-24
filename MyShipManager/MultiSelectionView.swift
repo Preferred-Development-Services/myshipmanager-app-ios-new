@@ -19,7 +19,7 @@ struct MultiSelectionView<Selectable: Identifiable & Hashable>: View {
             ForEach(options) { selectable in
                 Button(action: { toggleSelection(selectable: selectable) }) {
                     HStack {
-                        Text(optionToString(selectable))
+                        Text(optionToString(selectable)).accentColor(Color(.gray))
 
                         Spacer()
 
