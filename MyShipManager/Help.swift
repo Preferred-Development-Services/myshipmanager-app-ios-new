@@ -35,7 +35,7 @@ struct ShowHelp: View {
                     Spacer()
                 }
                 HStack {
-                    Text("This screen allows you to create a shipment from previously created products").font(.caption)
+                    Text("This screen allows you to create a shipment").font(.caption)
                     Spacer()
                 }
             }

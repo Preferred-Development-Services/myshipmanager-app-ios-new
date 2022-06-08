@@ -40,6 +40,8 @@ struct CreateShipment: View {
     @State var alertTitle = ""
     @State var alertMessage = ""
     @State var newVendor = ""
+    @State var weight = "";
+    @State var weightUnit = "GRAMS";
     @State var loaded = false
     @State var disableCreate = false
     
@@ -94,7 +96,18 @@ struct CreateShipment: View {
                         Section(header: Text("Source")) {
                             TextField("Enter Source", text: $source)
                         }
-                        
+                        Section(header: Text("Weight")) {
+                            HStack {
+                                TextField("Enter Weight", text: $weight)
+                                    .keyboardType(.numberPad)
+                                Picker(" ", selection: $weightUnit)  {
+                                    Text("g").tag("GRAMS")
+                                    Text("kg").tag("KILOGRAMS")
+                                    Text("oz").tag("OUNCES")
+                                    Text("lb").tag("POUNDS")
+                                }
+                            }
+                        }
                         Section(header: Text("Estimated Ship Date:")) {
                             DatePicker("Date",selection: $shipDate,in: Date()..., displayedComponents: .date
                                 )
@@ -193,11 +206,11 @@ struct CreateShipment: View {
     
     
     func initializeFormVars() {
-        
         vendorId = defaults.object(forKey: "defaultVendorId") as? Int ?? 0
         categoryId = defaults.object(forKey: "defaultCategoryId") as? Int ?? 0
         statusId = defaults.object(forKey: "defaultStatusId") as? Int ?? 0
         source = defaults.object(forKey: "defaultSource") as? String ?? ""
+        weightUnit = defaults.object(forKey: "defaultWeightUnit") as? String ?? "GRAMS"
     }
     
     func loadListData() {
@@ -342,7 +355,7 @@ struct CreateShipment: View {
         let safeShipDate = dateToPHPString(shipDate)
         let safeSource = source.addingPercentEncoding(withAllowedCharacters: allowed)!
 
-        let payload = "category=\(safeCategory)&vendor=\(safeVendor)&estDate=\(safeEst)&status=\(safeStatus)&source=\(safeSource)&shipDate=\(safeShipDate)"
+        let payload = "category=\(safeCategory)&vendor=\(safeVendor)&estDate=\(safeEst)&status=\(safeStatus)&source=\(safeSource)&shipDate=\(safeShipDate)&weight=\(weight)&weightUnit=\(weightUnit)"
         
         print("payload: \(payload)")
         

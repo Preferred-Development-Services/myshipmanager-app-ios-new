@@ -35,6 +35,7 @@ struct SetDefaults: View {
     @State var tags: String
     @State var tax: String
     @State var sku: String
+    @State var weightUnit: String
     @State private var showingAlert = false
 
     init () {
@@ -45,6 +46,7 @@ struct SetDefaults: View {
         self.tags = defaults.object(forKey: "defaultTags") as? String ?? ""
         self.tax = defaults.object(forKey: "defaultTax") as? String ?? "N"
         self.sku = defaults.object(forKey: "defaultSku") as? String ?? ""
+        self.weightUnit = defaults.object(forKey: "defaultWeightUnit") as? String ?? "GRAMS"
     }
 
     var body: some View {
@@ -60,6 +62,16 @@ struct SetDefaults: View {
                         
                         Section(header: Text("Source")) {
                             TextField("Enter Source", text: $source)
+                        }
+                        Section(header: Text("Weight")) {
+                            VStack {
+                                Picker("Select default weight unit", selection: $weightUnit)  {
+                                    Text("g").tag("GRAMS")
+                                    Text("kg").tag("KILOGRAMS")
+                                    Text("oz").tag("OUNCES")
+                                    Text("lb").tag("POUNDS")
+                                }
+                            }
                         }
                         Section(header: Text("Tax")) {
                             Picker("Charge tax on this product", selection: $tax, content: {
@@ -264,6 +276,7 @@ struct SetDefaults: View {
         defaults.set(tags, forKey: "defaultTags")
         defaults.set(sku, forKey: "defaultSku")
         defaults.set(tax, forKey: "defaultTax")
+        defaults.set(weightUnit, forKey: "defaultWeightUnit")
     }
  
 /*    func createOrder() {
