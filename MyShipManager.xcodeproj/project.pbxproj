@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B51EDAB427FD14B1000B00BA /* CreateProduct-ns.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51EDAB327FD14B1000B00BA /* CreateProduct-ns.swift */; };
 		B529396A2808E24F0063CDBA /* VariantsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52939692808E24F0063CDBA /* VariantsListView.swift */; };
+		B534E4B628920EB2004E6537 /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B534E4B528920EB2004E6537 /* Budget.swift */; };
 		B54968CC2803C47100D51727 /* Help.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54968CB2803C47100D51727 /* Help.swift */; };
 		B58186D528231AA9006F5FB7 /* ShipmentListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58186D428231AA9006F5FB7 /* ShipmentListFilter.swift */; };
 		B58BCDDE283988BE00F76463 /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58BCDDD283988BE00F76463 /* MultiSelectionView.swift */; };
@@ -66,8 +67,10 @@
 /* Begin PBXFileReference section */
 		B51EDAB327FD14B1000B00BA /* CreateProduct-ns.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateProduct-ns.swift"; sourceTree = "<group>"; };
 		B52939692808E24F0063CDBA /* VariantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantsListView.swift; sourceTree = "<group>"; };
+		B534E4B528920EB2004E6537 /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		B54968CB2803C47100D51727 /* Help.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Help.swift; sourceTree = "<group>"; };
 		B58186D428231AA9006F5FB7 /* ShipmentListFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShipmentListFilter.swift; sourceTree = SOURCE_ROOT; };
+		B584207B2894047C00435A79 /* MyShipManager */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MyShipManager; sourceTree = "<group>"; };
 		B58BCDDD283988BE00F76463 /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
 		B58BCDDF283993D800F76463 /* AddColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddColorView.swift; sourceTree = "<group>"; };
 		B58BCDE1283AD39300F76463 /* AddSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSizeView.swift; sourceTree = "<group>"; };
@@ -174,6 +177,8 @@
 				B5F6DF7D27F3885200B35957 /* BarcodeContentView.swift */,
 				B5F6DF7B27F3884900B35957 /* CameraView.swift */,
 				C9CE0A152633AD3700F6795B /* ShipmentList.swift */,
+				B534E4B528920EB2004E6537 /* Budget.swift */,
+				B584207B2894047C00435A79 /* MyShipManager */,
 				B5B7823127F3DF9F000E7A4C /* BarcodeInfo.swift */,
 				B5B8E14227F5F045006D9E2E /* ProductDefaults.swift */,
 				C9CE0A412633AD7F00F6795B /* CreateQueued.swift */,
@@ -384,6 +389,7 @@
 				B58BCDDE283988BE00F76463 /* MultiSelectionView.swift in Sources */,
 				B5F6DF7C27F3884900B35957 /* CameraView.swift in Sources */,
 				C9CE0A4A2633C2E900F6795B /* Models.swift in Sources */,
+				B534E4B628920EB2004E6537 /* Budget.swift in Sources */,
 				B5B8394027F67D41001D0840 /* CreateProduct.swift in Sources */,
 				C9F80C44263494E800442E47 /* API.swift in Sources */,
 				B529396A2808E24F0063CDBA /* VariantsListView.swift in Sources */,
@@ -546,7 +552,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_ASSET_PATHS = "\"MyShipManager/Preview Content\"";
 				DEVELOPMENT_TEAM = 2WJ3HU959U;
 				ENABLE_PREVIEWS = YES;
@@ -556,7 +562,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.myshipmanager.MyShipManagerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -570,7 +576,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_ASSET_PATHS = "\"MyShipManager/Preview Content\"";
 				DEVELOPMENT_TEAM = 2WJ3HU959U;
 				ENABLE_PREVIEWS = YES;
@@ -580,7 +586,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.myshipmanager.MyShipManagerApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

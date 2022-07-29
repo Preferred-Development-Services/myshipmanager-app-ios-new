@@ -112,6 +112,15 @@ struct MyShipManagerApp: App {
                             .accentColor(.brandPrimary)
                     }
                     NavigationView {
+                        Budget()
+                            .navigationTitle("Budget By Category")
+                    }
+                    .tabItem {
+                        Image(systemName: "list.bullet.rectangle.portrait.fill")
+                        Text("Budget".uppercased())
+                            .accentColor(.brandPrimary)
+                    }
+                    NavigationView {
                         Account()
                             .navigationTitle("Account")
                     }

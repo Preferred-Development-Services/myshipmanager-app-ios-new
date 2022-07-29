@@ -177,7 +177,7 @@ class API: ObservableObject {
         let urlPass = pass.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         
         guard let url = URL(string: base + proc + "&email=\(urlUser)&password=\(urlPass)&remember=0&app=1") else { return nil }
-        print("FINAL URL - \(url)")
+ //       print("FINAL URL - \(url)")
 //        guard let url = URL(string: base + proc) else { return nil }
 
         var req = URLRequest(url: url)

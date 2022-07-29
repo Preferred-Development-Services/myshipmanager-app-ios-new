@@ -89,6 +89,30 @@ struct ShipmentListing: Hashable, Identifiable {
     let status: String
 }
 
+struct BudgetLine: Hashable, Identifiable {
+    let id: String
+    let category: String
+    let budget: String
+    let actual: String
+    let diff: String
+    let diffVal: Double
+    let monthStr: String
+    
+    init(json: [String: Any]) {
+        id = UUID().uuidString
+        category = (json["category"] as? String) ?? ""
+        budget = (json["budget"] as? String) ?? ""
+        actual = (json["actual"] as? String) ?? ""
+        diff = (json["diff"] as? String) ?? ""
+        diffVal = (json["diff"] as? Double) ?? 0
+        monthStr = (json["monthStr"] as? String) ?? ""
+    }
+}
+
+func budgetline(json: [[String: Any]]) -> [BudgetLine] {
+    return json.map { BudgetLine(json: $0) }
+}
+
 struct BarcodeInfo: Hashable, Decodable {
     let title: String
     let description: String
